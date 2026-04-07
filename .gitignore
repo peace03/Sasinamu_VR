@@ -97,3 +97,31 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ==========================================
+# [ Custom Ignores for Manual Package Flow ]
+# 용량이 큰 3D 모델 및 관련 에셋 제외 (.unitypackage로 수동 공유 예정)
+# ==========================================
+# 3D 모델 파일 및 해당 메타 파일
+*.fbx
+*.fbx.meta
+*.obj
+*.obj.meta
+*.max
+*.max.meta
+*.blend
+*.blend.meta
+*.dae
+*.dae.meta
+*.3ds
+*.3ds.meta
+
+# 대용량 텍스처 파일 (모델과 함께 패키징될 이미지 소스)
+*.tga
+*.tga.meta
+*.tif
+*.tif.meta
+*.tiff
+*.tiff.meta
+*.psd
+*.psd.meta
