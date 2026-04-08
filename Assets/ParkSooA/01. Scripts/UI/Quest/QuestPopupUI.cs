@@ -4,14 +4,20 @@ using UnityEngine.UI;
 
 public class QuestPopupUI : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private Button questButton;                // 퀘스트 버튼
+    [Header("UI가 들어갈 위치(버튼)")]
+    [SerializeField] private Button questButton;
 
-    [Header("스탯")]
-    [SerializeField] private float waitDuration;                // 기다리는 시간
-    [SerializeField] private float displayDuration;             // 보여주는 시간
-    [SerializeField] private float movingDuration;              // 움직이는 시간
-    [SerializeField] private float stopDistance;                // 도착 판단 거리
+    [Header("시작된 후 UI가 나타날 시간")]
+    [SerializeField][Range(0f, 10f)] private float waitDuration;
+
+    [Header("UI를 보여줄 시간")]
+    [SerializeField][Range(0f, 15f)] private float displayDuration;
+
+    [Header("UI가 버튼으로 움직이는 시간(작을수록 빠름)")]
+    [SerializeField][Range(0f, 1f)] private float movingDuration;
+
+    [Header("연출이 멈추는 시점 판단 거리(작을수록 느림)")]
+    [SerializeField][Range(0f, 0.1f)] private float stopDistance;
 
     private Vector3 originPosition;                             // 원래 위치
     private Vector3 moveVelocity = Vector3.zero;                // 움직였던 속도
@@ -44,19 +50,19 @@ public class QuestPopupUI : MonoBehaviour
             // 처음이라면
             case QuestUIState.First:
                 // UI 처음 열기 실행
-                StartCoroutine(FirstOpenUI());
+                StartCoroutine(FirstOpenUICoroutine());
                 break;
             // 열림이라면
             case QuestUIState.Open:
                 // UI 닫기 실행
-                StartCoroutine(MoveToTarget(questButton.transform.position, Vector3.zero));
+                StartCoroutine(MoveToTargetCoroutine(questButton.transform.position, Vector3.zero));
                 break;
             // 닫힘이라면
             case QuestUIState.Close:
                 // UI 열기
                 gameObject.SetActive(true);
                 // UI 열기 실행
-                StartCoroutine(MoveToTarget(originPosition, Vector3.one));
+                StartCoroutine(MoveToTargetCoroutine(originPosition, Vector3.one));
                 break;
             // 그 외라면
             default:
@@ -66,8 +72,8 @@ public class QuestPopupUI : MonoBehaviour
         }
     }
 
-    // 처음으로 열 때 실행되는 함수
-    private IEnumerator FirstOpenUI()
+    // 처음 열기 코루틴
+    private IEnumerator FirstOpenUICoroutine()
     {
         // 기다리는 시간만큼 기다리기
         yield return new WaitForSeconds(waitDuration);
@@ -92,8 +98,8 @@ public class QuestPopupUI : MonoBehaviour
         UIHandler();
     }
 
-    // 타겟으로 이동할 때 실행되는 함수
-    private IEnumerator MoveToTarget(Vector3 pos, Vector3 scale)
+    // 타겟 이동 코루틴
+    private IEnumerator MoveToTargetCoroutine(Vector3 pos, Vector3 scale)
     {
         // 퀘스트 버튼 누를 수 없음
         questButton.interactable = false;
