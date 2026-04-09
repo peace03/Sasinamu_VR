@@ -1,10 +1,10 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScreenEffectUI : MonoBehaviour
 {
+    #region 변수
     [Header("연출 이미지")]
     [SerializeField] private Image effectImage;
 
@@ -28,6 +28,7 @@ public class ScreenEffectUI : MonoBehaviour
 
     [Header("연출 변화율 그래프")]
     [SerializeField] private AnimationCurve effectCurve;
+    #endregion
 
     private void OnEnable()
     {
