@@ -1,16 +1,25 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerMove : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private ActionBasedContinuousMoveProvider ObjMove;
+    [SerializeField] private ActionBasedContinuousTurnProvider ObjTurn;
 
-    // Update is called once per frame
-    void Update()
+    public void StopObjMove()
     {
-        
+        ObjMove.enabled = false;
+    }
+    public void StopObjTurn()
+    {
+        ObjTurn.enabled = false;
+    }
+    public void FreeObjMove()
+    {
+        ObjMove.enabled = true;
+    }
+    public void FreeObjTurn()
+    {
+        ObjTurn.enabled = true;
     }
 }
