@@ -23,7 +23,7 @@ public class ScreenEffectUI : MonoBehaviour
     [Header("페이드 인 - 끝 값")]
     [SerializeField][Range(0f, 1f)] private float fadeInEndValue = 0f;
 
-    [Header("연출의 총 시간")]
+    [Header("연출 시간")]
     [SerializeField][Range(5f, 30f)] private float effectDuration = 30f;
 
     [Header("연출 변화율 그래프")]

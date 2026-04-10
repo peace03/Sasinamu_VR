@@ -37,6 +37,9 @@ public class QuestPopupUI : MonoBehaviour
     private Coroutine moveCoroutine;                    // UI 이동 조절 코루틴
     private Coroutine scaleCoroutine;                   // UI 크기 조절 코루틴
 
+    private WaitForSeconds WaitDuration;
+    private WaitForSeconds DisplayDuration;
+
     private Vector3 moveVelocity = Vector3.zero;        // 움직였던 속도
     private Vector3 scaleVelocity = Vector3.zero;       // 줄었던 크기
 
@@ -47,6 +50,8 @@ public class QuestPopupUI : MonoBehaviour
     {
         // 초기화
         questButton.onClick.AddListener(QuestUIHander);
+        WaitDuration = new WaitForSeconds(waitDuration);
+        DisplayDuration = new WaitForSeconds(displayDuration);
     }
 
     private void Start()
@@ -99,11 +104,11 @@ public class QuestPopupUI : MonoBehaviour
     private IEnumerator FirstPopupQuestUI()
     {
         // UI가 나타날 시간 기다리기
-        yield return waitDuration;
+        yield return WaitDuration;
         // UI 여는 연출이 끝날 때까지 기다리기
         yield return StartCoroutine(UIScaleHandleCoroutine(Vector3.one));
         // UI를 보여줄 시간 기다리기
-        yield return displayDuration;
+        yield return DisplayDuration;
         // UI를 왼쪽 위로 이동시키기
         moveCoroutine = StartCoroutine(UIMoveHandleCoroutine(leftTopPoint));
         // UI 닫기

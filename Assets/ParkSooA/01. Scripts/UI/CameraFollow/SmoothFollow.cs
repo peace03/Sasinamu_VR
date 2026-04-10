@@ -34,6 +34,5 @@ public class SmoothFollow : MonoBehaviour
         // UI를 카메라 각도에 맞춰서 회전하기 
         transform.rotation = Quaternion.Slerp(transform.rotation, target.rotation,
                                                             rotationSpeed * Time.deltaTime);
-        // 카메라 회전하면 퀘스트 팝업 UI 사라지는 방식 웃김
     }
 }
