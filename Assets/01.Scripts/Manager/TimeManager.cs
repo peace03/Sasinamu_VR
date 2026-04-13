@@ -1,31 +1,65 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class TimeManager : MonoBehaviour
 {
+    //알람 데이터를 담을 구조체
+    private struct Alarm
+    {
+        public float TriggerTime;
+        public Action Callback;
+    }
+
+    //알람 명부 리스트
+    private List<Alarm> alarmQueue = new List<Alarm>();
+    public float CurrentTime { get; private set; } = 0f;
+
+    [Header("게임 시작시 대기 시간")]
     [SerializeField] private UnityEvent OnEnterStandbyStart;   //Object 못 움직일 때
     [SerializeField] private UnityEvent OnEnterStandbyEnd;     //다시 움직일 때
-    [SerializeField] private UnityEvent OnAttentionFix;     //헤드셋 고개 못돌릴 때
-    [SerializeField] private UnityEvent OnAttentionFree;    //다시 고객 돌릴 때
     [SerializeField] private float onlyMovePauseTime;       //움직임 정지 시간
+
 
     private void Start()
     {
         StartCoroutine(StandBy());
-        StartCoroutine(ShowUI());
+    }
+
+    private void Update()
+    {
+        CurrentTime += Time.deltaTime;
+        //Debug.Log(CurrentTime);
+        //알람큐에 액션이 등록되어있고
+        //NPC의 줄서는 시간이 되었으면 실행
+        while (alarmQueue.Count > 0 && alarmQueue[alarmQueue.Count - 1].TriggerTime <= CurrentTime)
+        {
+            int lastIndex = alarmQueue.Count - 1;
+            //마지막 인덱스 줄서기 실행
+            alarmQueue[lastIndex].Callback?.Invoke();
+            //실행 후 리스트에서 지워주기
+            alarmQueue.RemoveAt(lastIndex);
+            Debug.Log("줄서기 알람 발송 완료");
+        }
+        if (CurrentTime >= 120f) CurrentTime = 0f;
     }
 
     private IEnumerator StandBy()   //처음 시작하고 대기할 때(고개만 움직일 수 있음)
     {
         OnEnterStandbyStart?.Invoke();
         yield return new WaitForSeconds(onlyMovePauseTime);
-    }
-    private IEnumerator ShowUI()    //UI나타났을 때 모든 움직임 정지 및 문 바라보기
-    {
-        OnAttentionFix?.Invoke();
-        yield return new WaitForSeconds(onlyMovePauseTime);
-        OnAttentionFree?.Invoke();
         OnEnterStandbyEnd?.Invoke();
+    }
+
+    //NPC 알람 등록 메서드
+    public void RegisterAlarm(float targetTime, Action callback)
+    {
+        Alarm newAlarm = new Alarm { TriggerTime = targetTime, Callback = callback };
+        alarmQueue.Add(newAlarm);
+
+        //내림차순 정렬 (가장 작은 시간 값이 마지막에 오도록)
+        alarmQueue.Sort((a, b) => b.TriggerTime.CompareTo(a.TriggerTime));
     }
 }
