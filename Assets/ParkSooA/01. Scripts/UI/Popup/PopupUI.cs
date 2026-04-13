@@ -2,20 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuestPopupUI : MonoBehaviour
+public class PopupUI : MonoBehaviour
 {
     #region 변수
-    [Header("목표 버튼")]
-    [SerializeField] private Button questButton;
+    [Header("플레이어 왼쪽 손")]
+    [SerializeField] private Transform playerLeftHand;
 
-    [Header("UI가 이동할 왼쪽 위 좌표")]
-    [SerializeField] private Transform leftTopPoint;
-
-    [Header("UI가 이동할 중앙 좌표")]
-    [SerializeField] private Transform centerPoint;
-
-    [Header("시작 후 UI가 나타날 시간")]
-    [SerializeField][Range(0f, 10f)] private float waitDuration = 10f;
+    [Header("UI가 나타날 시간")]
+    [SerializeField][Range(0f, 10f)] private float delayDuration = 10f;
 
     [Header("UI를 보여줄 시간")]
     [SerializeField][Range(0f, 15f)] private float displayDuration = 15f;
@@ -37,7 +31,7 @@ public class QuestPopupUI : MonoBehaviour
     private Coroutine moveCoroutine;                    // UI 이동 조절 코루틴
     private Coroutine scaleCoroutine;                   // UI 크기 조절 코루틴
 
-    private WaitForSeconds WaitDuration;
+    private WaitForSeconds DelayDuration;
     private WaitForSeconds DisplayDuration;
 
     private Vector3 moveVelocity = Vector3.zero;        // 움직였던 속도
@@ -49,8 +43,7 @@ public class QuestPopupUI : MonoBehaviour
     private void Awake()
     {
         // 초기화
-        questButton.onClick.AddListener(QuestUIHander);
-        WaitDuration = new WaitForSeconds(waitDuration);
+        DelayDuration = new WaitForSeconds(delayDuration);
         DisplayDuration = new WaitForSeconds(displayDuration);
     }
 
@@ -66,16 +59,11 @@ public class QuestPopupUI : MonoBehaviour
     // 퀘스트 UI 관리 코루틴 함수
     private IEnumerator QuestUIHandleCoroutine()
     {
-        // 퀘스트 버튼 클릭 못함
-        questButton.interactable = false;
-
         // UI가 닫혀있다면
         if (!isOpen)
         {
             // UI 열림
             isOpen = true;
-            // UI를 중앙으로 이동시키기
-            moveCoroutine = StartCoroutine(UIMoveHandleCoroutine(centerPoint));
             // UI 열기
             scaleCoroutine = StartCoroutine(UIScaleHandleCoroutine(Vector3.one));
         }
@@ -84,8 +72,6 @@ public class QuestPopupUI : MonoBehaviour
         {
             // UI 닫힘
             isOpen = false;
-            // UI를 왼쪽 위로 이동시키기
-            moveCoroutine = StartCoroutine(UIMoveHandleCoroutine(leftTopPoint));
             // UI 닫기
             scaleCoroutine = StartCoroutine(UIScaleHandleCoroutine(Vector3.zero));
         }
@@ -96,21 +82,17 @@ public class QuestPopupUI : MonoBehaviour
         yield return scaleCoroutine;
         // 코루틴 초기화
         moveCoroutine = scaleCoroutine = null;
-        // 퀘스트 버튼 클릭 가능
-        questButton.interactable = true;
     }
 
     // 처음에 퀘스트 UI 띄우는 함수
     private IEnumerator FirstPopupQuestUI()
     {
         // UI가 나타날 시간 기다리기
-        yield return WaitDuration;
+        yield return DelayDuration;
         // UI 여는 연출이 끝날 때까지 기다리기
         yield return StartCoroutine(UIScaleHandleCoroutine(Vector3.one));
         // UI를 보여줄 시간 기다리기
         yield return DisplayDuration;
-        // UI를 왼쪽 위로 이동시키기
-        moveCoroutine = StartCoroutine(UIMoveHandleCoroutine(leftTopPoint));
         // UI 닫기
         scaleCoroutine = StartCoroutine(UIScaleHandleCoroutine(Vector3.zero));
         // UI 이동이 끝날 때까지 기다리기
