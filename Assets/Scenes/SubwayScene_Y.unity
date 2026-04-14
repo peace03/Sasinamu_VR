@@ -231,6 +231,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99134847}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &118593852
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 578978004}
+    m_Modifications:
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.3000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6420781867221955984, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_Name
+      value: SubwayDoor3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
 --- !u!1 &133618459
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +411,14 @@ PrefabInstance:
     - target: {fileID: 6614328587606774209, guid: 5429cca26869fb14790c2940786da75f, type: 3}
       propertyPath: m_Name
       value: NPC (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayScheduler
+      value: 
+      objectReference: {fileID: 1691600298}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayArrivalTime
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -487,6 +552,183 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &333557329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333557334}
+  - component: {fileID: 333557333}
+  - component: {fileID: 333557332}
+  - component: {fileID: 333557331}
+  - component: {fileID: 333557330}
+  - component: {fileID: 333557336}
+  - component: {fileID: 333557335}
+  m_Layer: 0
+  m_Name: EnterSubwayDoor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &333557330
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 0.5}
+  m_Center: {x: -6, y: 1.5, z: -0.2}
+--- !u!65 &333557331
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 0.5}
+  m_Center: {x: -2, y: 1.5, z: -0.2}
+--- !u!65 &333557332
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 0.5}
+  m_Center: {x: 2, y: 1.5, z: -0.2}
+--- !u!65 &333557333
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 0.5}
+  m_Center: {x: 7, y: 1.5, z: -0.2}
+--- !u!4 &333557334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10.89}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &333557335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f197a1421f7d79439003221627eee81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  loadScene: 2
+--- !u!114 &333557336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333557329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d47a2610f751c94d82f935bca4580e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColliderTriggerInvoke
+  OnColiderEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 333557335}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &357313540 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 710748059391530246, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 513777301}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d063d0e752a749c48a52498908593dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubwayDoorHandler
+--- !u!4 &357313541 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 513777301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &409383724
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +764,63 @@ Transform:
   - {fileID: 1985875965}
   m_Father: {fileID: 1948943837}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &513777301
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1985875965}
+    m_Modifications:
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.3000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6420781867221955984, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_Name
+      value: SubwayDoor4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
 --- !u!1 &515993319
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +851,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2142909836}
+  - {fileID: 1679261088}
   m_Father: {fileID: 409383725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &546768297
@@ -584,6 +884,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1606987316}
+  - {fileID: 2099626478}
   m_Father: {fileID: 409383725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &549313446 stripped
@@ -591,6 +892,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2140329733677579187, guid: 5429cca26869fb14790c2940786da75f, type: 3}
   m_PrefabInstance: {fileID: 217453162}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &558811844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 558811846}
+  - component: {fileID: 558811845}
+  m_Layer: 0
+  m_Name: SubwayDoorHandlerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &558811845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558811844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4f91bb1486992e41b0f29fe0af0ce77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubwayDoorHandlerManager
+  DoorHandlers:
+  - {fileID: 1679261089}
+  - {fileID: 2099626479}
+  - {fileID: 1444915308}
+  - {fileID: 357313540}
+  moveLocal: {x: 1.5, y: 0, z: 0}
+  speed: 1.5
+--- !u!4 &558811846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558811844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1936292506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &578978003
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,6 +973,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 951573639}
+  - {fileID: 1444915307}
   m_Father: {fileID: 409383725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &581586922 stripped
@@ -713,6 +1066,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2453071857088386821, guid: 41d0d8903f8c14e4894eca0783bb99fa, type: 3}
   m_PrefabInstance: {fileID: 5969433597318258130}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &630807917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630807919}
+  - component: {fileID: 630807918}
+  m_Layer: 0
+  m_Name: TestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &630807918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630807917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2947163702b574faedfcf02262abdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestManager
+  OnsubwayPause:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1691600298}
+        m_TargetAssemblyTypeName: SubwayScheduler, Assembly-CSharp
+        m_MethodName: DontUseScheduler
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSubwayContainue:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1691600298}
+        m_TargetAssemblyTypeName: SubwayScheduler, Assembly-CSharp
+        m_MethodName: UseScheduler
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &630807919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630807917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &632664509
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +1315,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayScheduler
+      value: 
+      objectReference: {fileID: 1691600298}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayArrivalTime
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1019,7 +1454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4305490039780343175, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_Name
-      value: CongestionVisualizer
+      value: CongestionVisualizer4
       objectReference: {fileID: 0}
     - target: {fileID: 6727971770151996936, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1257,8 +1692,8 @@ MonoBehaviour:
   OnPassengerReset:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2142909837}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
+      - m_Target: {fileID: 1730064591}
+        m_TargetAssemblyTypeName: CongestionVisualizerManager, Assembly-CSharp
         m_MethodName: SetPassengerCount
         m_Mode: 0
         m_Arguments:
@@ -1269,47 +1704,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1606987317}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
-        m_MethodName: SetPassengerCount
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 951573640}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
-        m_MethodName: SetPassengerCount
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1754939935}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
-        m_MethodName: SetPassengerCount
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLeave:
+  OnArrive:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2142909837}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
+      - m_Target: {fileID: 558811845}
+        m_TargetAssemblyTypeName: SubwayDoorHandlerManager, Assembly-CSharp
+        m_MethodName: OpenDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnCloseDoor:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1730064591}
+        m_TargetAssemblyTypeName: CongestionVisualizerManager, Assembly-CSharp
         m_MethodName: SetStandBy
         m_Mode: 1
         m_Arguments:
@@ -1320,33 +1734,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1606987317}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
-        m_MethodName: SetStandBy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 951573640}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
-        m_MethodName: SetStandBy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1754939935}
-        m_TargetAssemblyTypeName: ChangeTextObj, Assembly-CSharp
-        m_MethodName: SetStandBy
+      - m_Target: {fileID: 558811845}
+        m_TargetAssemblyTypeName: SubwayDoorHandlerManager, Assembly-CSharp
+        m_MethodName: CloseDoor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1479,6 +1869,14 @@ PrefabInstance:
     - target: {fileID: 6614328587606774209, guid: 5429cca26869fb14790c2940786da75f, type: 3}
       propertyPath: m_Name
       value: NPC (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayScheduler
+      value: 
+      objectReference: {fileID: 1691600298}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayArrivalTime
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1644,7 +2042,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4305490039780343175, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_Name
-      value: CongestionVisualizer
+      value: CongestionVisualizer1
       objectReference: {fileID: 0}
     - target: {fileID: 6727971770151996936, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1918,11 +2316,76 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayScheduler
+      value: 
+      objectReference: {fileID: 1691600298}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayArrivalTime
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+--- !u!1001 &1380310652
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 546768298}
+    m_Modifications:
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.3000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6420781867221955984, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_Name
+      value: SubwayDoor2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
 --- !u!1 &1385454919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2085,6 +2548,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385454919}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1444915307 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 118593852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1444915308 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 710748059391530246, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 118593852}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d063d0e752a749c48a52498908593dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubwayDoorHandler
 --- !u!1 &1510848577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,6 +2736,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d5d369e273ec74191859e8381c0b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChangeTextObj
+--- !u!4 &1679261088 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 1952789782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1679261089 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 710748059391530246, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 1952789782}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d063d0e752a749c48a52498908593dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubwayDoorHandler
 --- !u!1 &1691600297
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,9 +2781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01801dfa5d012e43bba0d85ee9db28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SubwayScheduler
-  subwayMove: {fileID: 1011751496}
-  subwayCycleTime: 10
-  stopTime: 5
+  subwayCycle: {fileID: 1011751496}
+  subwayCycleTime: 20
+  stopTime: 10
 --- !u!4 &1691600299
 Transform:
   m_ObjectHideFlags: 0
@@ -2322,7 +2817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4305490039780343175, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_Name
-      value: CongestionVisualizer
+      value: CongestionVisualizer3
       objectReference: {fileID: 0}
     - target: {fileID: 6727971770151996936, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2369,6 +2864,58 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
+--- !u!1 &1730064589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1730064590}
+  - component: {fileID: 1730064591}
+  m_Layer: 0
+  m_Name: CongestionVisualizerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1730064590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730064589}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.27161, y: 0, z: -1.48064}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1936292506}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1730064591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1730064589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef9edc1c88f631408fac60df5d7fbe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CongestionVisualizerManager
+  congestionVisualizers:
+  - {fileID: 2142909837}
+  - {fileID: 1606987317}
+  - {fileID: 951573640}
+  - {fileID: 1754939935}
+  congestion: 13
+  normal: 6
+  clear: 1
 --- !u!4 &1750126066 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2140329733677579187, guid: 5429cca26869fb14790c2940786da75f, type: 3}
@@ -2521,7 +3068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4305490039780343175, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_Name
-      value: CongestionVisualizer
+      value: CongestionVisualizer2
       objectReference: {fileID: 0}
     - target: {fileID: 6727971770151996936, guid: d29b4b89dbf68aa49951a99251861211, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2599,6 +3146,8 @@ Transform:
   m_Children:
   - {fileID: 1361244545}
   - {fileID: 1147899553}
+  - {fileID: 1730064590}
+  - {fileID: 558811846}
   - {fileID: 1580446355}
   m_Father: {fileID: 632664510}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2635,6 +3184,63 @@ Transform:
   - {fileID: 409383725}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1952789782
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 515993320}
+    m_Modifications:
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6420781867221955984, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+      propertyPath: m_Name
+      value: SubwayDoor1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
 --- !u!1 &1960475086
 GameObject:
   m_ObjectHideFlags: 0
@@ -2778,6 +3384,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1754939934}
+  - {fileID: 357313541}
   m_Father: {fileID: 409383725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2001556837 stripped
@@ -2885,6 +3492,22 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 993655abf94a2ee46af880e117677ba5, type: 2}
   m_BuildHeightMesh: 0
+--- !u!4 &2099626478 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4921033213479879718, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 1380310652}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2099626479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 710748059391530246, guid: 4a75653df01efe645b59e99e3a28d351, type: 3}
+  m_PrefabInstance: {fileID: 1380310652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d063d0e752a749c48a52498908593dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubwayDoorHandler
 --- !u!1 &2126542177
 GameObject:
   m_ObjectHideFlags: 0
@@ -3105,6 +3728,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayScheduler
+      value: 
+      objectReference: {fileID: 1691600298}
+    - target: {fileID: 8599950342026401662, guid: 5429cca26869fb14790c2940786da75f, type: 3}
+      propertyPath: subwayArrivalTime
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3178,3 +3809,5 @@ SceneRoots:
   - {fileID: 1147409787}
   - {fileID: 745163405}
   - {fileID: 1691600299}
+  - {fileID: 630807919}
+  - {fileID: 333557334}

@@ -1,12 +1,15 @@
+using System.Collections;
+using Unity.XR.CoreUtils.Bindings;
 using UnityEngine;
 using UnityEngine.Events;
 
 public enum SubwayStatus
 {
-    StandBy,//대기
-    Start,  //출발
-    Arrive, //정차
-    Leave   //떠나기
+    StandBy,    //대기
+    Start,      //출발
+    Arrive,     //정차
+    CloseDoor,  //문닫기
+    Leave       //떠나기
 }
 
 public class SubwayCycle : MonoBehaviour
@@ -21,13 +24,15 @@ public class SubwayCycle : MonoBehaviour
     [Tooltip("1초당 증가할 가속도")]
     [SerializeField] private float acceleration;    //1초당 증가할 가속도
 
-    [Header("지하철 탑승객 인원 리셋 이벤트")]
-    [SerializeField] private UnityEvent<int[]> OnPassengerReset;   //지하철 탑승객 인원 리셋 이벤트
-    [SerializeField] private UnityEvent OnLeave;   //지하철 탑승객 인원 리셋 이벤트
+    [Header("지하철 사이클 이벤트")]
+    [SerializeField] private UnityEvent<int[]> OnPassengerReset;    //지하철 탑승객 인원 리셋 이벤트
+    [SerializeField] private UnityEvent OnArrive;                   //지하철 역 도착시 이벤트 발행
+    [SerializeField] private UnityEvent OnCloseDoor;                    //지하철 역 떠날시 이벤트 발행
 
     private SubwayPassenserLevel passengerLevel; //탑승객 관리자
     private float currentSpeed = 0f;                //현재속도
     private int[] passenserCount;                   //탑승객 분포 리스트
+    private bool isCorouting = false;
 
     private SubwayStatus status = SubwayStatus.StandBy;
 
@@ -48,8 +53,8 @@ public class SubwayCycle : MonoBehaviour
                     passenserCount = passengerLevel.ResetCount(); //탑승객 리스트 리셋
                     OnPassengerReset?.Invoke(passenserCount);
                     Debug.Log($"탑승객\n1호:{passenserCount[0]}    2호:{passenserCount[1]}    3호:{passenserCount[2]}");
+                    currentSpeed = 0f;
                 }
-                currentSpeed = 0f;
                 //Debug.Log("StandBy");
                 break;
             case SubwayStatus.Start:
@@ -64,7 +69,16 @@ public class SubwayCycle : MonoBehaviour
                 }
                 break;
             case SubwayStatus.Arrive:
+                OnArrive?.Invoke();
                 //Debug.Log("Arrive");
+                break;
+            case SubwayStatus.CloseDoor:
+                if (!isCorouting)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(ClosingDoor());
+                    isCorouting = true;
+                }
                 break;
             case SubwayStatus.Leave:
                 //종착지까지 이동
@@ -92,6 +106,13 @@ public class SubwayCycle : MonoBehaviour
     public void SetSubwayStatus(SubwayStatus status)
     {
         this.status = status;
-        if (status == SubwayStatus.Leave) OnLeave?.Invoke();
+        if (status == SubwayStatus.CloseDoor) OnCloseDoor?.Invoke();
+    }
+
+    private IEnumerator ClosingDoor()
+    {
+        yield return new WaitForSeconds(5f);
+        status = SubwayStatus.Leave;
+        isCorouting = false;
     }
 }
