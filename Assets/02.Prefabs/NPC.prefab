@@ -138,7 +138,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4378c2c16d16f34438a18fb8416c042b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC_BT
-  gatePos: []
+  gatePos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   speed: 4
 --- !u!114 &8599950342026401662
 MonoBehaviour:

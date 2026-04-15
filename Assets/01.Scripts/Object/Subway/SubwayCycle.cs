@@ -66,6 +66,7 @@ public class SubwayCycle : MonoBehaviour
                 {
                     currentSpeed = 0f;
                     status = SubwayStatus.Arrive;
+                    EventBus<SubwayArrive>.Publish(default);
                 }
                 break;
             case SubwayStatus.Arrive:
