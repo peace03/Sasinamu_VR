@@ -1,30 +1,47 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PopupUI : MonoBehaviour
 {
-    [Header("크기 조절 스크립트")]
+    [Header("크기 효과")]
     [SerializeField] private UIScaleHandler scaleHandler;
 
-    [Header("불투명도 조절 스크립트")]
+    [Header("불투명도 효과")]
     [SerializeField] private UIFadeHandler fadeHandler;
 
-    [Header("불투명도를 변경할 UI")]
+    [Header("불투명도가 바뀌는 UI")]
     [SerializeField] private CanvasGroup canvasGroup;
 
-    [Header("연출의 대략적인 시간(열리는 것은 약 2배)")]
-    [SerializeField][Range(0f, 1f)] private float duration = 0.5f;
+    [Header("연출 시간")]
+    [SerializeField][Range(0f, 1f)] private float openDuration = 0.3f;
+    [SerializeField][Range(0f, 1f)] private float closeDuration = 0.2f;
 
-    [Header("연출이 끝나는 지점(값)")]
-    [SerializeField][Range(0f, 1f)] private float distance = 0.01f;
-
-    [Header("UI가 한번만 커질 크기")]
+    [Header("UI가 커질 크기")]
     [SerializeField][Range(1.01f, 1.075f)] private float overSize = 1.05f;
 
-    private void Awake()
+    [Header("연출 효과 그래프")]
+    [SerializeField] private AnimationCurve openAnimCurve;
+    [SerializeField] private AnimationCurve closeAnimCurve;
+
+    private bool curState = false;
+
+    private void OnValidate()
     {
-        // 초기화
-        scaleHandler.Init(duration, distance, overSize);
-        fadeHandler.Init(canvasGroup, duration, distance);
+        if (scaleHandler != null && fadeHandler != null)
+        {
+            if(curState)
+            {
+                scaleHandler.Init(openDuration, overSize, openAnimCurve);
+                fadeHandler.Init(canvasGroup, openDuration, openAnimCurve);
+            }
+            else
+            {
+                scaleHandler.Init(closeDuration, overSize, closeAnimCurve);
+                fadeHandler.Init(canvasGroup, closeDuration, closeAnimCurve);
+            }
+
+            Debug.Log("인스펙터 값이 반영되었습니다.");
+        }
     }
 
     // 팝업 UI 관리 함수
@@ -38,6 +55,8 @@ public class PopupUI : MonoBehaviour
             return;
         }
 
+        // 현재 상태 저장
+        curState = state;
         // 크기 조절
         scaleHandler.SetUIState(state);
         // 불투명도 조절

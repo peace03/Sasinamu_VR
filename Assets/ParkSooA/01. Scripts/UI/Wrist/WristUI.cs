@@ -15,7 +15,7 @@ public class WristUI : MonoBehaviour
     private void Update()
     {
         // 시야에 들어오고, 가깝다면
-        if (Vector3.Dot(transform.right, target.forward) <= -0.7f
+        if (Vector3.Dot(transform.right, target.forward) >= 0.7f
             && Vector3.Distance(transform.position, target.position) <= 0.5f)
             // 팝업 UI 키기
             popupUI.PopupUIHandler(true);

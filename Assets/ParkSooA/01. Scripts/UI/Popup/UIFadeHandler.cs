@@ -5,18 +5,18 @@ public class UIFadeHandler : MonoBehaviour
 {
     private CanvasGroup canvasGroup;                // UI
     private Coroutine fadeCoroutine = null;         // 불투명도 조절 코루틴
+    private AnimationCurve animCurve;               // 연출 효과
 
     private bool isOpen = false;                    // 현재 UI 상태
     private float duration;                         // 속도
-    private float distance;                         // 값
 
     // 초기화 함수
-    public void Init(CanvasGroup canvasGroup, float duration, float  distance)
+    public void Init(CanvasGroup canvasGroup, float duration, AnimationCurve curve)
     {
         // 초기화
         this.canvasGroup = canvasGroup;
         this.duration = duration;
-        this.distance = distance;
+        animCurve = curve;
     }
 
     // UI 상태 설정 함수
@@ -29,8 +29,12 @@ public class UIFadeHandler : MonoBehaviour
 
         // 불투명도 조절 코루틴이 비어있지 않다면
         if (fadeCoroutine != null)
-            // 종료
-            return;
+        {
+            // 불투명도 조절 코루틴 멈추기
+            StopCoroutine(fadeCoroutine);
+            // 불투명도 조절 코루틴 초기화
+            fadeCoroutine = null;
+        }
 
         // 현재 UI 상태 변경
         isOpen = state;
@@ -43,10 +47,12 @@ public class UIFadeHandler : MonoBehaviour
     {
         // UI를 열어야 된다면
         if (isOpen)
-            yield return StartCoroutine(FadeCoroutine(1f));
+            // 불투명하게 바꾸기
+            yield return FadeCoroutine(1f);
         // UI를 닫아야 된다면
         else
-            yield return StartCoroutine(FadeCoroutine(0f));
+            // 투명하게 바꾸기
+            yield return FadeCoroutine(0f);
 
         // 불투명도 조절 코루틴 초기화
         fadeCoroutine = null;
@@ -55,14 +61,18 @@ public class UIFadeHandler : MonoBehaviour
     // 불투명도 조절 코루틴
     private IEnumerator FadeCoroutine(float value)
     {
-        // 현재 속도를 저장할 변수 선언
-        float velocity = 0f;
+        // 현재 불투명도를 시작 값으로 저장
+        float startAlpha = canvasGroup.alpha;
+        // 시간을 확인할 변수 선언
+        float timer = 0f;
 
-        // 목표 불투명도 값까지
-        while (Mathf.Abs(value - canvasGroup.alpha) > distance)
+        // 연출이 끝날 때까지
+        while (timer < duration)
         {
-            // 불투명도 값 수정
-            canvasGroup.alpha = Mathf.SmoothDamp(canvasGroup.alpha, value, ref velocity, duration);
+            // 시간 더하기
+            timer += Time.deltaTime;
+            // 연출 효과 그래프에서 현재 시간에 해당하는 값을 가져와서 그 값으로 불투명도 조절
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, value, animCurve.Evaluate(timer / duration));
             // 프레임 기다리기
             yield return null;
         }
