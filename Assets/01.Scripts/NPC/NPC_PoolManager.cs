@@ -15,13 +15,15 @@ public class NPC_PoolManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         _pool = new ObjectPool<NPC_Brain>(
             createFunc: CreateNPC,
             actionOnGet: OnGetNPC,
             actionOnRelease: OnReleaseNPC,
             actionOnDestroy: OnDestroyNPC,
             collectionCheck: true,
-            maxSize: 20);
+            maxSize: 10);
     }
 
     private void Start()

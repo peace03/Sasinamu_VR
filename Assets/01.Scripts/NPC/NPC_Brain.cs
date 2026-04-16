@@ -33,4 +33,8 @@ public class NPC_Brain : MonoBehaviour
         BT.SetIsLineUPTime(true);
     }
 
+    public void ReleaseSelf()
+    {
+        _poolManager.Release(this);
+    }
 }

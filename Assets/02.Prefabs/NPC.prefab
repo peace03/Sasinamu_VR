@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 422689169152271734}
   - component: {fileID: 4876364925547203447}
   - component: {fileID: 2797820570347964677}
-  m_Layer: 16
+  m_Layer: 12
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,8 @@ GameObject:
   - component: {fileID: 814877878540616429}
   - component: {fileID: 8599950342026401662}
   - component: {fileID: 5914890756772969154}
-  m_Layer: 0
+  - component: {fileID: 4491893374188669441}
+  m_Layer: 12
   m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,12 +139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4378c2c16d16f34438a18fb8416c042b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC_BT
-  gatePos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   speed: 4
+  boardPos: 4
+  seatPosRange: 3
 --- !u!114 &8599950342026401662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d02d6a84044d04d858e82c5b4e88fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC_Brain
-  subwayScheduler: {fileID: 0}
   BT: {fileID: 814877878540616429}
 --- !u!195 &5914890756772969154
 NavMeshAgent:
@@ -180,6 +177,31 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!143 &4491893374188669441
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6614328587606774209}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.6
+  m_Radius: 0.4
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &8502540229809739954
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +213,7 @@ GameObject:
   - component: {fileID: 6406940285434116666}
   - component: {fileID: 1132840545293738932}
   - component: {fileID: 6428752475960988710}
-  m_Layer: 16
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartRoom_Y.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/SubwayScene_Y.unity
     guid: 72d5c47f4d1ef1d4fb423960bb7d68e4
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Scenes/StartRoom_Y.unity
+    guid: e0d050f9c93c5bd46b28f25c9fe33d91
+  - enabled: 0
     path: Assets/Scenes/EndScene_Y.unity
     guid: 31fcbc4cc2aeb7a46926d9f5e4eb9112
   m_configObjects:

@@ -1,8 +1,9 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 
 //지하철 스케쥴 관리
-public class SubwayScheduler : MonoBehaviour
+public class SubwayScheduler : MonoBehaviourPun
 {
     [SerializeField] private SubwayCycle subwayCycle;
     [Tooltip("다음 지하철이 오는 사이클 시간")]
@@ -11,19 +12,21 @@ public class SubwayScheduler : MonoBehaviour
     [Tooltip("지하철이 정차하는 시간")]
     [SerializeField] private float stopTime = 10f;          //지하철 정차 시간
 
-    private float currentTime = 0f;
+    public float CurrentTime { get; private set; }
     private bool nearSubway = false; //역에 지하철 있는가?
     private bool usingScheduler = true;    //스케쥴러 작동할 것인가?
     
     private void Update()
     {
+        //내가 방장이 아니면, 스케줄러의 시간 연산을 아예하지 않는다.
+        if (!PhotonNetwork.IsMasterClient) return;
         //역에 지하철 없으면 다음 지하철 생성까지 카운트
         if (nearSubway == false && usingScheduler)
         {
-            currentTime += Time.deltaTime;
-            if (currentTime >= subwayCycleTime)
+            CurrentTime += Time.deltaTime;
+            if (CurrentTime >= subwayCycleTime)
             {
-                currentTime = 0f;
+                CurrentTime = 0f;
                 subwayCycle.SetSubwayStatus(SubwayStatus.StandBy);
                 nearSubway = true;
             }
@@ -37,12 +40,12 @@ public class SubwayScheduler : MonoBehaviour
             }
             if (subwayCycle.GetSubwayStatus() == SubwayStatus.Arrive)
             {
-                currentTime += Time.deltaTime;
+                CurrentTime += Time.deltaTime;
                 //정차 시간 종료되면 떠나기
-                if (currentTime >= stopTime)
+                if (CurrentTime >= stopTime)
                 {
                     subwayCycle.SetSubwayStatus(SubwayStatus.CloseDoor);
-                    currentTime = 0f;
+                    CurrentTime = 0f;
                     nearSubway = false;
                 }
             }

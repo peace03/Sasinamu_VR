@@ -40,14 +40,6 @@ public class NPC_BT : MonoBehaviour
     {
         EventBus<SubwayArrive>.OnEvent -= SetIsBoardedTrue;
         isOpenDoor = false;
-
-        //초기화
-        agent.enabled = true;
-        isLineUpTime = false;
-        isBoarded = false;
-        lineUpTarget = defaultVector;
-        walkTarget = defaultVector;
-        CurrentTime = 0f;
     }
 
     public void OnCreate(List<Transform> gatePos, Transform subway)
@@ -65,6 +57,16 @@ public class NPC_BT : MonoBehaviour
     {
         transform.SetParent(parent);
         agent.Warp(spawnPos);
+        
+        //초기화
+        agent.enabled = true;
+        isLineUpTime = false;
+        isBoarded = false;
+        lineUpTarget = defaultVector;
+        walkTarget = defaultVector;
+        CurrentTime = 0f;
+        IdleStartTime = 0f;
+        IdleEndTime = 0f;
     }
 
     private void Start()
@@ -133,6 +135,8 @@ public class NPC_BT : MonoBehaviour
             //1회만 실행 부모가 안 바꼈을 시
             if (transform.parent != subway)
             {
+                //지하철 줄 초기화
+                lineUpManager.ResetAllLine();
                 //지하철을 부모 오브젝트로 수정
                 transform.SetParent(subway, true);
                 //자리 선택
@@ -151,7 +155,7 @@ public class NPC_BT : MonoBehaviour
     {
         if (Vector3.Distance(transform.localPosition, onSeatTarget) <= 0.2f)
             return BT_NodeStatus.Success;
-        Debug.Log("지하철 자리이동 BT 호출 완료");
+        //Debug.Log("지하철 자리이동 BT 호출 완료");
         Move(onSeatTarget, true);
         return BT_NodeStatus.Running;
     }
@@ -166,13 +170,13 @@ public class NPC_BT : MonoBehaviour
         {
             walkTarget = new Vector3(Random.Range(-9, 9), 0, Random.Range(-9, 9));
             agent.SetDestination(walkTarget); //NavMesh 사용
-            Debug.Log("걷기 시작");
+            //Debug.Log("걷기 시작");
         }
         //도착하면 성공
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             isIdle = true;
-            Debug.Log("걷기 종료");
+            //Debug.Log("걷기 종료");
             return BT_NodeStatus.Success;
         }
         return BT_NodeStatus.Running;
@@ -185,7 +189,7 @@ public class NPC_BT : MonoBehaviour
             IdleStartTime = CurrentTime;
             IdleEndTime = Random.Range(3f, 5f) + IdleStartTime;
             isIdle = true;
-            Debug.Log("대기 시작");
+            //Debug.Log("대기 시작");
         }
         if (IdleEndTime <= CurrentTime) //Idle 시간 끝
         {
@@ -194,7 +198,7 @@ public class NPC_BT : MonoBehaviour
             //Idle종료 초기화
             IdleEndTime = 0f;
             isIdle = false;
-            Debug.Log("대기 종료");
+            //Debug.Log("대기 종료");
             return BT_NodeStatus.Failure;
         }
 
