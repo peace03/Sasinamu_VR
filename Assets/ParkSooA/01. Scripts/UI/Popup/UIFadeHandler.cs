@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class UIFadeHandler : MonoBehaviour
 {
-    private CanvasGroup canvasGroup;                // UI
-    private Coroutine fadeCoroutine = null;         // 불투명도 조절 코루틴
+    private CanvasGroup canvasGroup;                // UI 불투명도
+    private Coroutine uiStateCoroutine = null;      // UI 상태 코루틴
     private AnimationCurve animCurve;               // 연출 효과
 
-    private bool isOpen = false;                    // 현재 UI 상태
     private float duration;                         // 속도
 
     // 초기화 함수
@@ -22,44 +21,37 @@ public class UIFadeHandler : MonoBehaviour
     // UI 상태 설정 함수
     public void SetUIState(bool state)
     {
-        // 현재 UI 상태와 같다면
-        if (isOpen == state)
-            // 종료
-            return;
-
-        // 불투명도 조절 코루틴이 비어있지 않다면
-        if (fadeCoroutine != null)
+        // UI 상태 코루틴이 비어있지 않다면
+        if (uiStateCoroutine != null)
         {
-            // 불투명도 조절 코루틴 멈추기
-            StopCoroutine(fadeCoroutine);
-            // 불투명도 조절 코루틴 초기화
-            fadeCoroutine = null;
+            // UI 상태 루틴 멈추기
+            StopCoroutine(uiStateCoroutine);
+            // UI 상태 코루틴 초기화
+            uiStateCoroutine = null;
         }
 
-        // 현재 UI 상태 변경
-        isOpen = state;
-        // 불투명도 조절 코루틴 시작
-        fadeCoroutine = StartCoroutine(UIHandler());
+        // UI 상태에 따른 루틴 시작
+        uiStateCoroutine = StartCoroutine(UIStateRoutine(state));
     }
 
-    // UI 관리 함수
-    private IEnumerator UIHandler()
+    // UI 상태 루틴 함수
+    private IEnumerator UIStateRoutine(bool state)
     {
         // UI를 열어야 된다면
-        if (isOpen)
+        if (state)
             // 불투명하게 바꾸기
-            yield return FadeCoroutine(1f);
+            yield return ApplyFadeRoutine(1f);
         // UI를 닫아야 된다면
         else
             // 투명하게 바꾸기
-            yield return FadeCoroutine(0f);
+            yield return ApplyFadeRoutine(0f);
 
-        // 불투명도 조절 코루틴 초기화
-        fadeCoroutine = null;
+        // UI 상태 코루틴 초기화
+        uiStateCoroutine = null;
     }
 
-    // 불투명도 조절 코루틴
-    private IEnumerator FadeCoroutine(float value)
+    // 불투명도 적용 루틴 함수
+    private IEnumerator ApplyFadeRoutine(float value)
     {
         // 현재 불투명도를 시작 값으로 저장
         float startAlpha = canvasGroup.alpha;

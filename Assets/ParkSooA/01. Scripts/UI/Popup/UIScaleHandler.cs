@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class UIScaleHandler : MonoBehaviour
 {
-    private Coroutine scaleCoroutine = null;        // 크기 조절 코루틴
+    private Coroutine uiStateCoroutine = null;      // UI 상태 코루틴
     private AnimationCurve animCurve;               // 연출 효과
-                                                        
-    private bool curState = false;                  // 현재 UI 상태
+    
     private float duration;                         // 시간
     private float overSize;                         // 크기
 
@@ -22,48 +21,41 @@ public class UIScaleHandler : MonoBehaviour
     // UI 상태 설정 함수
     public void SetUIState(bool state)
     {
-        // 현재 UI 상태와 같다면
-        if (curState == state)
-            // 종료
-            return;
-
-        // 크기 조절 코루틴이 비어있지 않다면
-        if (scaleCoroutine != null)
+        // UI 상태 코루틴이 비어있지 않다면
+        if (uiStateCoroutine != null)
         {
-            // 크기 조절 코루틴 멈추기
-            StopCoroutine(scaleCoroutine);
-            // 크기 조절 코루틴 초기화
-            scaleCoroutine = null;
+            // UI 상태 루틴 멈추기
+            StopCoroutine(uiStateCoroutine);
+            // UI 상태 코루틴 초기화
+            uiStateCoroutine = null;
         }
 
-        // 현재 UI 상태 변경
-        curState = state;
-        // 크기 조절 코루틴 시작
-        scaleCoroutine = StartCoroutine(UIHandler());
+        // UI 상태에 따른 루틴 시작
+        uiStateCoroutine = StartCoroutine(UIStateRoutine(state));
     }
 
-    // UI 관리 함수
-    private IEnumerator UIHandler()
+    // UI 상태 루틴 함수
+    private IEnumerator UIStateRoutine(bool state)
     {
         // UI를 열어야 된다면
-        if (curState)
+        if (state)
         {
             // 원래 크기보다 UI 크기 키우기
-            yield return UIScaleCoroutine(Vector3.one * overSize);
+            yield return ApplyScaleRoutine(Vector3.one * overSize);
             // 원래 크기로 바꾸기
-            yield return UIScaleCoroutine(Vector3.one);
+            yield return ApplyScaleRoutine(Vector3.one);
         }
         // UI를 닫아야 된다면
         else
-            // 크기 줄이기 기다리기
-            yield return UIScaleCoroutine(Vector3.zero);
+            // 크기 줄이기
+            yield return ApplyScaleRoutine(Vector3.zero);
 
-        // 크기 조절 코루틴 초기화
-        scaleCoroutine = null;
+        // UI 상태 코루틴 초기화
+        uiStateCoroutine = null;
     }
 
-    // UI 크기 조절 코루틴
-    private IEnumerator UIScaleCoroutine(Vector3 scale)
+    // 크기 적용 루틴 함수
+    private IEnumerator ApplyScaleRoutine(Vector3 scale)
     {
         // 현재 크기를 시작 값으로 저장하기
         Vector3 startScale = transform.localScale;
