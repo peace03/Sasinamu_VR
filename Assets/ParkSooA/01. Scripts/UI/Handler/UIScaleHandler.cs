@@ -4,18 +4,18 @@ using UnityEngine;
 public class UIScaleHandler : MonoBehaviour
 {
     private Coroutine uiStateCoroutine = null;      // UI 상태 코루틴
-    private AnimationCurve animCurve;               // 연출 효과
+    private AnimationCurve curve;                   // 연출 효과
     
     private float duration;                         // 시간
     private float overSize;                         // 크기
 
     // 초기화 함수
-    public void Init(float duration, float overSize, AnimationCurve curve)
+    public void Init(AnimationCurve curve, float duration, float overSize)
     {
         // 초기화
+        this.curve = curve;
         this.duration = duration;
         this.overSize = overSize;
-        animCurve = curve;
     }
 
     // UI 상태 설정 함수
@@ -49,9 +49,6 @@ public class UIScaleHandler : MonoBehaviour
         else
             // 크기 줄이기
             yield return ApplyScaleRoutine(Vector3.zero);
-
-        // UI 상태 코루틴 초기화
-        uiStateCoroutine = null;
     }
 
     // 크기 적용 루틴 함수
@@ -68,12 +65,14 @@ public class UIScaleHandler : MonoBehaviour
             // 시간 더하기
             timer += Time.deltaTime;
             // 연출 효과 그래프에서 현재 시간에 해당하는 값을 가져와서 그 값으로 크기 조절
-            transform.localScale = Vector3.Lerp(startScale, scale, animCurve.Evaluate(timer / duration));
+            transform.localScale = Vector3.Lerp(startScale, scale, curve.Evaluate(timer / duration));
             // 프레임 기다리기
             yield return null;
         }
 
         // 크기 맞추기
         transform.localScale = scale;
+        // UI 상태 코루틴 초기화
+        uiStateCoroutine = null;
     }
 }

@@ -3,19 +3,19 @@ using UnityEngine;
 
 public class UIFadeHandler : MonoBehaviour
 {
-    private CanvasGroup canvasGroup;                // UI 불투명도
     private Coroutine uiStateCoroutine = null;      // UI 상태 코루틴
-    private AnimationCurve animCurve;               // 연출 효과
+    private AnimationCurve curve;                   // 연출 효과
+    private CanvasGroup canvasGroup;                // UI 불투명도
 
     private float duration;                         // 속도
 
     // 초기화 함수
-    public void Init(CanvasGroup canvasGroup, float duration, AnimationCurve curve)
+    public void Init(AnimationCurve curve, float duration, CanvasGroup canvasGroup)
     {
         // 초기화
-        this.canvasGroup = canvasGroup;
+        this.curve = curve;
         this.duration = duration;
-        animCurve = curve;
+        this.canvasGroup = canvasGroup;
     }
 
     // UI 상태 설정 함수
@@ -34,6 +34,19 @@ public class UIFadeHandler : MonoBehaviour
         uiStateCoroutine = StartCoroutine(UIStateRoutine(state));
     }
 
+    // UI 상태 루틴 정지 함수
+    public void StopUIStateRoutine()
+    {
+        // UI 상태 코루틴이 비어있지 않다면
+        if (uiStateCoroutine != null)
+        {
+            // UI 상태 루틴 멈추기
+            StopCoroutine(uiStateCoroutine);
+            // UI 상태 코루틴 초기화
+            uiStateCoroutine = null;
+        }
+    }
+
     // UI 상태 루틴 함수
     private IEnumerator UIStateRoutine(bool state)
     {
@@ -45,9 +58,6 @@ public class UIFadeHandler : MonoBehaviour
         else
             // 투명하게 바꾸기
             yield return ApplyFadeRoutine(0f);
-
-        // UI 상태 코루틴 초기화
-        uiStateCoroutine = null;
     }
 
     // 불투명도 적용 루틴 함수
@@ -64,12 +74,14 @@ public class UIFadeHandler : MonoBehaviour
             // 시간 더하기
             timer += Time.deltaTime;
             // 연출 효과 그래프에서 현재 시간에 해당하는 값을 가져와서 그 값으로 불투명도 조절
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, value, animCurve.Evaluate(timer / duration));
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, value, curve.Evaluate(timer / duration));
             // 프레임 기다리기
             yield return null;
         }
 
         // 불투명도 맞추기
         canvasGroup.alpha = value;
+        // UI 상태 코루틴 초기화
+        uiStateCoroutine = null;
     }
 }

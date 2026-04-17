@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2953661385621080508}
   - component: {fileID: 909657390191982658}
   m_Layer: 5
-  m_Name: Canvas_Wrist_Home
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 36255536111282115}
   - component: {fileID: 7541824299831602061}
   m_Layer: 11
-  m_Name: Wrist_Anchor
+  m_Name: Wrist_Offset
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,7 +318,7 @@ GameObject:
   - component: {fileID: 8245365597517902925}
   - component: {fileID: 5148539795264626614}
   m_Layer: 5
-  m_Name: Quest Popup UI
+  m_Name: Popup UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,10 +360,13 @@ MonoBehaviour:
   scaleHandler: {fileID: 2637731133161561989}
   fadeHandler: {fileID: 8245365597517902925}
   canvasGroup: {fileID: 5148539795264626614}
+  moveHandler: {fileID: 0}
+  openedPos: {fileID: 0}
+  closedPos: {fileID: 0}
   openDuration: 0.3
   closeDuration: 0.2
   overSize: 1.05
-  openAnimCurve:
+  openCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -387,7 +390,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  closeAnimCurve:
+  closeCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -411,6 +414,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  curState: 0
 --- !u!114 &2637731133161561989
 MonoBehaviour:
   m_ObjectHideFlags: 0

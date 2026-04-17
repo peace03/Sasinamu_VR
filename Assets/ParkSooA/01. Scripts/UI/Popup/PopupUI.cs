@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PopupUI : MonoBehaviour
 {
+    #region 변수
     [Header("크기 조절")]
     [SerializeField] private UIScaleHandler scaleHandler;
 
@@ -11,6 +12,13 @@ public class PopupUI : MonoBehaviour
     [Header("불투명도가 바뀌는 UI")]
     [SerializeField] private CanvasGroup canvasGroup;
 
+    [Header("이동 조절")]
+    [SerializeField] private UIMoveHandler moveHandler;
+
+    [Header("이동 위치")]
+    [SerializeField] private Transform openedPos;
+    [SerializeField] private Transform closedPos;
+
     [Header("연출 시간")]
     [SerializeField][Range(0f, 2f)] private float openDuration = 0.3f;
     [SerializeField][Range(0f, 2f)] private float closeDuration = 0.2f;
@@ -19,32 +27,36 @@ public class PopupUI : MonoBehaviour
     [SerializeField][Range(1.01f, 1.075f)] private float overSize = 1.05f;
 
     [Header("연출 효과 그래프")]
-    [SerializeField] private AnimationCurve openAnimCurve;
-    [SerializeField] private AnimationCurve closeAnimCurve;
+    [SerializeField] private AnimationCurve openCurve;
+    [SerializeField] private AnimationCurve closeCurve;
 
     [Header("현재 상태")]
     [ContextMenuItem("열기 테스트", "DebugOpen")]
     [ContextMenuItem("닫기 테스트", "DebugClose")]
-    [SerializeField] protected bool isOpened = false;
+    [SerializeField] protected bool curState = false;
+
+    public Transform OpenedPos => openedPos;
+    #endregion
 
     // 팝업 UI 관리 함수
     public void PopupUIHandler(bool isOpen)
     {
         // 현재 UI 상태와 같다면
-        if (isOpened == isOpen)
+        if (curState == isOpen)
             // 종료
             return;
 
         // UI 상태 저장
-        isOpened = isOpen;
-        // 크기 조절이 비어있지 않다면, 현재 UI 상태에 따라서 초기화
-        scaleHandler?.Init(isOpen ? openDuration : closeDuration, overSize, isOpen ? openAnimCurve : closeAnimCurve);
-        // 불투명도 조절이 비어있지 않다면, 현재 UI 상태에 따라서 초기화
-        fadeHandler?.Init(canvasGroup, isOpen ? openDuration : closeDuration, isOpen ? openAnimCurve : closeAnimCurve);
-        // 크기 조절이 비어있지 않다면, 현재 UI 상태에 따라서 실행
+        curState = isOpen;
+        // 크기, 불투명도, 이동 조절이 비어있지 않다면 현재 UI 상태에 따라서 초기화
+        scaleHandler?.Init(isOpen ? openCurve : closeCurve, isOpen ? openDuration : closeDuration, overSize);
+        fadeHandler?.Init(isOpen ? openCurve : closeCurve, isOpen ? openDuration : closeDuration, canvasGroup);
+        moveHandler?.Init(isOpen ? openCurve : closeCurve, isOpen ? openDuration : closeDuration,
+                                                                            isOpen ? openedPos : closedPos);
+        // 크기, 불투명도, 이동 조절이 비어있지 않다면 현재 UI 상태에 따라서 실행
         scaleHandler?.SetUIState(isOpen);
-        // 불투명도 조절이 비어있지 않다면, 현재 UI 상태에 따라서 실행
         fadeHandler?.SetUIState(isOpen);
+        moveHandler?.SetUIState();
     }
 
     // 인스펙터 우클릭 전용 UI 열기 함수
@@ -56,7 +68,7 @@ public class PopupUI : MonoBehaviour
             return;
 
         // UI가 열릴 수 있게 현재 UI 상태를 변경
-        isOpened = false;
+        curState = false;
         // UI 열기
         PopupUIHandler(true);
     }
@@ -70,7 +82,7 @@ public class PopupUI : MonoBehaviour
             return;
 
         // UI가 닫힐 수 있게 현재 UI 상태를 변경
-        isOpened = true;
+        curState = true;
         // UI 닫기
         PopupUIHandler(false);
     }
