@@ -28,6 +28,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
 
     [Header("지하철 사이클 이벤트")]
     [SerializeField] private UnityEvent<int[]> OnPassengerReset;    //지하철 탑승객 인원 리셋 이벤트
+    [SerializeField] private UnityEvent OnStart;                    //지하철 이전역 출발
     [SerializeField] private UnityEvent OnArrive;                   //지하철 역 도착시 이벤트 발행
     [SerializeField] private UnityEvent OnCloseDoor;                    //지하철 역 떠날시 이벤트 발행
 
@@ -177,6 +178,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
             hash.Add("IsDoorOpen", false);  //스케줄러가 문 닫으라고 하면 닫힘 기록
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
+        if (status == SubwayStatus.Start) OnStart?.Invoke();
     }
 
     private IEnumerator ClosingDoor()
