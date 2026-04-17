@@ -538,6 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52af9b60799e05740a0a8ceea71fb46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
+  subwayScheduler: {fileID: 0}
   OnEnterStandbyStart:
     m_PersistentCalls:
       m_Calls:
@@ -946,12 +947,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d47a2610f751c94d82f935bca4580e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Door
-  OnColiderEnter:
+  OnTrigger:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 973169680}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: ChangeSubwayScene
+        m_MethodName: ChangeScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -990,6 +991,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1645104584590397817, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
+      propertyPath: m_MoveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645104584590397817, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
+      propertyPath: m_EnableStrafe
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645104584590397817, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
+      propertyPath: m_RightHandMoveAction.m_Reference
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3124541665171909669, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -1040,6 +1053,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531073540562703153, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
       propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7592129387244742351, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
+      propertyPath: m_LeftHandTurnAction.m_Reference
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []

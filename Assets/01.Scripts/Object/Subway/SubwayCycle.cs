@@ -35,6 +35,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     private float currentSpeed = 0f;                //현재속도
     private int[] passenserCount;                   //탑승객 분포 리스트
     private bool isCorouting = false;
+    private bool isArrive = false;
 
     private SubwayStatus status = SubwayStatus.StandBy;
 
@@ -52,7 +53,8 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
             passenserCount = passengerLevel.ResetCount();
             Hashtable hash = new Hashtable();
             hash.Add("PassengerCount", passenserCount);
-            hash.Add("IsBoarding", true); // 탑승 중(전광판 켜짐) 상태 등록
+            hash.Add("IsBoarding", true);   // 탑승 중(전광판 켜짐) 상태 등록
+            hash.Add("IsDoorOpen", false);  //문 닫힘 상태 초기화
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
         // 💡 2. 늦게 들어온 일반 참가자: 방에 들어오자마자 서버 기록을 읽고 맞춥니다.
@@ -75,6 +77,13 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                 }
             }
         }
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("IsDoorOpen"))
+        {
+            if ((bool)PhotonNetwork.CurrentRoom.CustomProperties["IsDoorOpen"])
+            {
+                OnArrive?.Invoke(); //늦게 접속해도 문이 열려있어야 하면 즉시 연다.
+            }
+        }
     }
 
     private void Update()
@@ -94,15 +103,9 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                     Hashtable hash = new Hashtable();
                     hash.Add("PassengerCount", passenserCount);
                     hash.Add("IsBoarding", true);
+                    hash.Add("IsDoorOpen", false);  //사이클 돌 때마다 문 닫힘 상태 초기화
                     PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
                     currentSpeed = 0f;
-
-                    //OnPassengerReset?.Invoke(passenserCount);
-                    //Debug.Log($"탑승객\n1호:{passenserCount[0]}    2호:{passenserCount[1]}    3호:{passenserCount[2]}");
-                    //currentSpeed = 0f;
-                    //
-                    ////다른 컴퓨터에도 똑같은 숫자로 인원수 변경
-                    //photonView.RPC("SyncPassengerCountRPC", RpcTarget.Others, passenserCount);
                 }
                 //Debug.Log("StandBy");
                 break;
@@ -116,10 +119,19 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                     currentSpeed = 0f;
                     status = SubwayStatus.Arrive;
                     EventBus<SubwayArrive>.Publish(default);
+
+                    //방장이 도착하면 화이트보드에 문 열림 기록 패킷 발송
+                    Hashtable hash = new Hashtable();
+                    hash.Add("IsDoorOpen", true);
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
                 }
                 break;
             case SubwayStatus.Arrive:
-                OnArrive?.Invoke();
+                if (!isArrive)
+                {
+                    OnArrive?.Invoke();
+                    isArrive = true;
+                }
                 //Debug.Log("Arrive");
                 break;
             case SubwayStatus.CloseDoor:
@@ -137,6 +149,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                 //이동 끝나면 처음으로
                 else 
                 {
+                    isArrive = false;
                     currentSpeed = 0f;
                     status = SubwayStatus.StandBy;
                 }
@@ -156,14 +169,12 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     public void SetSubwayStatus(SubwayStatus status)
     {
         this.status = status;
-        
-        // 🚨 기존 코드 삭제: if (status == SubwayStatus.CloseDoor) OnCloseDoor?.Invoke();
-        
         // 💡 3. 방장이 상태를 CloseDoor로 바꿀 때 혼자 이벤트를 실행하지 않고, 서버에 '문 닫힘(False)'을 기록합니다.
         if (PhotonNetwork.IsMasterClient && status == SubwayStatus.CloseDoor)
         {
             Hashtable hash = new Hashtable();
             hash.Add("IsBoarding", false);
+            hash.Add("IsDoorOpen", false);  //스케줄러가 문 닫으라고 하면 닫힘 기록
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
     }
@@ -202,13 +213,13 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                 }
             }
         }
+        if (propertiesThatChanged.ContainsKey("IsDoorOpen"))
+        {
+            bool isDoorOpen = (bool)propertiesThatChanged["IsDoorOpen"];
+            if (isDoorOpen)
+            {
+                OnArrive?.Invoke();
+            }
+        }
     }
-
-    //[PunRPC]
-    //public void SyncPassengerCountRPC(int[] syncedCounts)
-    //{
-    //    Debug.Log("방장으로부터 혼잡도 데이터 받음");
-    //    //내 컴퓨터 혼잡도 표시
-    //    OnPassengerReset?.Invoke(syncedCounts);
-    //}
 }

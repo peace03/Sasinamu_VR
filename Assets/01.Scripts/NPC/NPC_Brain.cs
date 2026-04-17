@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -35,6 +36,8 @@ public class NPC_Brain : MonoBehaviour
 
     public void ReleaseSelf()
     {
-        _poolManager.Release(this);
+        //로컬 풀로 직접 반납하지 않고, 네트워크 파괴 패킷을 날린다.
+        //그러면 전원의 컴퓨터에서 IPunPrefabpool의 Destroy가 실행되며 각자의 풀로 반납된다.
+        PhotonNetwork.Destroy(this.gameObject);
     }
 }

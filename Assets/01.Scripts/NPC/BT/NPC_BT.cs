@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class NPC_BT : MonoBehaviour
+public class NPC_BT : MonoBehaviourPun
 {
     private List<Transform> gatePos; //지하철 게이트 줄서는 위치
     [Header("NPC")]
@@ -56,10 +57,20 @@ public class NPC_BT : MonoBehaviour
     public void OnSpawn(Transform parent, Vector3 spawnPos)
     {
         transform.SetParent(parent);
-        agent.Warp(spawnPos);
+
+        //방장만 NavMesh 켬. 참가자는 껍데기만 움직여야함
+        if (PhotonNetwork.IsMasterClient)
+        {
+            agent.enabled = true;
+            agent.Warp(spawnPos);
+        }
+        else
+        {
+            agent.enabled = false;
+            transform.position = spawnPos;
+        }
         
         //초기화
-        agent.enabled = true;
         isLineUpTime = false;
         isBoarded = false;
         lineUpTarget = defaultVector;
@@ -95,6 +106,20 @@ public class NPC_BT : MonoBehaviour
 
     private void Update()
     {
+        //방장이 아니면 BT 정지
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        //방장 위임 처리: 참가자 시절 agent가 꺼져있던 경우 다시 켜줌
+        //단, 이미 지하철에 탑승해서 고의로 끈 상태가 아닐때만 작동
+        if (!agent.enabled && !isBoarded && transform.parent != subway)
+        {
+            agent.enabled = true;
+            //현재 위치 내비메시 동기화
+            agent.Warp(transform.position);
+        }
+        //안전성: 에이전트가 켜져있어도 네비메시 위에 없으면 연산 정지
+        if (agent.enabled && !agent.isOnNavMesh) return;
+
         CurrentTime += Time.deltaTime;
         root.Evaluate();
     }
@@ -102,6 +127,9 @@ public class NPC_BT : MonoBehaviour
     //줄 서기
     private BT_NodeStatus MoveLineUp()
     {
+        //에이전트가 비정상 상태면 길찾기 실패 반환
+        if (!agent.enabled || !agent.isOnNavMesh) return BT_NodeStatus.Failure;
+
         //Debug.Log("줄서기 BT 호출 완료");
         if (isLineUpTime == true)
         {
@@ -138,7 +166,7 @@ public class NPC_BT : MonoBehaviour
                 //지하철 줄 초기화
                 lineUpManager.ResetAllLine();
                 //지하철을 부모 오브젝트로 수정
-                transform.SetParent(subway, true);
+                photonView.RPC("SyncSetParentRPC", RpcTarget.All);
                 //자리 선택
                 onSeatTarget = 
                     transform.localPosition + new Vector3(Random.Range(-3f, 3f), 0f, 0f);
@@ -165,6 +193,9 @@ public class NPC_BT : MonoBehaviour
     {
         //Idle 상태면 넘어가기
         if (isIdle == true) return BT_NodeStatus.Failure;
+        //agent가 비정상 상태면 길찾기 실패 반환
+        if (!agent.enabled || !agent.isOnNavMesh) return BT_NodeStatus.Failure;
+
         //랜덤 타겟 설정
         if (walkTarget == defaultVector)
         {
@@ -218,4 +249,12 @@ public class NPC_BT : MonoBehaviour
     public void SetIsLineUPTime(bool isTime) => isLineUpTime = isTime;
     public void SetIsBoardedTrue(SubwayArrive _) => isOpenDoor = true;
 
+    //방장이 RPC를 쏘면 모든 클라이언트의 메모리에서 이 함수가 동시에 실행됨
+    [PunRPC]
+    public void SyncSetParentRPC()
+    {
+        //참가자들의 NPC도 지하철의 자식 오브젝트로 들어감
+        transform.SetParent(subway, true);
+        Debug.Log("네트워크 NPC 부모 변경 완료!");
+    }
 }
