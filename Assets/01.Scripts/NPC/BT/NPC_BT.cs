@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using Photon.Pun;
+using UnityEngine.Events;
 
 public class NPC_BT : MonoBehaviourPun
 {
@@ -31,6 +32,10 @@ public class NPC_BT : MonoBehaviourPun
     private float IdleEndTime = 0f; //Idle상태 유지 시간
     private float IdleStartTime = 0f;   //Idle 시작 시간
     private bool isIdle = true;     //Idle 상태인가?
+
+    [Header("Effect")]
+    [SerializeField] private UnityEvent OnWalk;
+    [SerializeField] private UnityEvent OnIdle;
 
     private void OnEnable()
     {
@@ -201,6 +206,7 @@ public class NPC_BT : MonoBehaviourPun
         {
             walkTarget = new Vector3(Random.Range(-9, 9), 0, Random.Range(-9, 9));
             agent.SetDestination(walkTarget); //NavMesh 사용
+            OnWalk?.Invoke();   //걷기 애니메이션 재생
             //Debug.Log("걷기 시작");
         }
         //도착하면 성공
@@ -220,6 +226,7 @@ public class NPC_BT : MonoBehaviourPun
             IdleStartTime = CurrentTime;
             IdleEndTime = Random.Range(3f, 5f) + IdleStartTime;
             isIdle = true;
+            OnIdle?.Invoke();   //대기 애니메이션 시작
             //Debug.Log("대기 시작");
         }
         if (IdleEndTime <= CurrentTime) //Idle 시간 끝
@@ -242,6 +249,7 @@ public class NPC_BT : MonoBehaviourPun
         //걷는 애니메이션 변환
         Vector3 direction = (target - (isLocal ? transform.localPosition : transform.position)).normalized;
         direction.y = 0;
+        if (transform.forward != direction) OnWalk?.Invoke();   //걷기 애니메이션 재생
         transform.forward = direction;
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }

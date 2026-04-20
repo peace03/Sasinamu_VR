@@ -141,9 +141,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4378c2c16d16f34438a18fb8416c042b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPC_BT
-  speed: 4
+  speed: 3.5
   boardPos: 4
   seatPosRange: 3
+  OnWalk:
+    m_PersistentCalls:
+      m_Calls: []
+  OnIdle:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8599950342026401662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +228,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 6216577808226245339}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
