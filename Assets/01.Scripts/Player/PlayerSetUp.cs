@@ -22,8 +22,12 @@ public class PlayerSetup : MonoBehaviourPun
     [SerializeField] private XRBaseController[] xrControllers; // Left, Right Hand
     [SerializeField] private XRRayInteractor[] rayInteractors;
 
+    [Header("에디터 테스트용 시뮬레이터")]
+    [SerializeField] private GameObject xrDeviceSimulator;
+
     private void Start()
     {
+        Debug.Log($"아바타 스폰됨. ViewID: {photonView.ViewID}, IsMine: {photonView.IsMine}");
         // 이 캐릭터가 '내 컴퓨터'에서 스폰된 내 아바타가 아니라면 (즉, 클론이라면)
         if (!photonView.IsMine)
         {
@@ -49,6 +53,14 @@ public class PlayerSetup : MonoBehaviourPun
             {
                 if (interactor != null) interactor.enabled = false;
             }
+
+            // 남의 아바타라면 시뮬레이터도 꺼버립니다.
+            if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(false);
+        }
+        else
+        {
+            // 내 아바타라면 시뮬레이터가 켜진 상태를 유지하여 키보드 입력을 받습니다.
+            if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(true);
         }
     }
 }

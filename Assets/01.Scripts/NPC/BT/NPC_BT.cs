@@ -174,7 +174,7 @@ public class NPC_BT : MonoBehaviourPun
                 photonView.RPC("SyncSetParentRPC", RpcTarget.All);
                 //자리 선택
                 onSeatTarget = 
-                    transform.localPosition + new Vector3(Random.Range(-3f, 3f), 0f, 0f);
+                    transform.localPosition + new Vector3(Random.Range(-seatPosRange, seatPosRange), 0f, 0f);
                 isBoarded = true;
             }
             return BT_NodeStatus.Success;
