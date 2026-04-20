@@ -3,13 +3,13 @@ using UnityEngine;
 public class SmoothFollow : MonoBehaviour
 {
     [Header("카메라로부터의 거리")]
-    [SerializeField][Range(0.4f, 1f)] private float distance = 0.8f;
+    [SerializeField][Range(0.31f, 1f)] private float distance = 0.8f;
 
     [Header("UI가 카메라를 따라오는 이동 시간(작을수록 빠름)")]
     [SerializeField][Range(0f, 2f)] private float movingDuration = 0.5f;
 
     [Header("UI가 카메라를 따라오는 회전 속도(작을수록 느림)")]
-    [SerializeField][Range(0f, 20f)] private float rotationSpeed = 5f;
+    [SerializeField][Range(0f, 100f)] private float rotationSpeed = 5f;
 
     private Transform target;                               // 타겟(메인 카메라)
 

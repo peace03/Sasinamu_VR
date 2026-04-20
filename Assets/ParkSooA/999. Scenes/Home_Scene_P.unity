@@ -2453,14 +2453,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Home_Screen Fader Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7609846013138731392, guid: 11c33f728139258428084825c0d12715, type: 3}
-      propertyPath: distance
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7609846013138731392, guid: 11c33f728139258428084825c0d12715, type: 3}
-      propertyPath: rotationSpeed
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
