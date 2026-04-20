@@ -1,17 +1,34 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR    // 유니티 에디터에서만
+using UnityEditor;
+#endif
 
 public class SceneChanger : MonoBehaviour
 {
     [Header("플레이어 레이어")]
     [SerializeField] private LayerMask playerLayer;
 
-    [Header("이동할 씬 종류")]
-    [SerializeField] private SceneType sceneType;
+    [Header("이동할 씬")]
+#if UNITY_EDITOR
+    [SerializeField] private SceneAsset sceneAsset;
+#endif
 
     [Header("화면 전환")]
     [SerializeField] private ScreenFader screenFader;
+
+    private string sceneName;       // 이동할 씬 이름
+
+    private void OnValidate()
+    {
+#if UNITY_EDITOR
+        // 이동할 씬이 비어있지 않다면
+        if (sceneAsset != null)
+            // 이동할 씬 이름 저장
+            sceneName = sceneAsset.name;
+#endif
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -61,13 +78,12 @@ public class SceneChanger : MonoBehaviour
             // 화면 전환 기다리기
             yield return new WaitForSeconds(screenFader.Duration);
 
-        // 이동할 씬 종류에 해당하는 씬 이름이 있다면
-        if (SceneRegistry.GetSceneName(sceneType, out string sceneName))
+        // 이동할 씬 이름이 있다면
+        if (!string.IsNullOrEmpty(sceneName))
             // 씬 이동
             SceneManager.LoadScene(sceneName);
         // 없다면
         else
-            // 알려주기
-            Debug.Log($"[Error] {sceneType}에 맞는 씬이 등록되어 있지 않습니다.");
+            Debug.Log($"[Error] {gameObject.name}에 이동할 씬이 지정되지 않았습니다.");
     }
 }

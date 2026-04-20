@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SmoothFollow : MonoBehaviour
 {
+    [Header("카메라로부터의 거리")]
+    [SerializeField][Range(0.4f, 1f)] private float distance = 0.8f;
+
     [Header("UI가 카메라를 따라오는 이동 시간(작을수록 빠름)")]
     [SerializeField][Range(0f, 2f)] private float movingDuration = 0.5f;
 
@@ -12,13 +15,10 @@ public class SmoothFollow : MonoBehaviour
 
     private Vector3 moveVelocity = Vector3.zero;            // 움직였던 속도
 
-    private float distance = 0.4f;                          // 카메라와의 거리(Z)
-
     private void Awake()
     {
         // 초기화
         target = Camera.main.transform;
-        distance = transform.position.z;
     }
 
     private void LateUpdate()
