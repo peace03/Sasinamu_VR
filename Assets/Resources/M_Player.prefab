@@ -1928,6 +1928,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2747212638129127213}
     m_Modifications:
+    - target: {fileID: 54924420873041672, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8db066cf6bb5d154fa8d80aa3bd4474d, type: 3}
+    - target: {fileID: 1480406573891614224, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2922
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480406573891614224, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3056531436328776883, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
       propertyPath: m_Name
       value: Platform_Intro Canvas
@@ -1939,7 +1951,7 @@ PrefabInstance:
     - target: {fileID: 3979421073394403488, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
       propertyPath: screenFader
       value: 
-      objectReference: {fileID: 973932098498856107}
+      objectReference: {fileID: 0}
     - target: {fileID: 6239382015447472548, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2018,6 +2030,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6239382015447472548, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104691316613182373, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2122,22 +2138,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform_Screen Fader Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9008335552827487461, guid: 1548c01b77bbebc4294d2e1672e8e34f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1548c01b77bbebc4294d2e1672e8e34f, type: 3}
---- !u!114 &973932098498856107 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5558338480059651820, guid: 1548c01b77bbebc4294d2e1672e8e34f, type: 3}
-  m_PrefabInstance: {fileID: 4658751097563189831}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dab490e0c2d7fa4eb171a33ac39de29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BlackOutUI
 --- !u!224 &6369226605969539152 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1784336580727476759, guid: 1548c01b77bbebc4294d2e1672e8e34f, type: 3}
