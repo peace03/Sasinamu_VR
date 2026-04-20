@@ -1301,7 +1301,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e5b802d8b07fe434c9d0463bc7eb62cd, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1491,7 +1491,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: fb1e94ea6e126294bae327fa230b35e9, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1766,9 +1766,7 @@ MonoBehaviour:
   EndPoint: {fileID: 1298491424}
   maxSpeed: 3
   acceleration: 0.5
-  subwayEntryBrodcastSound: {fileID: 0}
-  subwayArriveSound: {fileID: 0}
-  subwayLeaveSound: {fileID: 0}
+  subwayEntryBrodcastSound: {fileID: 1721565842}
   OnPassengerReset:
     m_PersistentCalls:
       m_Calls:
@@ -3030,7 +3028,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721565840}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
   m_Name: 

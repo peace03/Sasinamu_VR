@@ -285,7 +285,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8032107727409396443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SmoothFollow
   distance: 0.8
   movingDuration: 0
-  rotationSpeed: 0
+  rotationSpeed: 20
 --- !u!1 &9152071930548759013
 GameObject:
   m_ObjectHideFlags: 0

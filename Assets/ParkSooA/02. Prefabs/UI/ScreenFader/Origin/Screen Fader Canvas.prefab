@@ -271,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SmoothFollow
   distance: 0.8
   movingDuration: 0.5
-  rotationSpeed: 5
+  rotationSpeed: 20
 --- !u!1 &6012511890872306541
 GameObject:
   m_ObjectHideFlags: 0

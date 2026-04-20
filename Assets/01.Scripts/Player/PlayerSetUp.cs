@@ -27,6 +27,7 @@ public class PlayerSetup : MonoBehaviourPun
         // 이 캐릭터가 '내 컴퓨터'에서 스폰된 내 아바타가 아니라면 (즉, 클론이라면)
         if (!photonView.IsMine)
         {
+            Debug.Log("문제있는가?");
             // 1. 눈과 귀를 제거합니다 (시점/오디오 탈취 방지)
             if (mainCamera != null) mainCamera.enabled = false;
             if (audioListener != null) audioListener.enabled = false;
