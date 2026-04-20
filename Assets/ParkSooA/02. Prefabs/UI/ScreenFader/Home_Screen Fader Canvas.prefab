@@ -252,7 +252,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7841088800459066493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,8 +339,8 @@ MonoBehaviour:
   fadeHandler: {fileID: 1532886491542847581}
   openGroup: {fileID: 4140758547948495714}
   closeGroup: {fileID: 0}
-  openDuration: 30
-  closeDuration: 30
+  openDuration: 5
+  closeDuration: 5
   openCurve:
     serializedVersion: 2
     m_Curve:
