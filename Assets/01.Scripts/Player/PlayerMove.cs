@@ -6,20 +6,27 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private ActionBasedContinuousMoveProvider ObjMove;
     [SerializeField] private ActionBasedContinuousTurnProvider ObjTurn;
 
-    public void StopObjMove()
+    private void OnEnable()
+    {
+        EventBus<OnEnterStandbyStart>.OnEvent += StopObj;
+        EventBus<OnEnterStandbyEnd>.OnEvent += FreeObj;
+    }
+    private void OnDisable()
+    {
+        EventBus<OnEnterStandbyStart>.OnEvent -= StopObj;
+        EventBus<OnEnterStandbyEnd>.OnEvent -= FreeObj;
+    }
+
+    public void StopObj(OnEnterStandbyStart _)
     {
         ObjMove.enabled = false;
-    }
-    public void StopObjTurn()
-    {
         ObjTurn.enabled = false;
+        Debug.Log("StopObj 실행");
     }
-    public void FreeObjMove()
+    public void FreeObj(OnEnterStandbyEnd _)
     {
         ObjMove.enabled = true;
-    }
-    public void FreeObjTurn()
-    {
         ObjTurn.enabled = true;
+        Debug.Log("FreeObj 실행");
     }
 }

@@ -143,7 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPC_BT
   speed: 3.5
   boardPos: 4
-  seatPosRange: 3
+  seatPosRange: 2
   OnWalk:
     m_PersistentCalls:
       m_Calls: []
@@ -172,7 +172,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6614328587606774209}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.65
+  m_Radius: 0.6
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

@@ -26,8 +26,8 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     [Tooltip("1초당 증가할 가속도")]
     [SerializeField] private float acceleration;    //1초당 증가할 가속도
     
-    [Header("지하철 사운드 설정")]
-    [SerializeField] private PlaySFX subwayEntryBrodcastSound;  //지하철 진입 방송 안내음
+    //[Header("지하철 사운드 설정")]
+    //[SerializeField] private PlaySFX subwayEntryBrodcastSound;  //지하철 진입 방송 안내음
 
     [Header("지하철 사이클 이벤트")]
     [SerializeField] private UnityEvent<int[]> OnPassengerReset;    //지하철 탑승객 인원 리셋 이벤트
@@ -77,6 +77,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                 // 문이 닫혀있으면 전광판 끄기
                 else if (!isBoarding)
                 {
+                    Debug.Log("OnCloseDoor Invoke");
                     OnCloseDoor?.Invoke();
                 }
             }
@@ -212,6 +213,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
                 }
                 else
                 {
+                    Debug.Log("OnCloseDoor Invoke");
                     // IsBoarding이 False로 바뀌면 (지하철 문 닫힐 시) -> 모든 컴퓨터에서 전광판을 StandBy 모드로 변경!
                     OnCloseDoor?.Invoke();
                 }
@@ -235,7 +237,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncEntryBrodcastSound()
     {
-        subwayEntryBrodcastSound.Call();
+        //subwayEntryBrodcastSound.Call();
     }
 
     //지하철 도착 소리

@@ -7,10 +7,18 @@ public class NPC_PoolManager : MonoBehaviourPunCallbacks, IPunPrefabPool
 {
     public static NPC_PoolManager Instance;
 
-    [SerializeField] private SubwayScheduler subwayScheduler;
-    [SerializeField] private Transform subway;
+    [Header("NPC 프리펩")]
     [SerializeField] private NPC_Brain npcPrefab;
-    [SerializeField] List<Transform> gatePos;
+
+    [Header("NPC 탑승할 부모")]
+    [SerializeField] private Transform subway;                  //NPC 부모 변경용
+
+    [Header("이동 범위")]
+    [SerializeField] private BoxCollider groundPos;             //이동 가능 위치
+
+    [Header("줄서기")]
+    [SerializeField] private SubwayScheduler subwayScheduler;   //줄서기 알람용
+    [SerializeField] List<Transform> gatePos;                   //줄서기 위치용
 
     private IObjectPool<NPC_Brain> _pool;
 
@@ -80,7 +88,7 @@ public class NPC_PoolManager : MonoBehaviourPunCallbacks, IPunPrefabPool
     {
         NPC_Brain npc = Instantiate(npcPrefab, transform);
         npc.SetPoolManager(_pool);
-        npc.GetComponent<NPC_BT>().OnCreate(gatePos, subway);
+        npc.GetComponent<NPC_BT>().OnCreate(subway, groundPos, gatePos);
         return npc;
     }
 
@@ -92,7 +100,10 @@ public class NPC_PoolManager : MonoBehaviourPunCallbacks, IPunPrefabPool
     {
         //스폰 권한도 방장만 가짐
         if (!PhotonNetwork.IsMasterClient) return;
-        Vector3 spawnPos = new Vector3(Random.Range(-8f, 8f), 0, Random.Range(-8f, 8f));
+        Bounds bounds = groundPos.bounds;
+        float x = Random.Range(bounds.min.x, bounds.max.x);
+        float z = Random.Range(bounds.min.z, bounds.max.z);
+        Vector3 spawnPos = new Vector3(x, 0, z);
         //유니티 Instantiate 대신 방에 소속된 네트워크 오브젝트 생성 명령
         PhotonNetwork.InstantiateRoomObject(npcPrefab.name, spawnPos, Quaternion.identity);
     }

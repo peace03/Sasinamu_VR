@@ -21,15 +21,15 @@ public class TimeManager : MonoBehaviour
     //private float subwayCycleTime = 120f;
 
     [Header("게임 시작시 플레이어 대기 시간")]
-    [SerializeField] private UnityEvent OnEnterStandbyStart;   //Object 못 움직일 때
-    [SerializeField] private UnityEvent OnEnterStandbyEnd;     //다시 움직일 때
     [SerializeField] private float onlyMovePauseTime;       //움직임 정지 시간
 
-
-    private void Start()
+    private void OnEnable()
     {
-        //subwayCycleTime = subwayScheduler.SubwayCycleTime;
-        StartCoroutine(StandBy());
+        EventBus<OnSelfInstantiate>.OnEvent += StartStandBy;
+    }
+    private void OnDisable()
+    {
+        EventBus<OnSelfInstantiate>.OnEvent -= StartStandBy;
     }
 
     private void Update()
@@ -48,11 +48,17 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    private void StartStandBy(OnSelfInstantiate _)
+    {
+        StartCoroutine(StandBy());
+    }
     private IEnumerator StandBy()   //처음 시작하고 대기할 때(고개만 움직일 수 있음)
     {
-        OnEnterStandbyStart?.Invoke();
+        Debug.Log("플레이어 대기");
+        EventBus<OnEnterStandbyStart>.Publish(default);
         yield return new WaitForSeconds(onlyMovePauseTime);
-        OnEnterStandbyEnd?.Invoke();
+        EventBus<OnEnterStandbyEnd>.Publish(default);
+        Debug.Log("플레이어 대기 종료");
     }
 
     //NPC 알람 등록 메서드

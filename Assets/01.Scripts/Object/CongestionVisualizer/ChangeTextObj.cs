@@ -26,6 +26,7 @@ public class ChangeTextObj : MonoBehaviour
         clearObj = transform.GetChild(2).gameObject;
         standByObj = transform.GetChild(3).gameObject;
         QuadObj = transform.GetChild(4).GetComponent<ChangeMaterialObj>();
+        QuadObj.Init(congestion, normal, clear);
 
         //프리펩 비활성화
         SetActiveFalse();
@@ -51,9 +52,9 @@ public class ChangeTextObj : MonoBehaviour
         //혼잡도별 타일 색상 변경
         QuadObj.SetMaterialColor(passengerCount);
         //혼잡도별 텍스트 오브젝트 활성화
-        if (passengerCount >= 10) congestionObj.SetActive(true);
-        else if (passengerCount >= 5) normalObj.SetActive(true);
-        else clearObj.SetActive(true);
+        if (passengerCount >= congestion) congestionObj.SetActive(true);
+        else if (passengerCount >= normal) normalObj.SetActive(true);
+        else if (passengerCount >= clear) clearObj.SetActive(true);
     }
 
     //프리펩 비활성화

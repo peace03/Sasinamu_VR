@@ -13,7 +13,7 @@ public class CongestionVisualizerManager : MonoBehaviour
     [Tooltip("여유")]
     [SerializeField] private int clear;
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < congestionVisualizers.Count; i++)
         {
