@@ -36,6 +36,8 @@ public class PopupUI : MonoBehaviour
     [SerializeField] protected bool curState = false;
 
     public Transform OpenedPos => openedPos;
+
+    public float CloseDuration => closeDuration;
     #endregion
 
     // 팝업 UI 관리 함수

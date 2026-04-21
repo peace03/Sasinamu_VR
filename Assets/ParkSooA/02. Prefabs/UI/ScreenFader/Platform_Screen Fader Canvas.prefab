@@ -134,8 +134,8 @@ MonoBehaviour:
   fadeHandler: {fileID: 2563540084259272437}
   openGroup: {fileID: 0}
   closeGroup: {fileID: 987399515556181388}
-  openDuration: 30
-  closeDuration: 30
+  openDuration: 5
+  closeDuration: 5
   openCurve:
     serializedVersion: 2
     m_Curve:
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8032107727409396443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,9 +315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050a857892cfe494cada677211895ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmoothFollow
-  distance: 0.8
+  distance: 0.26
   movingDuration: 0
-  rotationSpeed: 0
+  rotationSpeed: 100
 --- !u!1 &9152071930548759013
 GameObject:
   m_ObjectHideFlags: 0

@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050a857892cfe494cada677211895ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmoothFollow
-  distance: 0.31
+  distance: 0.26
   movingDuration: 0
   rotationSpeed: 100
 --- !u!1 &4440437965659808487

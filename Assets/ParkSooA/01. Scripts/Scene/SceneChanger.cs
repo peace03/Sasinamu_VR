@@ -18,7 +18,9 @@ public class SceneChanger : MonoBehaviour
     [Header("화면 전환")]
     [SerializeField] private ScreenFader screenFader;
 
-    private string sceneName;       // 이동할 씬 이름
+    private Coroutine sceneChangeCoroutine;     // 씬 전환 코루틴
+
+    private string sceneName;                   // 이동할 씬 이름
 
     private void OnValidate()
     {
@@ -36,6 +38,11 @@ public class SceneChanger : MonoBehaviour
         if ((1 << other.gameObject.layer & playerLayer.value) == 0)
             // 종료
             return;
+
+        // 씬 전환 중이라면
+        if (sceneChangeCoroutine != null)
+            // 종료
+            return;
         
         // 화면 전환이 비어있지 않다면
         if (screenFader != null)
@@ -47,7 +54,7 @@ public class SceneChanger : MonoBehaviour
         }
 
         // 씬 전환 시작
-        StartCoroutine(SceneChangeCoroutine());
+        sceneChangeCoroutine = StartCoroutine(SceneChangeRoutine());
     }
 
     private void OnTriggerExit(Collider other)
@@ -66,17 +73,26 @@ public class SceneChanger : MonoBehaviour
             screenFader.gameObject.SetActive(false);
         }
 
-        // 씬 전환 중지
-        StopCoroutine(SceneChangeCoroutine());
+        // 씬 전환 중이라면
+        if (sceneChangeCoroutine != null)
+        {
+            // 씬 전환 중지
+            StopCoroutine(sceneChangeCoroutine);
+            // 씬 전환 코루틴 초기화
+            sceneChangeCoroutine = null;
+        }
     }
 
     // 씬 전환 코루틴
-    private IEnumerator SceneChangeCoroutine()
+    private IEnumerator SceneChangeRoutine()
     {
         // 화면 전환이 비어있지 않다면
         if (screenFader != null)
             // 화면 전환 기다리기
             yield return new WaitForSeconds(screenFader.Duration);
+
+        // 씬 전환 코루틴 초기화
+        sceneChangeCoroutine = null;
 
         // 이동할 씬 이름이 있다면
         if (!string.IsNullOrEmpty(sceneName))
