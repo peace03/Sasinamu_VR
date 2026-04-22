@@ -2332,6 +2332,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3843164665356277180, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3973018874905260550, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_Name
       value: Home_Intro Canvas
@@ -2400,8 +2404,17 @@ PrefabInstance:
       propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4167788985865854855, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eab7ca1927731774dadec1f0af5f3b3b, type: 3}
+    - target: {fileID: 7900117125300029125, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7900117125300029125, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}

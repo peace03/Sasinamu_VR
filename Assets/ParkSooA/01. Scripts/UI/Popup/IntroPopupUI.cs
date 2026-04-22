@@ -63,11 +63,11 @@ public class IntroPopupUI : PopupUI
 
         // 시작 후 기다리기
         yield return new WaitForSeconds(startDelayDuration);
-        // 팝업 UI 띄워주기
+        // 인트로 UI 열기
         PopupUIHandler(true);
         // UI 보여주기
         yield return new WaitForSeconds(displayDuration);
-        // 팝업 UI 닫기
+        // 인트로 UI 닫기
         PopupUIHandler(false);
         // UI 닫히는 거 기다리기
         yield return new WaitForSeconds(CloseDuration);
