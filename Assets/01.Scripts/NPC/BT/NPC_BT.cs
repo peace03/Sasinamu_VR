@@ -14,6 +14,8 @@ public class NPC_BT : MonoBehaviourPun
     [SerializeField] private float boardPos = 4f;   //지하철 올라탈 거리
     [SerializeField] private float seatPosRange = 3f;//지하철 자리 배치 범위
 
+    private Animator anim;              //애니메이션
+    private CharacterController cc;     //속도로 애니메이션 재생
     private BoxCollider groundPos;      //이동 가능 범위
     private List<Transform> gatePos;    //지하철 게이트 줄서는 위치
     private Transform subway;           //NPC 부모 변경용
@@ -31,14 +33,11 @@ public class NPC_BT : MonoBehaviourPun
     private bool isBoarded = false;     //탑승 했는가?
     private bool isOpenDoor = false;
 
+    private float velocity = 0f;
     private float CurrentTime = 0f;
     private float IdleEndTime = 0f; //Idle상태 유지 시간
     private float IdleStartTime = 0f;   //Idle 시작 시간
     private bool isIdle = true;     //Idle 상태인가?
-
-    [Header("Effect")]
-    [SerializeField] private UnityEvent OnWalk;
-    [SerializeField] private UnityEvent OnIdle;
 
     private void OnEnable()
     {
@@ -58,6 +57,8 @@ public class NPC_BT : MonoBehaviourPun
         this.subway = subway;
         this.groundPos = groundPos;
 
+        anim = GetComponent<Animator>();
+        cc = GetComponent<CharacterController>();
         agent = GetComponent<NavMeshAgent>();
         lineUpManager = FindAnyObjectByType<LineUpManager>();
         lineUpTarget = defaultVector;
@@ -78,8 +79,9 @@ public class NPC_BT : MonoBehaviourPun
             agent.enabled = false;
             transform.position = spawnPos;
         }
-        
+
         //초기화
+        cc.enabled = true;
         isLineUpTime = false;
         isBoarded = false;
         lineUpTarget = defaultVector;
@@ -87,6 +89,9 @@ public class NPC_BT : MonoBehaviourPun
         CurrentTime = 0f;
         IdleStartTime = 0f;
         IdleEndTime = 0f;
+
+        //cc 비활성으로 인한 고스트velocity 초기화
+        cc.Move(Vector3.forward * 0.0001f);
     }
 
     private void Start()
@@ -118,6 +123,15 @@ public class NPC_BT : MonoBehaviourPun
         //방장이 아니면 BT 정지
         if (!PhotonNetwork.IsMasterClient) return;
 
+        //애니메이션 재생
+        if (agent.enabled)
+            velocity = agent.velocity.magnitude;
+        else if (!cc.enabled) velocity = 0f;
+        else
+            velocity = new Vector3(cc.velocity.x, 0f, cc.velocity.z).magnitude;
+        anim.SetFloat("Speed", velocity);
+        //Debug.Log(velocity);
+
         //방장 위임 처리: 참가자 시절 agent가 꺼져있던 경우 다시 켜줌
         //단, 이미 지하철에 탑승해서 고의로 끈 상태가 아닐때만 작동
         if (!agent.enabled && !isBoarded && transform.parent != subway)
@@ -147,7 +161,7 @@ public class NPC_BT : MonoBehaviourPun
             if (lineUpTarget == defaultVector)
             {
                 int gateIndex = Random.Range(0, gatePos.Count);
-                Debug.Log($"NPC {photonView.ViewID}번이 선택한 게이트: {gateIndex}번, 좌표: {gatePos[gateIndex].position}");
+                //Debug.Log($"NPC {photonView.ViewID}번이 선택한 게이트: {gateIndex}번, 좌표: {gatePos[gateIndex].position}");
                 //타겟 한번만 초기화
                 lineUpTarget = lineUpManager.GetStaticLineUpPos(gateIndex, gatePos[gateIndex].position - decreaseGatePos, gatePos[gateIndex].forward);
                 onBoardTarget = gatePos[gateIndex].position + new Vector3(0f, 0f, boardPos); //지하철 탑승 위치 초기화
@@ -192,13 +206,16 @@ public class NPC_BT : MonoBehaviourPun
     //지하철 자리로 이동
     private BT_NodeStatus ChooseSeat()
     {
-        //Debug.Log($"{photonView.ViewID} ChooseSeat 실행 되는 중");
+        //도착하면 성공반환
         if (Vector3.Distance(transform.localPosition, onSeatTarget) <= 0.2f)
+        {
+            if (cc.enabled) cc.enabled = false;
             return BT_NodeStatus.Success;
-        //Debug.Log("지하철 자리이동 BT 호출 완료");
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, onSeatTarget, speed * Time.deltaTime);
-        Vector3 dir = (onSeatTarget - transform.localPosition).normalized;
-        if (dir == Vector3.zero) transform.forward = dir;
+        }
+        //방어로직
+        if (!cc.enabled) cc.enabled = true;
+        //이동 로직
+        Move(onSeatTarget, true);
         return BT_NodeStatus.Running;
     }
 
@@ -215,8 +232,6 @@ public class NPC_BT : MonoBehaviourPun
         {
             walkTarget = GetRandomTargetPos();
             agent.SetDestination(walkTarget); //NavMesh 사용
-            OnWalk?.Invoke();   //걷기 애니메이션 재생
-            //Debug.Log("걷기 시작");
         }
         //도착하면 성공
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
@@ -235,7 +250,6 @@ public class NPC_BT : MonoBehaviourPun
             IdleStartTime = CurrentTime;
             IdleEndTime = Random.Range(3f, 5f) + IdleStartTime;
             isIdle = true;
-            OnIdle?.Invoke();   //대기 애니메이션 시작
             //Debug.Log("대기 시작");
         }
         if (IdleEndTime <= CurrentTime) //Idle 시간 끝
@@ -255,12 +269,20 @@ public class NPC_BT : MonoBehaviourPun
 
     private void Move(Vector3 target, bool isLocal)
     {
-        //걷는 애니메이션 변환
-        Vector3 direction = (target - (isLocal ? transform.localPosition : transform.position)).normalized;
+        //목표지점까지의 방향 계산
+        Vector3 currentPos = isLocal ? transform.localPosition : transform.position;
+        Vector3 direction = (target - currentPos).normalized;
         direction.y = 0;
-        if (transform.forward != direction) OnWalk?.Invoke();   //걷기 애니메이션 재생
-        transform.forward = direction;
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        if (direction != Vector3.zero)
+        {
+            //캐릭터 회전
+            if (isLocal) transform.localRotation = Quaternion.LookRotation(direction);
+            else transform.rotation = Quaternion.LookRotation(direction);
+        }
+
+        //캐릭터 회전으로 방향을 맞춰두었기 때문에 transform.forward사용하면 됨
+        cc.Move(transform.forward * speed * Time.deltaTime);
     }
 
     //이동범위 내 NavMesh 위치 반환

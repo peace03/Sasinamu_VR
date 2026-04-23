@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerChangeScene : MonoBehaviour
+public class TriggerObjCollider : MonoBehaviour
 {
     [SerializeField] private UnityEvent OnTrigger;
 

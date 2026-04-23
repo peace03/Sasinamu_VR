@@ -21,7 +21,14 @@ public class TimeManager : MonoBehaviour
     //private float subwayCycleTime = 120f;
 
     [Header("게임 시작시 플레이어 대기 시간")]
+    [SerializeField] private LoadScene currentScene;        //현재 씬
     [SerializeField] private float onlyMovePauseTime;       //움직임 정지 시간
+
+    private void Start()
+    {
+        if (currentScene == LoadScene.StartScene)
+            StartCoroutine(StandBy());
+    }
 
     private void OnEnable()
     {
