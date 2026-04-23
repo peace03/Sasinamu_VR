@@ -16,7 +16,7 @@ public class WristUI : MonoBehaviour
     private Transform target;                   // 메인 카메라
     private XRRayInteractor leftHandRay;        // 왼쪽 컨트롤러 레이
 
-    private bool isIntroFinished = false;       // 인트로 끝남 여부
+    private bool canOpenUI = false;             // UI 열기 가능 여부
 
     private void Awake()
     {
@@ -26,8 +26,8 @@ public class WristUI : MonoBehaviour
 
     private void Update()
     {
-        // 메인 카메라가 없거나, 인트로가 끝나지 않았다면
-        if (target == null || !isIntroFinished)
+        // 메인 카메라가 없거나, UI 열기가 가능하지 않다면
+        if (target == null || !canOpenUI)
             // 종료
             return;
 
@@ -54,6 +54,6 @@ public class WristUI : MonoBehaviour
         return dot >= viewThreshold && dis >= minDistance && dis <= maxDistance;
     }
 
-    // 인트로 끝남 여부 설정 함수
-    public void SetIntroFinished(bool value) => isIntroFinished = value;
+    // UI 열기 가능 여부 설정 함수
+    public void SetCanOpenUI(bool value) => canOpenUI = value;
 }

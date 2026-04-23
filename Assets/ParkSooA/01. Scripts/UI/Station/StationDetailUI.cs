@@ -1,17 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public enum StationDetailState
-{
-    None,
-    Main,
-    Station,
-    Exit_Select,
-    Exit_Congestion,
-    Food_Select,
-    Food_List
-}
+public enum StationDetailState { None, Main, Station, Exit_Select, Exit_Congestion, Food_Select, Food_List }
 
 public class StationDetailUI: MonoBehaviour
 {
@@ -46,6 +38,11 @@ public class StationDetailUI: MonoBehaviour
     [SerializeField] private Image foodListImage;
     [SerializeField] private Button[] foodButtons;
     [SerializeField] private Sprite[] foodSprites;
+
+    [Header("버튼을 누르면 실행될 함수")]
+    [Space(10)][SerializeField] private UnityEvent OnStation;
+    [Space(10)][SerializeField] private UnityEvent OnExit;
+    [Space(10)][SerializeField] private UnityEvent OnFood;
 
     private List<GameObject> allUIList = new();                         // 모든 UI들 리스트
 
@@ -144,6 +141,8 @@ public class StationDetailUI: MonoBehaviour
             case StationDetailState.Station:
                 // 역 혼잡도 UI 열기
                 stationUI.SetActive(true);
+                // 실행될 함수가 있다면 실행하기
+                OnStation?.Invoke();
                 break;
             // 출구 선택이라면
             case StationDetailState.Exit_Select:
@@ -154,6 +153,8 @@ public class StationDetailUI: MonoBehaviour
             case StationDetailState.Exit_Congestion:
                 // 출구 혼잡도 UI 열기
                 exitCongestionUI.SetActive(true);
+                // 실행될 함수가 있다면 실행하기
+                OnExit?.Invoke();
                 break;
             // 맛집 출구 선택이라면
             case StationDetailState.Food_Select:
@@ -164,6 +165,8 @@ public class StationDetailUI: MonoBehaviour
             case StationDetailState.Food_List:
                 // 맛집 리스트 UI 열기
                 foodListUI.SetActive(true);
+                // 실행될 함수가 있다면 실행하기
+                OnFood?.Invoke();
                 break;
             // 그 외라면
             default:

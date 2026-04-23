@@ -1841,6 +1841,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1080514746}
   - component: {fileID: 1080514745}
+  - component: {fileID: 1080514748}
+  - component: {fileID: 1080514747}
   m_Layer: 11
   m_Name: XR Origin
   m_TagString: Untagged
@@ -1882,6 +1884,62 @@ Transform:
   - {fileID: 1376862426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1080514747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080514744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf296fc962d7184ab14ad1841598d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_System: {fileID: 1080514748}
+  m_MoveSpeed: 1
+  m_EnableStrafe: 1
+  m_UseGravity: 1
+  m_GravityApplicationMode: 0
+  m_ForwardSource: {fileID: 330585546}
+  m_LeftHandMoveAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Left Hand Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 75f1b245-c357-48c8-9acb-8967bec9dda2
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  m_RightHandMoveAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Right Hand Move
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 6bf6c732-e011-46b1-acc5-b649a4ec5f10
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+--- !u!114 &1080514748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080514744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a5df2202a8b96488c744be3bd0c33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.LocomotionSystem
+  m_Timeout: 10
+  m_XROrigin: {fileID: 1080514745}
 --- !u!1001 &1258982914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2187,8 +2245,14 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 2048
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
   sceneAsset: {fileID: 102900000, guid: 74557169fdef3be4394dcde33cb06143, type: 3}
-  screenFader: {fileID: 394053080804123295}
+  sceneChangeUI: {fileID: 394053080804123295}
 --- !u!65 &1665778287
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2278,7 +2342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3270617024457258285, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2922
+      value: 2916
       objectReference: {fileID: 0}
     - target: {fileID: 3270617024457258285, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2332,10 +2396,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3843164665356277180, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3973018874905260550, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_Name
       value: Home_Intro Canvas
@@ -2345,76 +2405,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 498683811}
     - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 709752287531365453}
     - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 709752287531365453}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetIntroFinished
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetIntroFinished
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WristUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: WristUI, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnStart.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4097095099419513087, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: OnFinished.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 4167788985865854855, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: eab7ca1927731774dadec1f0af5f3b3b, type: 3}
-    - target: {fileID: 7900117125300029125, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 7900117125300029125, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
@@ -2535,7 +2534,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335336963121939769, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_Name
-      value: Home_Screen Fader Canvas
+      value: Home_Scene Change Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440437965659808487, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_Name
+      value: Scene Change UI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

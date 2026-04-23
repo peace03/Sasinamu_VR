@@ -12,7 +12,7 @@ public class ArrivalTrigger : MonoBehaviour
     [Header("플레이어가 나가면 실행될 함수")]
     [Space(10)][SerializeField] private UnityEvent OnExit;
 
-    protected virtual void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // 들어온 물체가 플레이어가 아니라면
         if ((1 << other.gameObject.layer & playerLayer.value) == 0)
@@ -21,9 +21,11 @@ public class ArrivalTrigger : MonoBehaviour
 
         // 실행될 함수가 있다면 실행하기
         OnEnter?.Invoke();
+        // 상속받을 클래스에서 실행할 함수가 있다면 실행하기
+        OnArrival();
     }
 
-    protected virtual void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         // 나간 물체가 플레이어가 아니라면
         if ((1 << other.gameObject.layer & playerLayer.value) == 0)
@@ -32,5 +34,11 @@ public class ArrivalTrigger : MonoBehaviour
 
         // 실행될 함수가 있다면 실행하기
         OnExit?.Invoke();
+        // 상속받을 클래스에서 실행할 함수가 있다면 실행하기
+        OnExited();
     }
+
+    protected virtual void OnArrival() { }
+
+    protected virtual void OnExited() { }
 }

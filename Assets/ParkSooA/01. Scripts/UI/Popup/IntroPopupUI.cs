@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class IntroPopupUI : PopupUI
 {
     [Header("화면 전환")]
-    [SerializeField] private ScreenFader screenFader;
+    [SerializeField] private SceneChangeUI sceneChangeUI;
 
     [Header("시작 후 기다리는 시간")]
     [SerializeField][Range(0f, 10f)] private float startDelayDuration = 10f;
@@ -45,15 +45,15 @@ public class IntroPopupUI : PopupUI
     // 도입부 연출 함수
     private IEnumerator IntroSequence()
     {
-        // 화면 전환이 비어있지 않다면
-        if (screenFader != null)
+        // 화면 전환 UI가 비어있지 않다면
+        if (sceneChangeUI != null)
         {
-            // 화면 전환 활성화
-            screenFader.gameObject.SetActive(true);
-            // 화면 전환 시작
-            screenFader.ScreenFadeHandler(false);
+            // 화면 전환 UI 열기
+            sceneChangeUI.gameObject.SetActive(true);
+            // 화면 전환(페이드 인) 시작
+            sceneChangeUI.SetSceneChange(false);
             // 화면 전환 기다리기
-            yield return new WaitForSeconds(screenFader.Duration);
+            yield return new WaitForSeconds(sceneChangeUI.Duration);
         }
 
         // 열릴 때의 위치가 비어있지 않다면
