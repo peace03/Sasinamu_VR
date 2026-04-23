@@ -48,7 +48,9 @@ public class NPC_PoolManager : MonoBehaviourPunCallbacks, IPunPrefabPool
     }
 
     //Photon 네트워크 풀링 필수 구현부
-    //PhotonNetwork.Instantiate()가 호출될 때, 엔진이 내부적으로 이 함수를 실행
+    //PhotonNetwork.
+    //
+    //()가 호출될 때, 엔진이 내부적으로 이 함수를 실행
     public GameObject Instantiate(string prefabId, Vector3 position, Quaternion rotation)
     {
         //필터링: 요청받은 이름이 NPC 프리팹의 이름이 아니라면? (ex: Player)
@@ -103,7 +105,7 @@ public class NPC_PoolManager : MonoBehaviourPunCallbacks, IPunPrefabPool
         Bounds bounds = groundPos.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);
-        Vector3 spawnPos = new Vector3(x, 0, z);
+        Vector3 spawnPos = new Vector3(x, 0f, z);
         //유니티 Instantiate 대신 방에 소속된 네트워크 오브젝트 생성 명령
         PhotonNetwork.InstantiateRoomObject(npcPrefab.name, spawnPos, Quaternion.identity);
     }
