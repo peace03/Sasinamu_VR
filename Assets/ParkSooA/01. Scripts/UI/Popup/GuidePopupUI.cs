@@ -1,41 +1,99 @@
 using System.Collections;
 using UnityEngine;
-
-public enum GuideState { Select, Check, Move }
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class GuidePopupUI : PopupUI
 {
-    [Header("가이드 UI들")]
-    [SerializeField] private GameObject[] guideUI;
-
     [Header("가이드 UI 전환 시간")]
     [SerializeField][Range(0f, 1f)] private float duration = 0.3f;
 
+    [Header("가이드 UI들")]
+    [SerializeField] private GameObject[] guideUI;
+
     [Header("확인 이미지")]
-    [SerializeField] private GameObject stationCheckImage;
-    [SerializeField] private GameObject exitCheckImage;
-    [SerializeField] private GameObject foodCheckImage;
+    [SerializeField] private Image stationCheckImage;
+    [SerializeField] private Image exitCheckImage;
+    [SerializeField] private Image foodCheckImage;
+    [SerializeField] private Sprite[] stationCheckSprites;
+    [SerializeField] private Sprite[] exitCheckSprites;
+    [SerializeField] private Sprite[] foodCheckSprites;
 
-    private Coroutine guideCoroutine;                                       // 가이드 UI 코루틴
+    [Header("다음 가이드 단계가 되면 실행되는 함수")]
+    [Space(10)][SerializeField] private UnityEvent OnNextGuide;
 
-    private GuideState guideState = GuideState.Select;                      // 가이드 UI 상태
+    private Coroutine guideCoroutine;                           // 가이드 UI 코루틴
 
-    private bool checkStation = false;                                      // 역 혼잡도 확인 여부
-    private bool checkExit = false;                                         // 출구 혼잡도 확인 여부
-    private bool checkFood = false;                                         // 역 주변 맛집 확인 여부
-    private bool ReadyToMove => checkStation && checkExit && checkFood;     // 이동 가능 여부 확인
+    private GuideData guideData;                                // 현재 가이드 정보
+    private bool ReadyToMove
+        => guideData.station && guideData.exit && guideData.food;
 
-    private void Awake()
+    // 초기화 함수
+    public void Init(GuideData data)
     {
-        // 초기화
-        guideUI[(int)guideState].SetActive(true);
+        // 현재 가이드 정보 저장
+        guideData = data;
+        // UI 새로고침
+        RefreshUI();
+    }
+
+    // UI 새로고침 함수
+    private void RefreshUI()
+    {
+        // 가이드 UI들 닫기
+        foreach (var guide in guideUI)
+            guide.SetActive(false);
+
+        // 현재 가이드 UI 열기
+        guideUI[(int)guideData.state].SetActive(true);
+        // 확인 이미지 새로고침
+        RefreshCheckImage();
+    }
+
+    // 확인 이미지 새로고침 함수
+    private void RefreshCheckImage()
+    {
+        // 현재 가이드가 확인 UI가 아니라면
+        if (guideData.state != GuideState.Check)
+            // 종료
+            return;
+
+        // 역 혼잡도 이미지가 있다면
+        if (stationCheckImage != null)
+        {
+            // 역 혼잡도 확인 여부에 따라서 확인 이미지 초기화
+            if (guideData.station)
+                stationCheckImage.sprite = stationCheckSprites[1];
+            else
+                stationCheckImage.sprite = stationCheckSprites[0];
+        }
+
+        // 출구 혼잡도 이미지가 있다면
+        if (exitCheckImage != null)
+        {
+            // 출구 혼잡도 확인 여부에 따라서 확인 이미지 초기화
+            if (guideData.exit)
+                exitCheckImage.sprite = exitCheckSprites[1];
+            else
+                exitCheckImage.sprite = exitCheckSprites[0];
+        }
+
+        // 역 주변 맛집 이미지가 있다면
+        if (foodCheckImage != null)
+        {
+            // 역 주변 맛집 확인 여부에 따라서 확인 이미지 초기화
+            if (guideData.food)
+                foodCheckImage.sprite = foodCheckSprites[1];
+            else
+                foodCheckImage.sprite = foodCheckSprites[0];
+        }
     }
 
     // 다음 가이드 UI 열기 함수
     public void OpenNextGuideUI()
     {
         // 마지막 가이드이거나, 가이드 UI 코루틴이 비어있지 않다면
-        if (guideState == GuideState.Move || guideCoroutine != null)
+        if (guideData.state == GuideState.Move || guideCoroutine != null)
             // 종료
             return;
 
@@ -51,9 +109,9 @@ public class GuidePopupUI : PopupUI
         // UI 닫기 기다리기
         yield return new WaitForSeconds(duration);
         // 가이드 UI 닫기
-        guideUI[(int)guideState++].SetActive(false);
+        guideUI[(int)guideData.state++].SetActive(false);
         // 다음 가이드 UI 열기
-        guideUI[(int)guideState].SetActive(true);
+        guideUI[(int)guideData.state].SetActive(true);
         // UI 열기
         SetUIFade(true, duration);
         // UI 열기 기다리기
@@ -79,10 +137,8 @@ public class GuidePopupUI : PopupUI
     // 역 혼잡도 확인 함수
     public void CheckStation()
     {
-        // 확인 이미지 활성화
-        stationCheckImage.SetActive(true);
         // 역 혼잡도 확인
-        checkStation = true;
+        guideData.station = true;
 
         // 상세 화면을 전부 확인했다면
         if (ReadyToMove)
@@ -93,10 +149,8 @@ public class GuidePopupUI : PopupUI
     // 출구 혼잡도 확인 함수
     public void CheckExit()
     {
-        // 확인 이미지 활성화
-        exitCheckImage.SetActive(true);
         // 출구 혼잡도 확인
-        checkExit = true;
+        guideData.exit = true;
 
         // 상세 화면을 전부 확인했다면
         if (ReadyToMove)
@@ -107,10 +161,8 @@ public class GuidePopupUI : PopupUI
     // 역 주변 맛집 확인 함수
     public void CheckFood()
     {
-        // 확인 이미지 활성화
-        foodCheckImage.SetActive(true);
         // 역 주변 맛집 확인
-        checkFood = true;
+        guideData.food = true;
 
         // 상세 화면을 전부 확인했다면
         if (ReadyToMove)

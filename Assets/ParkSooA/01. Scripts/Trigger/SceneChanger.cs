@@ -29,7 +29,7 @@ public class SceneChanger : ArrivalTrigger
 #endif
     }
 
-    protected override void OnArrival()
+    protected override void OnArrival(GameObject player)
     {
         // 씬 전환 중이라면
         if (sceneChangeCoroutine != null)
@@ -49,7 +49,7 @@ public class SceneChanger : ArrivalTrigger
         sceneChangeCoroutine = StartCoroutine(SceneChangeRoutine());
     }
 
-    protected override void OnExited()
+    protected override void OnExited(GameObject player)
     {
         // 화면 전환 UI가 비어있지 않다면
         if (sceneChangeUI != null)

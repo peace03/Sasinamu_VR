@@ -1174,14 +1174,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498683806}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 1, y: 1, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 709752287531365452}
   m_Father: {fileID: 665988527}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -180}
 --- !u!1 &665988526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,7 +2555,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2026826618287205042, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.061
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2026826618287205042, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2596,6 +2596,26 @@ PrefabInstance:
     - target: {fileID: 6907667514226349533, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
       propertyPath: m_Name
       value: Home_Wrist Offset
+      objectReference: {fileID: 0}
+    - target: {fileID: 6907667514226349533, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7538127330721368140, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7538127330721368140, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7538127330721368140, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8091784741636659022, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

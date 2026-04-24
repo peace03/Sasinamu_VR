@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,7 +23,7 @@ public class ArrivalTrigger : MonoBehaviour
         // 실행될 함수가 있다면 실행하기
         OnEnter?.Invoke();
         // 상속받을 클래스에서 실행할 함수가 있다면 실행하기
-        OnArrival();
+        OnArrival(other.gameObject);
     }
 
     private void OnTriggerExit(Collider other)
@@ -35,10 +36,10 @@ public class ArrivalTrigger : MonoBehaviour
         // 실행될 함수가 있다면 실행하기
         OnExit?.Invoke();
         // 상속받을 클래스에서 실행할 함수가 있다면 실행하기
-        OnExited();
+        OnExited(other.gameObject);
     }
 
-    protected virtual void OnArrival() { }
+    protected virtual void OnArrival(GameObject player) { }
 
-    protected virtual void OnExited() { }
+    protected virtual void OnExited(GameObject player) { }
 }
