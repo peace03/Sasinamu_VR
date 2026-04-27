@@ -642,7 +642,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2469662819389926394}
-  - component: {fileID: 6021404496579304127}
+  - component: {fileID: 451949351440041983}
   m_Layer: 11
   m_Name: Platform_Wrist_Offset
   m_TagString: Untagged
@@ -666,7 +666,7 @@ Transform:
   - {fileID: 8609299157248932554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6021404496579304127
+--- !u!114 &451949351440041983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -675,9 +675,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6569064178296082190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f161a9495bd7e4f801f83ea266b6f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 211ffc173f111c948acdc27a919235c1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WristUI
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformWristUI
   popupUI: {fileID: 8851814319916567339}
   viewThreshold: 0.7
   minDistance: 0.35

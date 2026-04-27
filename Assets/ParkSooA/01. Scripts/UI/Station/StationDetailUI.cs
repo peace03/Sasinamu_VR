@@ -1,6 +1,8 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public enum StationDetailState { None, Main, Station, Exit_Select, Exit_Congestion, Food_Select, Food_List }
@@ -47,6 +49,8 @@ public class StationDetailUI: MonoBehaviour
     private List<GameObject> allUIList = new();                         // 모든 UI들 리스트
 
     private StationDetailState curState = StationDetailState.None;      // 현재 UI 상태
+
+    private int? playerID = null;                                       // 플레이어 ID
     #endregion
 
     private void Awake()
@@ -68,6 +72,9 @@ public class StationDetailUI: MonoBehaviour
         // 메인 UI 열기
         OpenUI(StationDetailState.Main);
     }
+
+    // 플레이어 ID 설정 함수
+    public void SetPlayerID(int? id) => playerID = id;
 
     // UI 초기화 함수
     private void InitUI(GameObject newUI)

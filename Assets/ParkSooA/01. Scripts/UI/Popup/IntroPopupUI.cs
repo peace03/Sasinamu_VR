@@ -13,8 +13,8 @@ public class IntroPopupUI : PopupUI
     [Header("UI를 보여주는 시간")]
     [SerializeField][Range(0f, 15f)] private float displayDuration = 15f;
 
-    [Header("인트로가 시작할 때 실행될 함수(테스트용)")]
-    [Space(10)][SerializeField] private UnityEvent OnStart;
+    //[Header("인트로가 시작할 때 실행될 함수(테스트용)")]
+    //[Space(10)][SerializeField] private UnityEvent OnStart;
 
     [Header("인트로가 끝났을 때 실행될 함수")]
     [Space(10)][SerializeField] private UnityEvent OnFinished;
@@ -36,8 +36,8 @@ public class IntroPopupUI : PopupUI
 
         // 혹시 모를 중복 방지
         StopAllCoroutines();
-        // 손목 UI가 안 열리게 바꾸기
-        OnStart?.Invoke();
+        //// 손목 UI가 안 열리게 바꾸기
+        //OnStart?.Invoke();
         // 도입부 연출 시작
         StartCoroutine(IntroSequence());
     }

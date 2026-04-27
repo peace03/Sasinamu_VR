@@ -30,15 +30,11 @@ public class PopupUI : MonoBehaviour
     [SerializeField] private AnimationCurve openCurve;
     [SerializeField] private AnimationCurve closeCurve;
 
-    [Header("현재 상태")]
-    [ContextMenuItem("열기 테스트", "DebugOpen")]
-    [ContextMenuItem("닫기 테스트", "DebugClose")]
-    [SerializeField] protected bool curState = false;
+    public Transform OpenedPos => openedPos;            // UI 여는 위치
 
-    protected Transform OpenedPos => openedPos;         // UI 여는 위치
+    public float CloseDuration => closeDuration;        // UI 닫기 연출 시간
 
-    protected float OpenDuration => openDuration;       // UI 열기 연출 시간
-    protected float CloseDuration => closeDuration;     // UI 닫기 연출 시간
+    private bool curState = false;                      // 현재 UI 상태
     #endregion
 
     // 팝업 UI 관리 함수
@@ -74,7 +70,7 @@ public class PopupUI : MonoBehaviour
     }
 
     // UI 불투명도 설정 함수
-    public void SetUIFade(bool isOpen, float? custom = null)
+    public void SetUIFade(bool isOpen, float? custom = null, CanvasGroup customGroup = null)
     {
         // 불투명도 조절이 비어있다면
         if (fadeHandler == null)
@@ -83,8 +79,10 @@ public class PopupUI : MonoBehaviour
 
         // 초 설정이 없다면, UI 상태에 따라서 연출 시간 저장
         float duration = custom ?? (isOpen ? openDuration : closeDuration);
+        // 그룹 설정이 없다면, 기존 캔버스 그룹으로 연출 대상 저장
+        CanvasGroup group = customGroup ?? canvasGroup;
         // UI 상태에 따라서 초기화
-        fadeHandler.Init(isOpen ? openCurve : closeCurve, duration, canvasGroup);
+        fadeHandler.Init(isOpen ? openCurve : closeCurve, duration, group);
         // UI 상태에 따라서 실행
         fadeHandler.SetUIState(isOpen);
     }
@@ -102,34 +100,5 @@ public class PopupUI : MonoBehaviour
                                                                             isOpen ? openedPos : closedPos);
         // 실행
         moveHandler.SetUIState();
-
-    }
-
-    // 인스펙터 우클릭 전용 UI 열기 함수
-    protected void DebugOpen()
-    {
-        // 게임 실행 중이 아니라면
-        if (!Application.isPlaying)
-            // 종료
-            return;
-
-        // UI가 열릴 수 있게 현재 UI 상태를 변경
-        curState = false;
-        // UI 열기
-        PopupUIHandler(true);
-    }
-
-    // 인스펙터 우클릭 전용 UI 닫기 함수
-    protected void DebugClose()
-    {
-        // 게임 실행 중이 아니라면
-        if (!Application.isPlaying)
-            // 종료
-            return;
-
-        // UI가 닫힐 수 있게 현재 UI 상태를 변경
-        curState = true;
-        // UI 닫기
-        PopupUIHandler(false);
     }
 }
