@@ -3,15 +3,53 @@ using UnityEngine;
 
 public class StationInfo : ArrivalTrigger
 {
-    [Header("지하철 상세 정보 UI")]
-    [SerializeField] private StationDetailUI detailUI;
+    [Header("지하철 UI들")]
+    [SerializeField] private StationMapUI mapUI;            // 노선도 UI
+    [SerializeField] private StationDetailUI detailUI;      // 상세정보 UI
 
     [Header("가이드 UI")]
     [SerializeField] private GuidePopupUI guideUI;
 
-    private PlatformWristUI wristUI;        // 플레이어 손목 UI
+    private PhotonView pv;                                  // 포톤뷰
+    private PlatformWristUI wristUI;                        // 플레이어 손목 UI
 
-    private int? playerID = null;           // 플레이어 ID
+    private int? playerID = null;                           // 플레이어 ID
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+
+    [PunRPC]
+    // 플레이어 ID 설정 동기화 함수
+    public void RPC_SyncOwner(int id)
+    {
+        if (id == -1)
+        {
+            playerID = null;
+            mapUI.SetPlayerID(playerID);
+            detailUI.SetPlayerID(playerID);
+        }
+        else
+        {
+            playerID = id;
+            mapUI.SetPlayerID(id);
+            detailUI.SetPlayerID(id);
+        }
+    }
+
+    [PunRPC]
+    // UI 변경 동기화 함수
+    public void RPC_SyncChangeUI(string uiType, int buttonType)
+    {
+
+    }
+
+    // 동기화 요청 함수
+    public void RequestSync(string uiType, int buttonType)
+    {
+
+    }
 
     // LED 화면에 도착했을 때 실행되는 함수
     protected override void OnArrival(GameObject player)
@@ -26,10 +64,19 @@ public class StationInfo : ArrivalTrigger
         // 플레이어 ID 저장
         playerID = root.GetComponentInChildren<PhotonView>()?.Owner?.ActorNumber;
 
-        // 플레이어 ID가 있고 상세정보 UI가 있다면
-        if (playerID != null && detailUI != null)
-            // 상세정보 UI에 플레이어 ID 설정하기
-            detailUI.SetPlayerID(playerID);
+        // 플레이어 ID가 있다면
+        if (playerID != null)
+        {
+            // 노선도 UI가 있다면
+            if (mapUI != null)
+                // 노선도 UI에 플레이어 ID 설정하기 
+                mapUI.SetPlayerID(playerID);
+
+            // 상세정보 UI가 있다면
+            if (detailUI != null)
+                // 상세정보 UI에 플레이어 ID 설정하기
+                detailUI.SetPlayerID(playerID);
+        }
 
         // 손목 UI 저장
         wristUI = root.GetComponentInChildren<PlatformWristUI>();

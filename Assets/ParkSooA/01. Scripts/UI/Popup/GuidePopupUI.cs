@@ -63,7 +63,7 @@ public class GuidePopupUI : PopupUI
         RefreshUI();
     }
 
-    // UI 새로고침 함수
+    // UI 재설정 함수
     private void RefreshUI()
     {
         // 가이드 UI들 닫기
@@ -76,7 +76,7 @@ public class GuidePopupUI : PopupUI
         RefreshCheckImage();
     }
 
-    // 확인 이미지 새로고침 함수
+    // 확인 이미지 재설정 함수
     private void RefreshCheckImage()
     {
         // 현재 가이드 진행 상황이 확인 이미지가 필요한 가이드가 아니라면
@@ -165,6 +165,8 @@ public class GuidePopupUI : PopupUI
     {
         // 역 혼잡도 확인
         guideProgress.stationCheck = true;
+        // 확인 이미지 재설정
+        RefreshCheckImage();
 
         // 상세 화면을 전부 확인했다면
         if (ReadyToMove)
@@ -177,6 +179,8 @@ public class GuidePopupUI : PopupUI
     {
         // 출구 혼잡도 확인
         guideProgress.exitCheck = true;
+        // 확인 이미지 재설정
+        RefreshCheckImage();
 
         // 상세 화면을 전부 확인했다면
         if (ReadyToMove)
@@ -189,6 +193,8 @@ public class GuidePopupUI : PopupUI
     {
         // 역 주변 맛집 확인
         guideProgress.foodCheck = true;
+        // 확인 이미지 재설정
+        RefreshCheckImage();
 
         // 상세 화면을 전부 확인했다면
         if (ReadyToMove)
