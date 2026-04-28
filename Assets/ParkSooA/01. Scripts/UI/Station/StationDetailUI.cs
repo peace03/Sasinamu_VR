@@ -26,6 +26,7 @@ public class StationDetailUI: MonoBehaviour
     [Space(10)][SerializeField] private UnityEvent OnFood;
 
     private Dictionary<GameObject, StationDetailButtonData> allButtons = new();     // 모든 버튼들
+    private Dictionary<string, StationDetailButtonData> buttonPaths = new();        // 버튼 경로들
     private Stack<GameObject> openedUI = new();                                     // 열린 UI
 
     private int? playerID = null;                                                   // 플레이어 ID
@@ -74,17 +75,37 @@ public class StationDetailUI: MonoBehaviour
                 OnStation?.Invoke();
                 break;
             // 출구 혼잡도 UI의 출구 버튼이라면
-            case StationDetailButtonType.Exit_1:
-            case StationDetailButtonType.Exit_2:
-            case StationDetailButtonType.Exit_3:
-            case StationDetailButtonType.Exit_4:
-                // 출구 혼잡도 이미지 변경
-                ChangeExitCongestionImage((int)data.ButtonType - (int)StationDetailButtonType.Exit_1);
+            case >= StationDetailButtonType.Exit_1 and <= StationDetailButtonType.Exit_4:
                 OnExit?.Invoke();
                 break;
             // 역 주변 맛집 UI의 출구 버튼이라면
             case StationDetailButtonType.Food:
                 OnFood?.Invoke();
+                break;
+        }
+
+        // UI 변경 동기화 요청하기
+        transform.GetComponentInParent<StationInfo>().RequestSync(StationInfo.UI_NAME_DETAIL, data.ButtonPath);
+    }
+
+    // 네트워크를 통해 모든 컴퓨터에서 실행될 함수
+    public void ExecuteNetworkAction(string buttonPath)
+    {
+        // 버튼 경로가 없다면
+        if (!buttonPaths.TryGetValue(buttonPath, out var data))
+        {
+            Debug.Log($"{buttonPath}가 등록되어 있지 않습니다.");
+            // 종료
+            return;
+        }
+
+        // 버튼 종류에 따라서
+        switch (data.ButtonType)
+        {
+            // 출구 혼잡도 UI의 출구 버튼이라면
+            case >= StationDetailButtonType.Exit_1 and <= StationDetailButtonType.Exit_4:
+                // 출구 혼잡도 이미지 변경
+                ChangeExitCongestionImage((int)data.ButtonType - (int)StationDetailButtonType.Exit_1);
                 break;
             // 뒤로가기 버튼이라면
             case StationDetailButtonType.Back:
@@ -104,34 +125,29 @@ public class StationDetailUI: MonoBehaviour
         ChangeUI(data.TargetUI);
     }
 
-    // 네트워크를 통해 모든 컴퓨터에서 실행될 함수
-    public void ExecuteNetworkAction(int type)
-    {
-        // 버튼 타입... 0.. None은 너무 많으니까 건너뛰고..
-        // 1 역 혼잡도 버튼
-
-    }
-
     // 버튼들 초기화 함수
     private void InitButtons()
     {
         // 버튼 데이터 컴포넌트를 가지고 있는 자식들을 전부 가져오기
-        var datas = transform.GetComponentsInChildren<StationDetailButtonData>();
+        var datas = transform.GetComponentsInChildren<StationDetailButtonData>(true);
 
         // 버튼 데이터 컴포넌트가 있다면
         if (datas != null)
             // 자식들의 수만큼
             foreach (var data in datas)
             {
+                // 버튼 경로 설정
+                data.SetButtonPath(transform);
+
                 // 해당 버튼이 없다면
                 if (!allButtons.ContainsKey(data.gameObject))
-                    // 딕셔너리에 추가
+                    // 버튼 저장
                     allButtons.Add(data.gameObject, data);
 
-                // UI가 비어있지 않다면
-                if (data.TargetUI != null)
-                    // UI 닫기
-                    data.TargetUI.SetActive(false);
+                // 해당 버튼의 경로가 없다면
+                if (!buttonPaths.ContainsKey(data.ButtonPath))
+                    // 버튼 경로 저장
+                    buttonPaths.Add(data.ButtonPath, data);
             }
     }
 
