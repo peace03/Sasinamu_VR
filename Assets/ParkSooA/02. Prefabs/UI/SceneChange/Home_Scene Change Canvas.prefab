@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050a857892cfe494cada677211895ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmoothFollow
-  distance: 0.26
+  distance: 0.16
   movingDuration: 0
   rotationSpeed: 100
 --- !u!1 &4440437965659808487
@@ -339,7 +339,7 @@ MonoBehaviour:
   fadeHandler: {fileID: 1532886491542847581}
   openGroup: {fileID: 4140758547948495714}
   closeGroup: {fileID: 0}
-  openDuration: 5
+  openDuration: 10
   closeDuration: 5
   openCurve:
     serializedVersion: 2

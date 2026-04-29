@@ -45,6 +45,8 @@ MonoBehaviour:
   - SyncEntryBrodcastSound
   - SyncArriveSound
   - SyncLeaveSound
+  - RPC_SyncChangeUI
+  - RPC_SyncOwner
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
