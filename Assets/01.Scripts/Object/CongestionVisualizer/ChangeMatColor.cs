@@ -15,7 +15,7 @@ public class ChangeMatColor : MonoBehaviour
 
     public void SetMatColor(Color color)
     {
-        textCorn_Door.material.SetColor("_Color", color);
+        textCorn_Door.material.SetColor("_BaseColor", color);
         SetEFColor(color);
     }
 
