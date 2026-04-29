@@ -26,6 +26,7 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
+        //플레이어 움직임 정지
         if (currentScene == LoadScene.StartScene)
             StartCoroutine(StandBy());
     }

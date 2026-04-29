@@ -33,7 +33,6 @@ public class NPC_BT : MonoBehaviourPun
     private bool isBoarded = false;     //탑승 했는가?
     private bool isOpenDoor = false;
 
-    private float velocity = 0f;
     private float CurrentTime = 0f;
     private float IdleEndTime = 0f; //Idle상태 유지 시간
     private float IdleStartTime = 0f;   //Idle 시작 시간
@@ -74,17 +73,26 @@ public class NPC_BT : MonoBehaviourPun
         //방장만 NavMesh 켬. 참가자는 껍데기만 움직여야함
         if (PhotonNetwork.IsMasterClient)
         {
+            agent.enabled = false;
+            cc.enabled = false;
+
+
+            transform.position = spawnPos;
+
             agent.enabled = true;
             agent.Warp(spawnPos);
+            //cc 비활성으로 인한 고스트velocity 초기화
+            cc.enabled = true;
+            cc.Move(Vector3.forward * 0.0001f);
         }
         else
         {
             agent.enabled = false;
+            cc.enabled = false;
             transform.position = spawnPos;
         }
 
         //초기화
-        cc.enabled = true;
         isLineUpTime = false;
         isBoarded = false;
         lineUpTarget = defaultVector;
@@ -93,8 +101,6 @@ public class NPC_BT : MonoBehaviourPun
         IdleStartTime = 0f;
         IdleEndTime = 0f;
 
-        //cc 비활성으로 인한 고스트velocity 초기화
-        cc.Move(Vector3.forward * 0.0001f);
     }
 
     private void Start()
@@ -123,6 +129,11 @@ public class NPC_BT : MonoBehaviourPun
 
     private void Update()
     {
+
+        //방장이 아니면 BT 정지
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        //애니메이션 재생
         Vector3 movementDelta = transform.position - lastPosition;
         movementDelta.y = 0f;
 
@@ -135,23 +146,11 @@ public class NPC_BT : MonoBehaviourPun
         anim.SetFloat("Speed", smoothedVelocity);
         lastPosition = transform.position;
 
-        //방장이 아니면 BT 정지
-        if (!PhotonNetwork.IsMasterClient) return;
-
-        //애니메이션 재생
-        //if (agent.enabled)
-        //    velocity = agent.velocity.magnitude;
-        //else if (!cc.enabled) velocity = 0f;
-        //else
-        //    velocity = new Vector3(cc.velocity.x, 0f, cc.velocity.z).magnitude;
-        //anim.SetFloat("Speed", velocity);
-        //Debug.Log(velocity);
-
         //방장 위임 처리: 참가자 시절 agent가 꺼져있던 경우 다시 켜줌
         //단, 이미 지하철에 탑승해서 고의로 끈 상태가 아닐때만 작동
         if (!agent.enabled && !isBoarded && !isOpenDoor && transform.parent != subway)
         {
-            Debug.Log("agent on");
+            //Debug.Log("agent on");
             agent.enabled = true;
             //현재 위치 내비메시 동기화
             agent.Warp(transform.position);
@@ -197,7 +196,7 @@ public class NPC_BT : MonoBehaviourPun
     private BT_NodeStatus BoardSubway()
     {
         //Debug.Log("지하철 탑승 BT 호출 완료");
-        if (agent.enabled) { agent.enabled = false; Debug.Log("agent off"); }
+        if (agent.enabled) { agent.enabled = false; }
             if (isBoarded || Vector3.Distance(transform.position, onBoardTarget) <= 0.2)
         {
             //1회만 실행 부모가 안 바꼈을 시

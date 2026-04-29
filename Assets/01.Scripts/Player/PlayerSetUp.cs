@@ -62,5 +62,7 @@ public class PlayerSetup : MonoBehaviourPun
             // 내 아바타라면 시뮬레이터가 켜진 상태를 유지하여 키보드 입력을 받습니다.
             if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(true);
         }
+        //플레이어 움직임 정지 (시작시 UI 보는 용도)
+        EventBus<OnSelfInstantiate>.Publish(default);
     }
 }

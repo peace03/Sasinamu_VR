@@ -41,8 +41,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // 주의: 첫 번째 파라미터는 Resources 폴더 안에 있는 프리팹의 정확한 '이름'이어야 합니다.
         // 스폰 위치는 일단 역 내부의 안전한 좌표로 임의 설정합니다.
-        Vector3 spawnPos = new Vector3(0f, -2.2f, 1f);
-        PhotonNetwork.Instantiate("Player_photon", spawnPos, Quaternion.identity);
-        EventBus<OnSelfInstantiate>.Publish(default);
+        Vector3 spawnPos = new Vector3(-20f, -2.2f, -0.1f);
+        Quaternion spawnRot = Quaternion.Euler(0f, -70f, 0f);
+        PhotonNetwork.Instantiate("Player_photon", spawnPos, spawnRot);
     }
 }

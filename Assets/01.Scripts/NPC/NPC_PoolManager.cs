@@ -105,7 +105,7 @@ public class NPC_PoolManager : MonoBehaviourPunCallbacks, IPunPrefabPool
         Bounds bounds = groundPos.bounds;
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float z = Random.Range(bounds.min.z, bounds.max.z);
-        Vector3 spawnPos = new Vector3(x, 0f, z);
+        Vector3 spawnPos = new Vector3(x, -2.2f, z);
         //유니티 Instantiate 대신 방에 소속된 네트워크 오브젝트 생성 명령
         PhotonNetwork.InstantiateRoomObject(npcPrefab.name, spawnPos, Quaternion.identity);
     }
