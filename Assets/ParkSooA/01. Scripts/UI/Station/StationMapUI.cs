@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class StationMapUI : MonoBehaviour
 {
-    [Header("역 버튼")]
-    [SerializeField] private Button stationButton;
-
     [Header("상세정보 UI")]
     [SerializeField] private GameObject detailUI;
 

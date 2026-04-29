@@ -4325,6 +4325,7 @@ GameObject:
   - component: {fileID: 1080514748}
   - component: {fileID: 1080514747}
   - component: {fileID: 1080514749}
+  - component: {fileID: 1080514750}
   m_Layer: 11
   m_Name: XR Origin
   m_TagString: Untagged
@@ -4444,6 +4445,23 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1080514750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080514744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9223835dbfbb3b14b9eaba689fe0dbf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  playerUI:
+  - {fileID: 1548026681}
+  - {fileID: 1965664593}
+  - {fileID: 2121785945}
+  - {fileID: 2025481890}
 --- !u!1 &1150462189
 GameObject:
   m_ObjectHideFlags: 0
@@ -6301,6 +6319,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StationDetailButtonData
   targetUI: {fileID: 0}
   buttonType: 7
+--- !u!1 &1548026681 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6569064178296082190, guid: 57e93bd16ca3f1947a333d5915476f97, type: 3}
+  m_PrefabInstance: {fileID: 7454155027936893798}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1568468765
 GameObject:
   m_ObjectHideFlags: 0
@@ -8414,6 +8437,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6598815579406187027, guid: 9f5a24a380916d14db9775daab4fe333, type: 3}
   m_PrefabInstance: {fileID: 1955859804}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1965664593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3056531436328776883, guid: 0b26e13282ef2a847846be0b1de59030, type: 3}
+  m_PrefabInstance: {fileID: 2966339648580371174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1983466697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8530,6 +8558,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986709624}
   m_CullTransparentMesh: 1
+--- !u!1 &2025481890 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8345411671073670856, guid: fbdcae5e466ca7e4aae5f6390cf6c0bf, type: 3}
+  m_PrefabInstance: {fileID: 4330747671303219227}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2033053570
 GameObject:
   m_ObjectHideFlags: 0
@@ -8749,6 +8782,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088789776}
   m_CullTransparentMesh: 1
+--- !u!1 &2121785945 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9008335552827487461, guid: 1548c01b77bbebc4294d2e1672e8e34f, type: 3}
+  m_PrefabInstance: {fileID: 5709022722262062137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &36255536680469154 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2469662819389926394, guid: 57e93bd16ca3f1947a333d5915476f97, type: 3}
@@ -8930,6 +8968,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guide UI
       objectReference: {fileID: 0}
+    - target: {fileID: 8345411671073670856, guid: fbdcae5e466ca7e4aae5f6390cf6c0bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9100,6 +9142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform_Wrist_Offset
       objectReference: {fileID: 0}
+    - target: {fileID: 6569064178296082190, guid: 57e93bd16ca3f1947a333d5915476f97, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8609299157248932554, guid: 57e93bd16ca3f1947a333d5915476f97, type: 3}
       propertyPath: m_SizeDelta.x
       value: 972
@@ -9121,7 +9167,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 451949351440041983, guid: 57e93bd16ca3f1947a333d5915476f97, type: 3}
   m_PrefabInstance: {fileID: 7454155027936893798}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1548026681}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 211ffc173f111c948acdc27a919235c1, type: 3}
