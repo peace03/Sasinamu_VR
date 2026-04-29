@@ -39,6 +39,9 @@ public class NPC_BT : MonoBehaviourPun
     private float IdleStartTime = 0f;   //Idle 시작 시간
     private bool isIdle = true;     //Idle 상태인가?
 
+    private Vector3 lastPosition;
+    private float smoothedVelocity;
+
     private void OnEnable()
     {
         EventBus<SubwayArrive>.OnEvent += SetIsBoardedTrue;
@@ -120,22 +123,35 @@ public class NPC_BT : MonoBehaviourPun
 
     private void Update()
     {
+        Vector3 movementDelta = transform.position - lastPosition;
+        movementDelta.y = 0f;
+
+        float currentSpeed = movementDelta.magnitude / Time.deltaTime;
+
+        smoothedVelocity = Mathf.Lerp(smoothedVelocity, currentSpeed, Time.deltaTime * 15);
+
+        if (smoothedVelocity < 0.1f) smoothedVelocity = 0f;
+
+        anim.SetFloat("Speed", smoothedVelocity);
+        lastPosition = transform.position;
+
         //방장이 아니면 BT 정지
         if (!PhotonNetwork.IsMasterClient) return;
 
         //애니메이션 재생
-        if (agent.enabled)
-            velocity = agent.velocity.magnitude;
-        else if (!cc.enabled) velocity = 0f;
-        else
-            velocity = new Vector3(cc.velocity.x, 0f, cc.velocity.z).magnitude;
-        anim.SetFloat("Speed", velocity);
+        //if (agent.enabled)
+        //    velocity = agent.velocity.magnitude;
+        //else if (!cc.enabled) velocity = 0f;
+        //else
+        //    velocity = new Vector3(cc.velocity.x, 0f, cc.velocity.z).magnitude;
+        //anim.SetFloat("Speed", velocity);
         //Debug.Log(velocity);
 
         //방장 위임 처리: 참가자 시절 agent가 꺼져있던 경우 다시 켜줌
         //단, 이미 지하철에 탑승해서 고의로 끈 상태가 아닐때만 작동
-        if (!agent.enabled && !isBoarded && transform.parent != subway)
+        if (!agent.enabled && !isBoarded && !isOpenDoor && transform.parent != subway)
         {
+            Debug.Log("agent on");
             agent.enabled = true;
             //현재 위치 내비메시 동기화
             agent.Warp(transform.position);
@@ -181,8 +197,8 @@ public class NPC_BT : MonoBehaviourPun
     private BT_NodeStatus BoardSubway()
     {
         //Debug.Log("지하철 탑승 BT 호출 완료");
-        if (agent.enabled) agent.enabled = false;
-        if (isBoarded || Vector3.Distance(transform.position, onBoardTarget) <= 0.2)
+        if (agent.enabled) { agent.enabled = false; Debug.Log("agent off"); }
+            if (isBoarded || Vector3.Distance(transform.position, onBoardTarget) <= 0.2)
         {
             //1회만 실행 부모가 안 바꼈을 시
             if (transform.parent != subway)

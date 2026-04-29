@@ -29,33 +29,33 @@ public class PlayerSetup : MonoBehaviourPun
     {
         Debug.Log($"아바타 스폰됨. ViewID: {photonView.ViewID}, IsMine: {photonView.IsMine}");
         // 이 캐릭터가 '내 컴퓨터'에서 스폰된 내 아바타가 아니라면 (즉, 클론이라면)
-        if (!photonView.IsMine)
+        if (photonView.IsMine)
         {
             // 1. 눈과 귀를 제거합니다 (시점/오디오 탈취 방지)
-            if (mainCamera != null) mainCamera.enabled = false;
-            if (audioListener != null) audioListener.enabled = false;
+            if (mainCamera != null) mainCamera.enabled = true;
+            if (audioListener != null) audioListener.enabled = true;
 
             // 2. HMD 입력 기반의 고개 회전을 막습니다
-            if (trackedPoseDriver != null) trackedPoseDriver.enabled = false;
+            if (trackedPoseDriver != null) trackedPoseDriver.enabled = true;
 
             // 3. 조이스틱 이동 입력과 물리 엔진 충돌을 막습니다
-            if (playerMove != null) playerMove.enabled = false;
-            if (moveProvider != null) moveProvider.enabled = false;
-            if (turnProvider != null) turnProvider.enabled = false;
-            if (characterController != null) characterController.enabled = false;
+            if (playerMove != null) playerMove.enabled = true;
+            if (moveProvider != null) moveProvider.enabled = true;
+            if (turnProvider != null) turnProvider.enabled = true;
+            if (characterController != null) characterController.enabled = true;
 
             // 4. 양손의 입력과 레이저 상호작용을 막습니다
             foreach (var controller in xrControllers)
             {
-                if (controller != null) controller.enabled = false;
+                if (controller != null) controller.enabled = true;
             }
             foreach (var interactor in rayInteractors)
             {
-                if (interactor != null) interactor.enabled = false;
+                if (interactor != null) interactor.enabled = true;
             }
 
             // 남의 아바타라면 시뮬레이터도 꺼버립니다.
-            if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(false);
+            if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(true);
         }
         else
         {

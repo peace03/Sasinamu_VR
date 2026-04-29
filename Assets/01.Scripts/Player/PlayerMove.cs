@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
         //조이스틱 움직이면 run
         else velocity = new Vector3(cc.velocity.x, 0f, cc.velocity.z);
         anim.SetFloat("Speed", velocity.magnitude);
-        Debug.Log(velocity.magnitude);
+        //Debug.Log(velocity.magnitude);
     }
 
     public void StopObj(OnEnterStandbyStart _)

@@ -26,8 +26,10 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     [Tooltip("1초당 증가할 가속도")]
     [SerializeField] private float acceleration;    //1초당 증가할 가속도
     
-    //[Header("지하철 사운드 설정")]
-    //[SerializeField] private PlaySFX subwayEntryBrodcastSound;  //지하철 진입 방송 안내음
+    [Header("지하철 사운드 설정")]
+    [SerializeField] private PlaySFX subwayEntryBrodcastSound;  //지하철 진입 방송 안내음
+    [SerializeField] private PlaySFX subwayArriveSound;  //지하철 진입음
+    [SerializeField] private PlaySFX subwayLeaveSound;  //지하철 발차음
 
     [Header("지하철 사이클 이벤트")]
     [SerializeField] private UnityEvent<int[]> OnPassengerReset;    //지하철 탑승객 인원 리셋 이벤트
@@ -189,6 +191,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(5f);
         status = SubwayStatus.Leave;
         isCorouting = false;
+        PlayLeaveSound();   //발차음 재생
     }
 
     // [모두를 위한 처리]
@@ -232,12 +235,12 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     //지하철 도착 전 안내음
     public void PlayEntryBroadCastSound()
     {
-        photonView.RPC("SyncEntrySound", RpcTarget.All);
+        photonView.RPC("SyncEntryBrodcastSound", RpcTarget.All);
     }
     [PunRPC]
     public void SyncEntryBrodcastSound()
     {
-        //subwayEntryBrodcastSound.Call();
+        subwayEntryBrodcastSound.Call();
     }
 
     //지하철 도착 소리
@@ -248,7 +251,7 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncArriveSound()
     {
-        //subwayArriveSound.Call();
+        subwayArriveSound.Call();
     }
 
     //지하철 떠나는 소리
@@ -259,6 +262,6 @@ public class SubwayCycle : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncLeaveSound()
     {
-        //subwayLeaveSound.Call();
+        subwayLeaveSound.Call();
     }
 }
