@@ -1,15 +1,15 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+public enum LoadScene
+{
+    StartScene,
+    SubwayScene,
+    EndScene
+}
 
 public class SceneLoader : MonoBehaviour
 {
-    public enum LoadScene
-    {
-        StartScene,
-        SubwayScene,
-        EndScene
-    }
 
     [Header("이동할 씬 설정")]
     [SerializeField] private LoadScene loadScene;

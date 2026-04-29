@@ -4,7 +4,7 @@ using System.Collections.Generic;
 //혼잡도 오브젝트 매니저
 public class CongestionVisualizerManager : MonoBehaviour
 {
-    [SerializeField] private List<ChangeTextObj> congestionVisualizers;
+    [SerializeField] private List<ChangeCongestionState> congestionVisualizers;
     [Header("탑승 인원수 별 임계치")]
     [Tooltip("혼잡")]
     [SerializeField] private int congestion;
@@ -13,7 +13,7 @@ public class CongestionVisualizerManager : MonoBehaviour
     [Tooltip("여유")]
     [SerializeField] private int clear;
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < congestionVisualizers.Count; i++)
         {

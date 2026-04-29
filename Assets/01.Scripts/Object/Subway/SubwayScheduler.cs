@@ -41,7 +41,7 @@ public class SubwayScheduler : MonoBehaviourPun
             if (CurrentTime >= subwayCycleTime - entryCountdown && brodcastSoundPlay == false)
             {
                 brodcastSoundPlay = true;
-                subwayCycle.PlayEntryBroadCastSound();
+                subwayCycle.PlayEntryBroadCastSound(); //지하철 진입 안내음 재생
             }
             //지하철 진입 대기
             if (CurrentTime >= subwayCycleTime)
@@ -58,6 +58,7 @@ public class SubwayScheduler : MonoBehaviourPun
             if (subwayCycle.GetSubwayStatus() == SubwayStatus.StandBy)
             {
                 subwayCycle.SetSubwayStatus(SubwayStatus.Start);
+                subwayCycle.PlayArriveSound(); //도착 사운드 재생
             }
             if (subwayCycle.GetSubwayStatus() == SubwayStatus.Arrive)
             {

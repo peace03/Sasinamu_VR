@@ -30,8 +30,8 @@ public class SubwayDoorHandler : MonoBehaviour
         this.speed = speed;
 
         //제어할 문
-        leftDoor = transform.GetChild(0).transform;
-        rightDoor = transform.GetChild(1).transform;
+        leftDoor = transform.GetChild(1).transform;
+        rightDoor = transform.GetChild(0).transform;
         //원본 로컬좌표
         leftOriginPos = leftDoor.localPosition;
         rightOriginPos = rightDoor.localPosition;

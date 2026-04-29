@@ -30,7 +30,7 @@ public class NPC_Brain : MonoBehaviour
 
     private void OnLineUpAlarmTriggered()
     {
-        Debug.Log("줄서야한다고!! 세팅");
+        //Debug.Log("줄서야한다고!! 세팅");
         BT.SetIsLineUPTime(true);
     }
 
