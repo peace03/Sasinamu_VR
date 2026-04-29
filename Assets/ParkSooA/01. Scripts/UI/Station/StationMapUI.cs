@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class StationMapUI : MonoBehaviour
 {
@@ -15,10 +14,7 @@ public class StationMapUI : MonoBehaviour
     [Header("버튼을 눌렀을 때 실행될 함수")]
     [Space(10)][SerializeField] private UnityEvent OnClick;
 
-    private Dictionary<GameObject, ButtonData> allButtons = new();      // 모든 버튼들
     private Dictionary<string, ButtonData> buttonPaths = new();         // 버튼 경로들
-
-    private int? playerID = null;                                       // 플레이어 ID
 
     private void Awake()
     {
@@ -27,26 +23,18 @@ public class StationMapUI : MonoBehaviour
         InitButtons();
     }
 
-    // 플레이어 ID 설정 함수
-    public void SetPlayerID(int? id) => playerID = id;
-
     // 버튼 선택 함수
-    public void SelectButton(SelectEnterEventArgs args)
+    public void SelectButton(ButtonData data)
     {
-        // 플레이어 ID와 버튼을 누른 컨트롤러의 ID가 다르다면
-        if (playerID != args.interactorObject.transform.GetComponent<PlayerID>().ID)
-        {
-            Debug.Log($"{args.interactorObject.transform.GetComponent<PlayerID>().ID}와 {playerID}는 다릅니다.");
+        // 노선도 UI가 닫혀있다면
+        if (!gameObject.activeSelf)
             // 종료
             return;
-        }
 
-        Debug.Log($"{args.interactorObject.transform.GetComponent<PlayerID>().ID} / {playerID}");
-
-        // 누른 버튼에 버튼 데이터가 없다면
-        if (!allButtons.TryGetValue(args.interactableObject.transform.gameObject, out var data))
+        // 지정된 플레이어의 컨트롤러가 UI를 가리키고 있지 않다면
+        if(!transform.GetComponentInParent<StationInfo>().IsPlayerUIHovering())
         {
-            Debug.Log($"{args.interactableObject.transform.gameObject.name}은 버튼 데이터가 없습니다.");
+            Debug.Log("지정된 플레이어가 UI를 가리키고 있지 않습니다.");
             // 종료
             return;
         }
@@ -80,11 +68,6 @@ public class StationMapUI : MonoBehaviour
                 // 버튼 경로 설정
                 data.SetButtonPath(transform);
 
-                // 해당 버튼이 없다면
-                if (!allButtons.ContainsKey(data.gameObject))
-                    // 버튼 저장
-                    allButtons.Add(data.gameObject, data);
-
                 // 해당 버튼의 경로가 없다면
                 if (!buttonPaths.ContainsKey(data.ButtonPath))
                     // 버튼 경로 저장
@@ -94,6 +77,15 @@ public class StationMapUI : MonoBehaviour
                 if (data.TargetUI != null)
                     // UI 닫기
                     data.TargetUI.SetActive(false);
+
+                // 버튼 컴포넌트가 있다면
+                if (data.TryGetComponent<Button>(out var button))
+                {
+                    // 기존에 있던 버튼의 클릭 기능을 모두 삭제
+                    button.onClick.RemoveAllListeners();
+                    // 버튼 클릭 기능 추가
+                    button.onClick.AddListener(() => SelectButton(data));
+                }
             }
     }
 }
