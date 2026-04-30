@@ -12,14 +12,15 @@ public class SmoothFollow : MonoBehaviour
     [Header("UI가 카메라를 따라오는 회전 속도(작을수록 느림)")]
     [SerializeField][Range(0f, 100f)] private float rotationSpeed = 5f;
 
-    private Transform target;                               // 타겟(메인 카메라)
+    [SerializeField] private Transform target;              // 타겟(메인 카메라)
 
     private Vector3 moveVelocity = Vector3.zero;            // 움직였던 속도
 
-    private void Awake()
+    public void Init()
     {
-        // 초기화
-        target = Camera.main.transform;
+        if (target == null)
+            // 초기화
+            target = Camera.main.transform;
     }
 
     private void LateUpdate()

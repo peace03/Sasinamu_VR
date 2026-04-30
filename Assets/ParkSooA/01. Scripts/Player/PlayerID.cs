@@ -12,13 +12,9 @@ public class PlayerID : MonoBehaviour
     private bool isUIHovering;              // UI 가리킴 여부
     private int? id = null;                 // 아이디
 
-    private void Awake()
+    public void Init()
     {
         interactor = transform.GetComponent<XRRayInteractor>();
-    }
-
-    private void OnEnable()
-    {
         // 아이디 받아오기
         id = transform.root.GetComponentInChildren<PhotonView>()?.Owner?.ActorNumber;
     }

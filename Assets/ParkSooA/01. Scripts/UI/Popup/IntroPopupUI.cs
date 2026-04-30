@@ -4,6 +4,8 @@ using UnityEngine.Events;
 
 public class IntroPopupUI : PopupUI
 {
+    [SerializeField] private LoadScene currentScene;
+
     [Header("화면 전환")]
     [SerializeField] private SceneChangeUI sceneChangeUI;
 
@@ -20,6 +22,13 @@ public class IntroPopupUI : PopupUI
     [Space(10)][SerializeField] private UnityEvent OnFinished;
 
     private void Start()
+    {
+        if (currentScene == LoadScene.StartScene)
+            // 도입부 연출 시작
+            StartCoroutine(IntroSequence());
+    }
+
+    public void Init()
     {
         // 도입부 연출 시작
         StartCoroutine(IntroSequence());

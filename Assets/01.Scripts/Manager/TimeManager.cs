@@ -52,7 +52,7 @@ public class TimeManager : MonoBehaviour
             alarmQueue[lastIndex].Callback?.Invoke();
             //실행 후 리스트에서 지워주기
             alarmQueue.RemoveAt(lastIndex);
-            Debug.Log("줄서기 알람 발송 완료");
+            //Debug.Log("줄서기 알람 발송 완료");
         }
     }
 
@@ -82,7 +82,7 @@ public class TimeManager : MonoBehaviour
     //NPC 알람 초기화 메서드
     public void RegisterAlarmReset()
     {
-        Debug.Log("알람 리셋");
+        //Debug.Log("알람 리셋");
         alarmQueue.Clear();
     }
 }

@@ -25,6 +25,10 @@ public class PlayerSetup : MonoBehaviourPun
     [Header("에디터 테스트용 시뮬레이터")]
     [SerializeField] private GameObject xrDeviceSimulator;
 
+    [Header("UI 매니저들")]
+    [SerializeField] private PlayerInitManager initManager;
+    [SerializeField] private PlayerUIManager uiManager;
+
     private void Start()
     {
         Debug.Log($"아바타 스폰됨. ViewID: {photonView.ViewID}, IsMine: {photonView.IsMine}");
@@ -57,6 +61,13 @@ public class PlayerSetup : MonoBehaviourPun
 
             // 남의 아바타라면 시뮬레이터도 꺼버립니다.
             if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(true);
+
+            if (initManager != null)
+            {
+                initManager.enabled = true;
+                if (uiManager != null) uiManager.enabled = true;
+                initManager.TotalInit();
+            }
         }
         else
         {

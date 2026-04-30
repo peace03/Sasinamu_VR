@@ -1,33 +1,16 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-#if UNITY_EDITOR    // 유니티 에디터에서만
-using UnityEditor;
-#endif
 
 public class SceneChanger : ArrivalTrigger
 {
     [Header("이동할 씬")]
-#if UNITY_EDITOR
-    [SerializeField] private SceneAsset sceneAsset;
-#endif
+    [SerializeField] private LoadScene nextScene;
 
     [Header("화면 전환 UI")]
     [SerializeField] private SceneChangeUI sceneChangeUI;
 
     private Coroutine sceneChangeCoroutine;     // 씬 전환 코루틴
-
-    private string sceneName;                   // 이동할 씬 이름
-
-    private void OnValidate()
-    {
-#if UNITY_EDITOR
-        // 이동할 씬이 비어있지 않다면
-        if (sceneAsset != null)
-            // 이동할 씬 이름 저장
-            sceneName = sceneAsset.name;
-#endif
-    }
 
     protected override void OnArrival(GameObject player)
     {
@@ -81,12 +64,20 @@ public class SceneChanger : ArrivalTrigger
         // 씬 전환 코루틴 초기화
         sceneChangeCoroutine = null;
 
-        // 이동할 씬 이름이 있다면
-        if (!string.IsNullOrEmpty(sceneName))
-            // 씬 이동
-            SceneManager.LoadScene(sceneName);
-        // 없다면
-        else
-            Debug.Log($"[Error] {gameObject.name}에 이동할 씬이 지정되지 않았습니다.");
+        switch (nextScene)
+        {
+            case LoadScene.StartScene:
+                SceneManager.LoadScene("StartRoom_Y");
+                break;
+            case LoadScene.SubwayScene:
+                SceneManager.LoadScene("SubwayScene_Y");
+                break;
+            case LoadScene.EndScene:
+                SceneManager.LoadScene("EndScene_Y");
+                break;
+            default:
+                Debug.Log($"[Error] {gameObject.name}에 이동할 씬이 지정되지 않았습니다.");
+                break;
+        }
     }
 }

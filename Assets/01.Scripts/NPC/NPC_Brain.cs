@@ -20,7 +20,7 @@ public class NPC_Brain : MonoBehaviour
         float randomWaitTime = Random.Range(5f, subwayArrivalTime-5f);
         float targetAlarmTime = subwayArrivalTime - randomWaitTime;
         timeManager.RegisterAlarm(targetAlarmTime, OnLineUpAlarmTriggered);
-        Debug.Log("알람 울릴 시간: "+targetAlarmTime);
+        //Debug.Log("알람 울릴 시간: "+targetAlarmTime);
     }
 
     public void SetPoolManager(IObjectPool<NPC_Brain> pool)

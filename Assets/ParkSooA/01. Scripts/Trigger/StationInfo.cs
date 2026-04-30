@@ -7,8 +7,8 @@ public class StationInfo : ArrivalTrigger
     public const string UI_NAME_DETAIL = "Detail";          // 상세정보
 
     [Header("플레이어 손 이름")]
-    [SerializeField] private string leftHandName = "LeftHand";
-    [SerializeField] private string rightHandName = "RightHand";
+    [SerializeField] private string leftHandName = "LeftHand Controller";
+    [SerializeField] private string rightHandName = "RightHand Controller";
 
     [Header("지하철 UI들")]
     [SerializeField] private StationMapUI mapUI;            // 노선도 UI
@@ -26,7 +26,7 @@ public class StationInfo : ArrivalTrigger
 
     private void Awake()
     {
-        platformPV = GetComponent<PhotonView>();
+        platformPV = transform.GetComponent<PhotonView>();
     }
 
     [PunRPC]
@@ -162,10 +162,11 @@ public class StationInfo : ArrivalTrigger
         wristUI = root.GetComponentInChildren<PlatformWristUI>();
 
         // 손목 UI가 있고 가이드 UI가 있다면
-        if (wristUI != null && guideUI != null)
+        if (wristUI != null && guideUI != null && mapUI != null)
         {
             // 손목 UI 기능 막기
             wristUI.SetCanOpenUI(false);
+            mapUI.Init(wristUI.CurrentProgress.currentStep);
             // 손목 UI의 가이드 진행 상황에 따라서 가이드 UI 초기화
             guideUI.Init(wristUI.CurrentProgress);
             // 가이드 UI 열기

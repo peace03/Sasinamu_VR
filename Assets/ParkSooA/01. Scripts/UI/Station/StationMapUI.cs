@@ -13,12 +13,16 @@ public class StationMapUI : MonoBehaviour
 
     private Dictionary<string, ButtonData> buttonPaths = new();         // 버튼 경로들
 
+    private GuideState curGuideState;
+
     private void Awake()
     {
         // 초기화
         gameObject.SetActive(true);
         InitButtons();
     }
+
+    public void Init(GuideState state) => curGuideState = state;
 
     // 버튼 선택 함수
     public void SelectButton(ButtonData data)
@@ -36,8 +40,10 @@ public class StationMapUI : MonoBehaviour
             return;
         }
 
-        // 실행될 함수가 있다면 실행하기
-        OnClick?.Invoke();
+        if (curGuideState == GuideState.Select)
+            // 실행될 함수가 있다면 실행하기
+            OnClick?.Invoke();
+
         // UI 변경 동기화 요청하기
         transform.GetComponentInParent<StationInfo>().RequestSync(StationInfo.UI_NAME_MAP, data.ButtonPath);
     }

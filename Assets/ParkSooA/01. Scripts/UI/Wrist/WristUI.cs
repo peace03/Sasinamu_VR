@@ -3,6 +3,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class WristUI : MonoBehaviour
 {
+    [SerializeField] private LoadScene curScene;
+
     [Header("팝업 UI")]
     [SerializeField] private PopupUI popupUI;
 
@@ -19,6 +21,12 @@ public class WristUI : MonoBehaviour
     private bool canOpenUI = false;             // UI 열기 가능 여부
 
     private void Awake()
+    {
+        if (curScene == LoadScene.StartScene)
+            Init();
+    }
+
+    public void Init()
     {
         target = Camera.main.transform;
         leftHandRay = GetComponentInParent<XRRayInteractor>();
@@ -38,6 +46,8 @@ public class WristUI : MonoBehaviour
         if (leftHandRay != null && leftHandRay.enabled == leftHandCheck)
             // 손목과의 거리, 각도에 따라서 레이 상태 바꾸기
             leftHandRay.enabled = !leftHandCheck;
+        else if (leftHandRay == null)
+            leftHandRay = GetComponentInParent<XRRayInteractor>();
 
         // 거리와 각도에 따른 결과로 팝업 UI 열거나 닫기
         popupUI.PopupUIHandler(leftHandCheck);

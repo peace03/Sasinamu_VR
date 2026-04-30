@@ -110,6 +110,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  currentScene: 0
   sceneChangeUI: {fileID: 0}
   startDelayDuration: 10
   displayDuration: 15
@@ -367,6 +368,7 @@ MonoBehaviour:
   distance: 0.8
   movingDuration: 0.5
   rotationSpeed: 5
+  target: {fileID: 0}
 --- !u!1 &5858487923020314580
 GameObject:
   m_ObjectHideFlags: 0
