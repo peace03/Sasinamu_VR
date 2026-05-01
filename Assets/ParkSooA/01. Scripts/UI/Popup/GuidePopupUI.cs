@@ -18,8 +18,8 @@ public class GuidePopupUI : PopupUI
     [SerializeField] private Sprite[] exitCheckSprites;
     [SerializeField] private Sprite[] foodCheckSprites;
 
-    private CanvasGroup[] guideCanvasGroup;     // 가이드 UI들의 캔버스 그룹
-    private Coroutine guideCoroutine;           // 가이드 UI 코루틴
+    private CanvasGroup[] guideSubCanvasGroup;      // 가이드 UI들의 개별 캔버스 그룹
+    private Coroutine guideCoroutine;               // 가이드 UI 코루틴
     public Coroutine GuideCoroutine => guideCoroutine;
 
     private GuideProgress guideProgress;        // 현재 가이드 진행 상황
@@ -31,8 +31,8 @@ public class GuidePopupUI : PopupUI
         // 가이드 UI가 있다면
         if (guideAllUI != null)
         {
-            // 가이드 UI의 개수만큼 캔버스 그룹 개수를 정하기
-            guideCanvasGroup = new CanvasGroup[guideAllUI.Length];
+            // 가이드 UI들의 개수만큼 개별 캔버스 그룹 개수를 정하기
+            guideSubCanvasGroup = new CanvasGroup[guideAllUI.Length];
 
             // 가이드 UI 개수만큼
             for (int i = 0; i < guideAllUI.Length; i++)
@@ -49,7 +49,7 @@ public class GuidePopupUI : PopupUI
                 }
                 else
                     // 캔버스 그룹 저장
-                    guideCanvasGroup[i] = canvas;
+                    guideSubCanvasGroup[i] = canvas;
             }
         }
     }
@@ -72,8 +72,21 @@ public class GuidePopupUI : PopupUI
 
         // 현재 가이드 진행 상황에 맞는 UI 열기
         guideAllUI[(int)guideProgress.currentStep].SetActive(true);
-        // 확인 이미지 새로고침
+        // 개별 캔버스 그룹 재설정
+        RefreshSubCanvasGroup();
+        // 확인 이미지 재설정
         RefreshCheckImage();
+    }
+
+    // 개별 캔버스 그룹 재설정 함수
+    private void RefreshSubCanvasGroup()
+    {
+        // 투명하게 바꾸기
+        foreach (var canvas in guideSubCanvasGroup)
+            canvas.alpha = 0f;
+
+        // 현재 가이드 진행 상황에 맞는 UI 불투명하게 바꾸기
+        guideSubCanvasGroup[(int)guideProgress.currentStep].alpha = 1f;
     }
 
     // 확인 이미지 재설정 함수
@@ -131,7 +144,7 @@ public class GuidePopupUI : PopupUI
     private IEnumerator GuideUIRoutine()
     {
         // UI 닫기
-        SetUIFade(false, nextGuideDuration, guideCanvasGroup[(int)guideProgress.currentStep]);
+        SetUIFade(false, nextGuideDuration, guideSubCanvasGroup[(int)guideProgress.currentStep]);
         // UI 닫기 기다리기
         yield return new WaitForSeconds(nextGuideDuration);
         // 가이드 UI 닫기
@@ -139,7 +152,7 @@ public class GuidePopupUI : PopupUI
         // 다음 가이드 UI 열기
         guideAllUI[(int)guideProgress.currentStep].SetActive(true);
         // UI 열기
-        SetUIFade(true, nextGuideDuration, guideCanvasGroup[(int)guideProgress.currentStep]);
+        SetUIFade(true, nextGuideDuration, guideSubCanvasGroup[(int)guideProgress.currentStep]);
         // UI 열기 기다리기
         yield return new WaitForSeconds(nextGuideDuration);
         // 가이드 UI 코루틴 초기화

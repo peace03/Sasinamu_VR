@@ -21,6 +21,7 @@ public class StationInfo : ArrivalTrigger
     private PlayerID leftHand;                              // 왼손
     private PlayerID rightHand;                             // 오른손
     private PlatformWristUI wristUI;                        // 플레이어 손목 UI
+    private ArrowPointer arrowPointer;                      // 방향 화살표
 
     private int? playerID = null;                           // 플레이어 ID
 
@@ -128,16 +129,6 @@ public class StationInfo : ArrivalTrigger
             RPC_SyncOwner(999);
         }
 
-        //// 캔버스 가져오기
-        //var canvas = transform.GetComponentInChildren<Canvas>();
-        //// 플레이어의 카메라 가져오기
-        //var camera = root.GetComponentInChildren<Camera>();
-
-        //// 캔버스와 카메라 둘다 비어있지 않다면
-        //if (canvas != null && camera != null)
-        //    // 캔버스의 카메라를 플레이어 카메라로 설정하기
-        //    canvas.worldCamera = camera;
-
         // 플레이어 ID 컴포넌트를 가지고 있는 손 가져오기
         var ids = root.GetComponentsInChildren<PlayerID>();
         
@@ -161,16 +152,32 @@ public class StationInfo : ArrivalTrigger
         // 손목 UI 저장
         wristUI = root.GetComponentInChildren<PlatformWristUI>();
 
-        // 손목 UI가 있고 가이드 UI가 있다면
-        if (wristUI != null && guideUI != null && mapUI != null)
+        // 손목 UI가 있다면
+        if (wristUI != null)
         {
             // 손목 UI 기능 막기
             wristUI.SetCanOpenUI(false);
-            mapUI.Init(wristUI.CurrentProgress.currentStep);
-            // 손목 UI의 가이드 진행 상황에 따라서 가이드 UI 초기화
-            guideUI.Init(wristUI.CurrentProgress);
-            // 가이드 UI 열기
-            guideUI.PopupUIHandler(true);
+
+            // 맵 UI가 있다면
+            if (mapUI != null)
+                // 손목 UI의 가이드 진행 상황에 따라서 맵 UI 버튼 기능 초기화
+                mapUI.Init(wristUI.CurrentProgress.currentStep);
+
+            // 가이드 UI가 있다면
+            if (guideUI != null)
+            {
+                // 손목 UI의 가이드 진행 상황에 따라서 가이드 UI 초기화
+                guideUI.Init(wristUI.CurrentProgress);
+                // 가이드 UI 열기
+                guideUI.PopupUIHandler(true);
+                // 방향 화살표 저장
+                arrowPointer = root.GetComponentInChildren<ArrowPointer>();
+
+                // 방향 화살표가 있다면
+                if (arrowPointer != null)
+                    // 방향 화살표 숨기기
+                    arrowPointer.ArrowPointerHandler(false);
+            }
         }
     }
 
@@ -204,14 +211,6 @@ public class StationInfo : ArrivalTrigger
             Debug.Log("오프라인 테스트 : 로컬에서 직접 Owner(초기화) 설정 함수를 실행합니다.");
             RPC_SyncOwner(-1);
         }
-
-        //// 캔버스 가져오기
-        //var canvas = transform.GetComponentInChildren<Canvas>();
-
-        //// 캔버스가 비어있지 않다면
-        //if (canvas != null)
-        //    // 캔버스의 카메라 초기화
-        //    canvas.worldCamera = null;
 
         // 왼손 초기화
         leftHand = null;
@@ -252,6 +251,15 @@ public class StationInfo : ArrivalTrigger
             wristUI.SetCanOpenUI(true);
             // 손목 UI 초기화
             wristUI = null;
+        }
+
+        // 방향 화살표가 있다면
+        if (arrowPointer != null)
+        {
+            // 방향 화살표 보여주기
+            arrowPointer.ArrowPointerHandler(true);
+            // 방향 화살표 초기화
+            arrowPointer = null;
         }
 
         // 만약 플레이어 ID가 초기화가 안됐다면

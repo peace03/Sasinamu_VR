@@ -1,4 +1,3 @@
-using Photon.Pun;
 using UnityEngine;
 
 public class PlayerUIManager : MonoBehaviour
@@ -7,6 +6,9 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] private PlatformWristUI wristUI;
     [SerializeField] private GameObject introUI;
     [SerializeField] private GameObject sceneChangeUI;
+
+    [Header("방향 화살표")]
+    [SerializeField] private ArrowPointer pointer;
 
     public void Init()
     {
@@ -17,5 +19,7 @@ public class PlayerUIManager : MonoBehaviour
         introUI.SetActive(true);
         introUI.GetComponentInChildren<SmoothFollow>().Init();
         introUI.GetComponentInChildren<IntroPopupUI>().Init();
+        pointer.Init(wristUI.CurrentProgress);
+        pointer.gameObject.SetActive(true);
     }
 }

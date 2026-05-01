@@ -45,8 +45,6 @@ public class IntroPopupUI : PopupUI
 
         // 혹시 모를 중복 방지
         StopAllCoroutines();
-        //// 손목 UI가 안 열리게 바꾸기
-        //OnStart?.Invoke();
         // 도입부 연출 시작
         StartCoroutine(IntroSequence());
     }
