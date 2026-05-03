@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7473345780621377393}
   - component: {fileID: 1083245999923646915}
   - component: {fileID: 3992617638480884605}
+  - component: {fileID: 5247276807723106576}
   m_Layer: 5
   m_Name: Popup UI
   m_TagString: Untagged
@@ -147,6 +148,19 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &5247276807723106576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1379201416799710773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3173930d28a7f4d966b62aec90922a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WristUIBillBoard
+  rotationSpeed: 15
 --- !u!1 &1828604302478190758
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WristUI
   curScene: 0
   popupUI: {fileID: 3669454550457629526}
+  rotationSpeed: 15
   viewThreshold: 0.7
   minDistance: 0.16
   maxDistance: 0.65

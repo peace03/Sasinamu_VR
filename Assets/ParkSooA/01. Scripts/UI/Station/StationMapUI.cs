@@ -13,7 +13,7 @@ public class StationMapUI : MonoBehaviour
 
     private Dictionary<string, ButtonData> buttonPaths = new();         // 버튼 경로들
 
-    private GuideState curGuideState;
+    private GuideProgress playerProgress;                               // 플레이어 진행상황
 
     private void Awake()
     {
@@ -22,7 +22,8 @@ public class StationMapUI : MonoBehaviour
         InitButtons();
     }
 
-    public void Init(GuideState state) => curGuideState = state;
+    // 초기화 함수
+    public void Init(GuideProgress progress) => playerProgress = progress;
 
     // 버튼 선택 함수
     public void SelectButton(ButtonData data)
@@ -40,7 +41,8 @@ public class StationMapUI : MonoBehaviour
             return;
         }
 
-        if (curGuideState == GuideState.Select)
+        // 플레이어의 가이드 진행상황이 노선도라면
+        if (playerProgress.currentStep == GuideState.Select)
             // 실행될 함수가 있다면 실행하기
             OnClick?.Invoke();
 

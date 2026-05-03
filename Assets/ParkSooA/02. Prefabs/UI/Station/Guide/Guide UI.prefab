@@ -777,7 +777,7 @@ GameObject:
   - component: {fileID: 3684296493939034996}
   - component: {fileID: 128959687579649475}
   m_Layer: 0
-  m_Name: Guide UI
+  m_Name: Popup UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

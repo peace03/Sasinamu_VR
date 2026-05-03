@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 
 public class StationInfo : ArrivalTrigger
@@ -17,11 +18,15 @@ public class StationInfo : ArrivalTrigger
     [Header("가이드 UI")]
     [SerializeField] private GuidePopupUI guideUI;
 
+    [Header("승강장 위치")]
+    [SerializeField] private GameObject subwayDestination;
+
     private PhotonView platformPV;                          // 지하철 포톤뷰
     private PlayerID leftHand;                              // 왼손
     private PlayerID rightHand;                             // 오른손
     private PlatformWristUI wristUI;                        // 플레이어 손목 UI
     private ArrowPointer arrowPointer;                      // 방향 화살표
+    private Coroutine closeCoroutine;                       // 닫기 코루틴
 
     private int? playerID = null;                           // 플레이어 ID
 
@@ -100,13 +105,13 @@ public class StationInfo : ArrivalTrigger
         return false;
     }
 
-    // LED 화면에 도착했을 때 실행되는 함수
+    // LED 화면에 들어왔을 때 실행되는 함수
     protected override void OnArrival(GameObject player)
     {
         // 플레이어 요소를 찾기 편하게 제일 최상위 요소로 이동
-        Transform root = player.transform.root;
+        var root = player.transform.root;
         // 플레이어의 포톤뷰 가져오기
-        PhotonView playerPV = root.GetComponentInChildren<PhotonView>();
+        var playerPV = root.GetComponentInChildren<PhotonView>();
 
         // 플레이어에 포톤뷰가 없거나, 내 캐릭터에서 발생한 상황이 아니거나, 서버에 접속되어 있는 상태에서 준비가 안된 캐릭터라면
         if (playerPV == null || !playerPV.IsMine || (PhotonNetwork.InRoom && playerPV.Owner == null))
@@ -117,6 +122,20 @@ public class StationInfo : ArrivalTrigger
         if (playerID != null)
             // 종료
             return;
+
+        // 가이드 닫기 연출이 진행 중이라면
+        if (closeCoroutine != null)
+        {
+            // 가이드 닫기 연출 중지
+            StopCoroutine(closeCoroutine);
+            // 닫기 코루틴 변수 초기화
+            closeCoroutine = null;
+
+            // 가이드 UI가 있다면
+            if (guideUI != null)
+                // 가이드 UI 전부 초기화
+                guideUI.ResetUI(true);
+        }
 
         // 서버에 접속되어 있다면
         if (PhotonNetwork.InRoom)
@@ -161,13 +180,19 @@ public class StationInfo : ArrivalTrigger
             // 맵 UI가 있다면
             if (mapUI != null)
                 // 손목 UI의 가이드 진행 상황에 따라서 맵 UI 버튼 기능 초기화
-                mapUI.Init(wristUI.CurrentProgress.currentStep);
+                mapUI.Init(wristUI.CurrentProgress);
 
             // 가이드 UI가 있다면
             if (guideUI != null)
             {
                 // 손목 UI의 가이드 진행 상황에 따라서 가이드 UI 초기화
                 guideUI.Init(wristUI.CurrentProgress);
+
+                // 가이드 UI의 닫힌 위치가 손목이라면
+                if (wristUI.CurrentProgress.currentStep == GuideState.Move)
+                    // 가이드 UI의 현재 위치만 초기화
+                    guideUI.ResetUI(false);
+
                 // 가이드 UI 열기
                 guideUI.PopupUIHandler(true);
                 // 방향 화살표 저장
@@ -181,13 +206,13 @@ public class StationInfo : ArrivalTrigger
         }
     }
 
-    // LED 화면에서 멀어졌을 때 실행되는 함수
+    // LED 화면에서 나갔을 때 실행되는 함수
     protected override void OnExited(GameObject player)
     {
         // 플레이어 요소를 찾기 편하게 제일 최상위 요소로 이동
-        Transform root = player.transform.root;
+        var root = player.transform.root;
         // 플레이어의 포톤뷰 가져오기
-        PhotonView playerPV = root.GetComponentInChildren<PhotonView>();
+        var playerPV = root.GetComponentInChildren<PhotonView>();
 
         // 플레이어에 포톤뷰가 없거나, 내 캐릭터에서 발생한 상황이 아니라면
         if (playerPV == null || !playerPV.IsMine)
@@ -232,6 +257,20 @@ public class StationInfo : ArrivalTrigger
             }
         }
 
+        // 손목 UI가 있고 다음 목적지가 승강장이라면
+        if (wristUI != null && wristUI.CurrentProgress.currentStep == GuideState.Move)
+        {
+            // 손목 UI 변경
+            wristUI.ChangeUI(PlatformWristType.Move);
+            // 승강장 위치 활성화
+            subwayDestination.SetActive(true);
+
+            // 가이드 UI가 있다면
+            if (guideUI != null)
+                // 닫는 위치 설정하기
+                guideUI.SetClosedPosition(wristUI.LeftHand);
+        }
+
         // 가이드 UI가 있다면
         if (guideUI != null)
         {
@@ -241,8 +280,22 @@ public class StationInfo : ArrivalTrigger
                 guideUI.StopGuideUIRoutine();
 
             // 가이드 UI 닫기
-            guideUI.PopupUIHandler(false);
+            closeCoroutine = StartCoroutine(WaitForCloseGuideUI());
         }
+    }
+
+    // 가이드 UI 닫기 함수
+    private IEnumerator WaitForCloseGuideUI()
+    {
+        // 가이드 UI 닫기
+        guideUI.PopupUIHandler(false);
+        // 가이드 UI 닫기 기다리기
+        yield return new WaitForSeconds(guideUI.CloseDuration);
+        
+        // 가이드 UI가 있다면
+        if (guideUI != null)
+            // 닫는 위치 초기화
+            guideUI.SetClosedPosition(guideUI.OpenedPos);
 
         // 손목 UI가 있다면
         if (wristUI != null)
@@ -266,5 +319,8 @@ public class StationInfo : ArrivalTrigger
         if (playerID != null)
             // 플레이어 ID 초기화
             playerID = null;
+
+        // 닫기 코루틴 변수 초기화
+        closeCoroutine = null;
     }
 }

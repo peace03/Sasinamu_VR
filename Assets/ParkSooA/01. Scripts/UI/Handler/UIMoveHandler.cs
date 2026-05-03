@@ -32,7 +32,20 @@ public class UIMoveHandler : MonoBehaviour
 
         // UI 상태에 따른 루틴 시작
         uiStateCoroutine = StartCoroutine(UIStateRoutine());
-        
+
+    }
+
+    // UI 상태 루틴 정지 함수
+    public void StopUIStateRoutine()
+    {
+        // UI 상태 코루틴이 비어있지 않다면
+        if (uiStateCoroutine != null)
+        {
+            // UI 상태 루틴 멈추기
+            StopCoroutine(uiStateCoroutine);
+            // UI 상태 코루틴 초기화
+            uiStateCoroutine = null;
+        }
     }
 
     // UI 상태 루틴 함수

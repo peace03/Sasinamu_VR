@@ -3,6 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class WristUI : MonoBehaviour
 {
+    [Header("현재 씬 종류")]
     [SerializeField] private LoadScene curScene;
 
     [Header("팝업 UI")]
@@ -17,19 +18,30 @@ public class WristUI : MonoBehaviour
 
     private Transform target;                   // 메인 카메라
     private XRRayInteractor leftHandRay;        // 왼쪽 컨트롤러 레이
+    private WristUIBillBoard billBoard;         // 빌보드
 
     private bool canOpenUI = false;             // UI 열기 가능 여부
+    private bool checkLeftHand;                 // 왼쪽 손 확인 여부
+    
+    public Transform LeftHand => leftHandRay.transform;
+
+    public bool CanRotate => canOpenUI && checkLeftHand;
 
     private void Awake()
     {
+        // 현재 씬이 시작 씬이라면
         if (curScene == LoadScene.StartScene)
+            // 초기화
             Init();
     }
 
+    // 초기화 함수
     public void Init()
     {
         target = Camera.main.transform;
         leftHandRay = GetComponentInParent<XRRayInteractor>();
+        billBoard = GetComponentInChildren<WristUIBillBoard>();
+        billBoard?.Init(this);
     }
 
     private void Update()
@@ -40,17 +52,17 @@ public class WristUI : MonoBehaviour
             return;
 
         // 손목과의 거리, 각도 확인하기
-        bool leftHandCheck = CheckDistanceAndRotation();
+        checkLeftHand = CheckDistanceAndRotation();
 
         // 왼쪽 컨트롤러에 레이가 있고, 상태를 바꿀 필요가 있다면
-        if (leftHandRay != null && leftHandRay.enabled == leftHandCheck)
+        if (leftHandRay != null && leftHandRay.enabled == checkLeftHand)
             // 손목과의 거리, 각도에 따라서 레이 상태 바꾸기
-            leftHandRay.enabled = !leftHandCheck;
-        else if (leftHandRay == null)
-            leftHandRay = GetComponentInParent<XRRayInteractor>();
+            leftHandRay.enabled = !checkLeftHand;
 
-        // 거리와 각도에 따른 결과로 팝업 UI 열거나 닫기
-        popupUI.PopupUIHandler(leftHandCheck);
+        // 팝업 UI가 있다면
+        if (popupUI != null)
+            // 거리와 각도에 따른 결과로 팝업 UI 열거나 닫기
+            popupUI.PopupUIHandler(checkLeftHand);
     }
 
     // 거리와 각도 확인 함수
@@ -65,5 +77,22 @@ public class WristUI : MonoBehaviour
     }
 
     // UI 열기 가능 여부 설정 함수
-    public void SetCanOpenUI(bool value) => canOpenUI = value;
+    public void SetCanOpenUI(bool value)
+    {
+        canOpenUI = value;
+
+        // UI를 못 열게 할거라면
+        if (!value)
+        {
+            // 팝업 UI가 있다면
+            if (popupUI != null)
+                // 팝업 UI 닫기
+                popupUI.PopupUIHandler(false);
+
+            // 왼쪽 컨트롤러가 있다면
+            if (leftHandRay != null)
+                // 레이 켜기
+                leftHandRay.enabled = true;
+        }
+    }
 }

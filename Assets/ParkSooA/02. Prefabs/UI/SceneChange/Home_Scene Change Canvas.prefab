@@ -252,7 +252,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7841088800459066493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,9 +282,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 050a857892cfe494cada677211895ce6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmoothFollow
+  offsetPosition: {x: 0, y: -0.1, z: 0}
+  offsetRotation: {x: 0, y: 0, z: 0}
   distance: 0.5
   movingDuration: 0
   rotationSpeed: 100
+  target: {fileID: 0}
 --- !u!1 &4440437965659808487
 GameObject:
   m_ObjectHideFlags: 0

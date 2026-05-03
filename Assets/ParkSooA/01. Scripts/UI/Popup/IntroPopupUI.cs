@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class IntroPopupUI : PopupUI
 {
+    [Header("현재 씬 종류")]
     [SerializeField] private LoadScene currentScene;
 
     [Header("화면 전환")]
@@ -15,19 +16,18 @@ public class IntroPopupUI : PopupUI
     [Header("UI를 보여주는 시간")]
     [SerializeField][Range(0f, 15f)] private float displayDuration = 15f;
 
-    //[Header("인트로가 시작할 때 실행될 함수(테스트용)")]
-    //[Space(10)][SerializeField] private UnityEvent OnStart;
-
     [Header("인트로가 끝났을 때 실행될 함수")]
     [Space(10)][SerializeField] private UnityEvent OnFinished;
 
     private void Start()
     {
+        // 현재 씬이 처음 씬이라면
         if (currentScene == LoadScene.StartScene)
             // 도입부 연출 시작
             StartCoroutine(IntroSequence());
     }
 
+    // 초기화 함수
     public void Init()
     {
         // 도입부 연출 시작

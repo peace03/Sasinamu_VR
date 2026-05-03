@@ -353,6 +353,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Home_Scene Change Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1667656452467139248, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1800963899112103878, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_Maskable
       value: 1
@@ -606,6 +610,10 @@ PrefabInstance:
     - target: {fileID: 3270617024457258285, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843164665356277180, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3973018874905260550, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_Name

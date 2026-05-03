@@ -7,7 +7,7 @@ public class UIFadeHandler : MonoBehaviour
     private AnimationCurve curve;                   // 연출 효과
     private CanvasGroup canvasGroup;                // UI 불투명도
 
-    private float duration;                         // 속도
+    private float duration;                         // 시간
 
     // 초기화 함수
     public void Init(AnimationCurve curve, float duration, CanvasGroup canvasGroup)

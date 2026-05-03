@@ -30,12 +30,16 @@ public class PopupUI : MonoBehaviour
     [SerializeField] private AnimationCurve openCurve;
     [SerializeField] private AnimationCurve closeCurve;
 
+    private bool curState = false;                      // 현재 UI 상태
+
+    public CanvasGroup CanvasGroup => canvasGroup;      // UI 캔버스 그룹
     public Transform OpenedPos => openedPos;            // UI 여는 위치
 
     public float CloseDuration => closeDuration;        // UI 닫기 연출 시간
-
-    private bool curState = false;                      // 현재 UI 상태
     #endregion
+
+    // 팝업 UI 상태 설정 함수
+    public void SetPopupUIState(bool state) => curState = state;
 
     // 팝업 UI 관리 함수
     public void PopupUIHandler(bool isOpen)
@@ -55,18 +59,43 @@ public class PopupUI : MonoBehaviour
         SetUIMove(curState);
     }
 
+    // 모든 팝업 요소 중지 함수
+    public void StopAllPopupUI()
+    {
+        // 크기 조절 연출 중지
+        StopUIScale();
+        // 불투명도 조절 연출 중지
+        StopUIFade();
+        // 이동 조절 연출 중지
+        StopUIMove();
+    }
+
     // UI 크기 설정 함수
-    public void SetUIScale(bool isOpen)
+    public void SetUIScale(bool isOpen, float? custom = null)
     {
         // 크기 조절이 비어있다면
         if (scaleHandler == null)
             // 종료
             return;
 
+        // 초 설정이 없다면, UI 상태에 따라서 연출 시간 저장
+        float duration = custom ?? (isOpen ? openDuration : closeDuration);
         // UI 상태에 따라서 초기화
-        scaleHandler.Init(isOpen ? openCurve : closeCurve, isOpen ? openDuration : closeDuration, overSize);
-        // UI 상태에 따라서 실행
+        scaleHandler.Init(isOpen ? openCurve : closeCurve, duration, overSize);
+        // 크기 조절 연출 시작
         scaleHandler.SetUIState(isOpen);
+    }
+
+    // UI 크기 조절 중지 함수
+    public void StopUIScale()
+    {
+        // 크기 조절이 비어있다면
+        if (scaleHandler == null)
+            // 종료
+            return;
+
+        // 크기 조절 연출 중지
+        scaleHandler.StopUIStateRoutine();
     }
 
     // UI 불투명도 설정 함수
@@ -83,22 +112,59 @@ public class PopupUI : MonoBehaviour
         CanvasGroup group = customGroup ?? canvasGroup;
         // UI 상태에 따라서 초기화
         fadeHandler.Init(isOpen ? openCurve : closeCurve, duration, group);
-        // UI 상태에 따라서 실행
+        // 불투명도 조절 연출 시작
         fadeHandler.SetUIState(isOpen);
     }
 
+    // UI 불투명도 조절 중지 함수
+    public void StopUIFade()
+    {
+        // 불투명도 조절이 비어있다면
+        if (fadeHandler == null)
+            // 종료
+            return;
+
+        // 불투명도 조절 연출 중지
+        fadeHandler.StopUIStateRoutine();
+    }
+
+    // 닫는 위치 설정 함수
+    public void SetClosedPosition(Transform closedPos)
+    {
+        // 같은 위치라면
+        if (this.closedPos == closedPos)
+            // 종료
+            return;
+
+        // 위치 설정
+        this.closedPos = closedPos;
+    }
+
     // UI 이동 설정 함수
-    public void SetUIMove(bool isOpen)
+    public void SetUIMove(bool isOpen, float? custom = null)
+    {
+        // 이동 조절이 비어있다면
+        if (moveHandler == null || (isOpen ? openedPos : closedPos) == null)
+            // 종료
+            return;
+
+        // 초 설정이 없다면, UI 상태에 따라서 연출 시간 저장
+        float duration = custom ?? (isOpen ? openDuration : closeDuration);
+        // UI 상태에 따라서 초기화
+        moveHandler.Init(isOpen ? openCurve : closeCurve, duration, isOpen ? openedPos : closedPos);
+        // 이동 조절 연출 시작
+        moveHandler.SetUIState();
+    }
+
+    // UI 이동 조절 중지 함수
+    public void StopUIMove()
     {
         // 이동 조절이 비어있다면
         if (moveHandler == null)
             // 종료
             return;
 
-        // UI 상태에 따라서 초기화
-        moveHandler.Init(isOpen ? openCurve : closeCurve, isOpen ? openDuration : closeDuration,
-                                                                            isOpen ? openedPos : closedPos);
-        // 실행
-        moveHandler.SetUIState();
+        // 이동 조절 연출 중지
+        moveHandler.StopUIStateRoutine();
     }
 }
