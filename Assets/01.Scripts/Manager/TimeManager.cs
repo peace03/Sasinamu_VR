@@ -58,7 +58,7 @@ public class TimeManager : MonoBehaviour
 
     private void StartStandBy(OnSelfInstantiate _)
     {
-        StartCoroutine(StandBy());
+        if (_.isMine == true) StartCoroutine(StandBy());
     }
     private IEnumerator StandBy()   //처음 시작하고 대기할 때(고개만 움직일 수 있음)
     {

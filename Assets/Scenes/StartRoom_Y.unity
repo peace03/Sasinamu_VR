@@ -295,11 +295,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 878839510619145823, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 5000
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 878839510619145823, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5000
+      value: 20000
       objectReference: {fileID: 0}
     - target: {fileID: 878839510619145823, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,7 +331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 878839510619145823, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.836
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 878839510619145823, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -361,13 +361,37 @@ PrefabInstance:
       propertyPath: m_Maskable
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4440437965659808487, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809282944728329101, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5809282944728329101, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 7609846013138731392, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 837786113237127397}
+    - target: {fileID: 7609846013138731392, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: distance
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8035432216421503352, guid: 11c33f728139258428084825c0d12715, type: 3}
       propertyPath: m_Maskable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035432216421503352, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8035432216421503352, guid: 11c33f728139258428084825c0d12715, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -593,7 +617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3270617024457258285, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.836
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3270617024457258285, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -663,6 +687,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 837786113237127397}
+    - target: {fileID: 8586815504658074968, guid: 5d1911b04261128468dfda350a7ca15d, type: 3}
+      propertyPath: distance
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -792,7 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
   subwayScheduler: {fileID: 0}
   currentScene: 0
-  onlyMovePauseTime: 1
+  onlyMovePauseTime: 25
 --- !u!1001 &1105909874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -865,7 +893,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2026826618287205042, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.061
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2026826618287205042, guid: 35f1e9663a32f8c4bbf74787d6905c4a, type: 3}
       propertyPath: m_LocalPosition.y

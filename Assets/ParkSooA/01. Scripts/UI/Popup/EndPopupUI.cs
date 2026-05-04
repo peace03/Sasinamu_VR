@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EndPopupUI : PopupUI
 {
     private void Start()

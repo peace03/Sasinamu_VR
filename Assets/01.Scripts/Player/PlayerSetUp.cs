@@ -74,6 +74,8 @@ public class PlayerSetup : MonoBehaviourPun
             if (xrDeviceSimulator != null) xrDeviceSimulator.SetActive(true);
         }
         //플레이어 움직임 정지 (시작시 UI 보는 용도)
-        EventBus<OnSelfInstantiate>.Publish(default);
+        OnSelfInstantiate onSelfInstantiate = new OnSelfInstantiate();
+        onSelfInstantiate.isMine = photonView.IsMine;
+        EventBus<OnSelfInstantiate>.Publish(onSelfInstantiate);
     }
 }

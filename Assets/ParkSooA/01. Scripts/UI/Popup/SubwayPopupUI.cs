@@ -57,6 +57,9 @@ public class SubwayPopupUI : PopupUI
     // 초기화 함수
     public void Init(SubwayDestination destination) => this.destination = destination;
 
+    // 진행상황 초기화 함수
+    public void ResetProgress() => curUIType = SubwayUIType.First;
+
     // UI 열기 함수
     public void OpenUI()
     {
@@ -103,6 +106,32 @@ public class SubwayPopupUI : PopupUI
         CanvasGroup.blocksRaycasts = false;
         // 팝업 닫기 연출 시작
         PopupUIHandler(false);
+    }
+
+    // UI 초기화
+    public void ResetUI(bool allReset)
+    {
+        // 팝업 UI 상태 설정
+        SetPopupUIState(false);
+        // 닫는 위치 초기화
+        SetClosedPosition(OpenedPos);
+        // 이동 조절 연출 중지
+        StopUIMove();
+        // UI 여는 위치로 초기화
+        SetUIMove(false, 0f);
+
+        // 전부 초기화한다면
+        if (allReset)
+        {
+            // 크기 조절 연출 중지
+            StopUIScale();
+            // UI 닫는 크기로 초기화
+            SetUIScale(false, 0f);
+            // 불투명도 조절 연출 중지
+            StopUIFade();
+            // UI 투명으로 초기화
+            SetUIFade(false, 0f);
+        }
     }
 
     // 다음 페이지 변경 함수

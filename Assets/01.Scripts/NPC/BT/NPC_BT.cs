@@ -142,9 +142,7 @@ public class NPC_BT : MonoBehaviourPun
         smoothedVelocity = Mathf.Lerp(smoothedVelocity, currentSpeed, Time.deltaTime * 15);
 
         if (smoothedVelocity < 0.1f) smoothedVelocity = 0f;
-
-        // ★
-        //anim.SetFloat("Speed", smoothedVelocity);
+        anim.SetFloat("Speed", smoothedVelocity);
         lastPosition = transform.position;
 
         //방장 위임 처리: 참가자 시절 agent가 꺼져있던 경우 다시 켜줌

@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerID : MonoBehaviour
@@ -7,24 +8,28 @@ public class PlayerID : MonoBehaviour
     public bool IsUIHovering => isUIHovering;
     public int? ID => id;
 
-    private XRRayInteractor interactor;     // 인터렉터
+    private XRRayInteractor interactor;             // 인터렉터
 
-    private bool isUIHovering;              // UI 가리킴 여부
-    private int? id = null;                 // 아이디
+    private bool isUIHovering;                      // UI 가리킴 여부
+    private int? id = null;                         // 아이디
 
+    // 초기화
     public void Init()
     {
         interactor = transform.GetComponent<XRRayInteractor>();
-        // 아이디 받아오기
         id = transform.root.GetComponentInChildren<PhotonView>()?.Owner?.ActorNumber;
     }
 
     private void Update()
     {
-        // 인터렉터가 비어있지 않고 UI에 닿고 있는 결과 값에 따라서
+        // 인터렉터가 비어있지 않고 UI에 닿고 있다면
         if (interactor != null && interactor.TryGetCurrentUIRaycastResult(out var result))
-            // UI 가리킴 여부 반영
-            isUIHovering = result.isValid;
+        {
+            // 닿고 있는 UI가 버튼이라면
+            if (result.gameObject.TryGetComponent<Button>(out var button))
+                // UI를 가리키고 있음
+                isUIHovering = true;
+        }
         // 아니라면
         else
             // UI 가리키고 있지 않음

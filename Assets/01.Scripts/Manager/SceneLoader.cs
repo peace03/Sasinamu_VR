@@ -25,7 +25,7 @@ public class SceneLoader : MonoBehaviour
                 SceneManager.LoadScene("SubwayScene_Y");
                 break;
             case LoadScene.EndScene:
-                SceneManager.LoadScene("EndScene_Y");
+                SceneManager.LoadScene("EndScene");
                 break;
             default:
                 break;

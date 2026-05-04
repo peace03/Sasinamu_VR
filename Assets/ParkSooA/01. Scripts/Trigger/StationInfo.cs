@@ -91,13 +91,13 @@ public class StationInfo : ArrivalTrigger
     // 플레이어가 UI를 가리키고 있는지 판단하는 함수
     public bool IsPlayerUIHovering()
     {
-        // 왼손이 비어있지 않고 UI를 가리키고 있다면
-        if (leftHand != null && leftHand.IsUIHovering)
+        // 왼손이 비어있지 않고 플레이어의 ID와 일치하며 UI를 가리키고 있다면
+        if (leftHand != null && leftHand.ID == playerID && leftHand.IsUIHovering)
             // 가리키고 있음
             return true;
 
-        // 오른손이 비어있지 않고 UI를 가리키고 있다면
-        if (rightHand != null && rightHand.IsUIHovering)
+        // 오른손이 비어있지 않고 플레이어의 ID와 일치하며 UI를 가리키고 있다면
+        if (rightHand != null && rightHand.ID == playerID && rightHand.IsUIHovering)
             // 가리키고 있음
             return true;
 
@@ -262,8 +262,20 @@ public class StationInfo : ArrivalTrigger
         {
             // 손목 UI 변경
             wristUI.ChangeUI(PlatformWristType.Move);
-            // 승강장 위치 활성화
-            subwayDestination.SetActive(true);
+
+            // 방향 화살표가 있다면
+            if (arrowPointer != null)
+            {
+                // 방향 화살표 보여주기
+                arrowPointer.ArrowPointerHandler(true);
+                // 방향 화살표 초기화
+                arrowPointer = null;
+            }
+
+            // 승강장 위치가 있다면
+            if (subwayDestination != null)
+                // 승강장 위치 활성화
+                subwayDestination.SetActive(true);
 
             // 가이드 UI가 있다면
             if (guideUI != null)
@@ -304,15 +316,6 @@ public class StationInfo : ArrivalTrigger
             wristUI.SetCanOpenUI(true);
             // 손목 UI 초기화
             wristUI = null;
-        }
-
-        // 방향 화살표가 있다면
-        if (arrowPointer != null)
-        {
-            // 방향 화살표 보여주기
-            arrowPointer.ArrowPointerHandler(true);
-            // 방향 화살표 초기화
-            arrowPointer = null;
         }
 
         // 만약 플레이어 ID가 초기화가 안됐다면

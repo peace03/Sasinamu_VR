@@ -4,6 +4,7 @@ using UnityEngine;
 public class SubwayDestination : ArrivalTrigger
 {
     private PlatformWristUI wristUI;        // 손목 UI
+    private ArrowPointer arrowPointer;      // 방향 화살표
     private BillBoard billBoard;            // 빌보드
     private SubwayPopupUI subwayUI;         // 지하철 UI
     private Coroutine closeCoroutine;       // 닫기 코루틴
@@ -25,12 +26,6 @@ public class SubwayDestination : ArrivalTrigger
     {
         // 지하철 UI의 닫는 위치 초기화
         subwayUI.SetClosedPosition(subwayUI.OpenedPos);
-        // 손목 UI 열 수 있게 바꾸기
-        wristUI.SetCanOpenUI(true);
-        // 손목 UI 초기화
-        wristUI = null;
-        // 승강장 위치 비활성화
-        gameObject.SetActive(false);
     }
 
     // 승강장에 도착했을 때 실행되는 함수
@@ -41,10 +36,24 @@ public class SubwayDestination : ArrivalTrigger
         // 손목 UI 받아오기
         wristUI = root.GetComponentInChildren<PlatformWristUI>();
 
-        // 손목 UI가 없거나, 승강장 차례가 아니거나, 지하철 UI 닫기 연출이 진행 중이라면
-        if (wristUI == null || wristUI?.CurrentProgress.currentStep != GuideState.Move || closeCoroutine != null)
+        // 손목 UI가 없거나, 승강장 차례가 아니라면
+        if (wristUI == null || wristUI?.CurrentProgress.currentStep != GuideState.Move)
             // 종료
             return;
+
+        // 지하철 UI 닫기 연출이 진행 중이라면
+        if (closeCoroutine != null)
+        {
+            // 지하철 UI 닫기 연출 중지
+            StopCoroutine(closeCoroutine);
+            // 닫기 코루틴 변수 초기화
+            closeCoroutine = null;
+            
+            // 지하철 UI가 있다면
+            if (subwayUI != null)
+                // 지하철 UI 초기화
+                subwayUI.ResetUI(true);
+        }
 
         // 손목 UI 못 열게 바꾸기
         wristUI.SetCanOpenUI(false);
@@ -57,10 +66,26 @@ public class SubwayDestination : ArrivalTrigger
         // 지하철 UI가 있다면
         if (subwayUI != null)
         {
+            // 지하철 UI가 손목에 있다면
+            if (subwayUI.CurUIType == SubwayUIType.Fourth)
+            {
+                // 지하철 UI 위치 초기화
+                subwayUI.ResetUI(false);
+                // 지하철 UI 진행상황 초기화
+                subwayUI.ResetProgress();
+            }
+
             // 지하철 UI 열기
             subwayUI.OpenUI();
             // 지하철 UI의 닫는 위치 설정
             subwayUI.SetClosedPosition(wristUI.LeftHand);
+            // 방향 화살표 저장
+            arrowPointer = root.GetComponentInChildren<ArrowPointer>();
+
+            // 방향 화살표가 있다면
+            if (arrowPointer != null)
+                // 방향 화살표 숨기기
+                arrowPointer.ArrowPointerHandler(false);
         }
     }
 
@@ -92,6 +117,15 @@ public class SubwayDestination : ArrivalTrigger
                 subwayUI.CloseUI();
             }
         }
+
+        // 방향 화살표가 있다면
+        if (arrowPointer != null)
+        {
+            // 방향 화살표 보여주기
+            arrowPointer.ArrowPointerHandler(true);
+            // 방향 화살표 초기화
+            arrowPointer = null;
+        }
     }
 
     // 지하철 UI 닫기 연출 함수
@@ -109,7 +143,5 @@ public class SubwayDestination : ArrivalTrigger
         wristUI = null;
         // 닫기 코루틴 변수 초기화
         closeCoroutine = null;
-        // 승강장 위치 비활성화
-        gameObject.SetActive(false);
     }
 }
