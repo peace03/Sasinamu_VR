@@ -115,6 +115,10 @@ public class SubwayDestination : ArrivalTrigger
                 subwayUI.SetClosedPosition(subwayUI.OpenedPos);
                 // 지하철 UI 닫기
                 subwayUI.CloseUI();
+                // 손목 UI 열 수 있게 바꾸기
+                wristUI.SetCanOpenUI(true);
+                // 손목 UI 초기화
+                wristUI = null;
             }
         }
 

@@ -127,9 +127,8 @@ public class NPC_BT : MonoBehaviourPun
         });
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-
         //방장이 아니면 BT 정지
         if (!PhotonNetwork.IsMasterClient) return;
 
@@ -144,6 +143,13 @@ public class NPC_BT : MonoBehaviourPun
         if (smoothedVelocity < 0.1f) smoothedVelocity = 0f;
         anim.SetFloat("Speed", smoothedVelocity);
         lastPosition = transform.position;
+    }
+
+    private void Update()
+    {
+
+        //방장이 아니면 BT 정지
+        if (!PhotonNetwork.IsMasterClient) return;
 
         //방장 위임 처리: 참가자 시절 agent가 꺼져있던 경우 다시 켜줌
         //단, 이미 지하철에 탑승해서 고의로 끈 상태가 아닐때만 작동

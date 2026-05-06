@@ -257,30 +257,13 @@ public class StationInfo : ArrivalTrigger
             }
         }
 
-        // 손목 UI가 있고 다음 목적지가 승강장이라면
-        if (wristUI != null && wristUI.CurrentProgress.currentStep == GuideState.Move)
+        // 방향 화살표가 있다면
+        if (arrowPointer != null)
         {
-            // 손목 UI 변경
-            wristUI.ChangeUI(PlatformWristType.Move);
-
-            // 방향 화살표가 있다면
-            if (arrowPointer != null)
-            {
-                // 방향 화살표 보여주기
-                arrowPointer.ArrowPointerHandler(true);
-                // 방향 화살표 초기화
-                arrowPointer = null;
-            }
-
-            // 승강장 위치가 있다면
-            if (subwayDestination != null)
-                // 승강장 위치 활성화
-                subwayDestination.SetActive(true);
-
-            // 가이드 UI가 있다면
-            if (guideUI != null)
-                // 닫는 위치 설정하기
-                guideUI.SetClosedPosition(wristUI.LeftHand);
+            // 방향 화살표 보여주기
+            arrowPointer.ArrowPointerHandler(true);
+            // 방향 화살표 초기화
+            arrowPointer = null;
         }
 
         // 가이드 UI가 있다면
@@ -291,8 +274,57 @@ public class StationInfo : ArrivalTrigger
                 // 가이드 진행 중지
                 guideUI.StopGuideUIRoutine();
 
-            // 가이드 UI 닫기
-            closeCoroutine = StartCoroutine(WaitForCloseGuideUI());
+            // 손목 UI가 없다면
+            if (wristUI == null)
+            {
+                // 가이드 UI 닫기
+                guideUI.PopupUIHandler(false);
+
+                // 만약 플레이어 ID가 초기화가 안됐다면
+                if (playerID != null)
+                    // 플레이어 ID 초기화
+                    playerID = null;
+
+                // 종료
+                return;
+            }
+
+            // 다음 목적지가 승강장이라면
+            if (wristUI.CurrentProgress.currentStep == GuideState.Move)
+            {
+                // 손목 UI 변경
+                wristUI.ChangeUI(PlatformWristType.Move);
+
+                // 승강장 위치가 있다면
+                if (subwayDestination != null)
+                    // 승강장 위치 활성화
+                    subwayDestination.SetActive(true);
+
+                // 닫는 위치 설정하기
+                guideUI.SetClosedPosition(wristUI.LeftHand);
+                // 가이드 UI 닫기
+                closeCoroutine = StartCoroutine(WaitForCloseGuideUI());
+            }
+            // 다음 목적지가 승강장이 아니라면
+            else
+            {
+                // 가이드 UI 닫기
+                guideUI.PopupUIHandler(false);
+
+                // 손목 UI가 있다면
+                if (wristUI != null)
+                {
+                    // 손목 UI 기능 풀기
+                    wristUI.SetCanOpenUI(true);
+                    // 손목 UI 초기화
+                    wristUI = null;
+                }
+
+                // 만약 플레이어 ID가 초기화가 안됐다면
+                if (playerID != null)
+                    // 플레이어 ID 초기화
+                    playerID = null;
+            }
         }
     }
 

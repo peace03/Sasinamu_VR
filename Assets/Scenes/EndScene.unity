@@ -15415,74 +15415,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1786297751309892663, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3649094248007670018, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.00042
-      objectReference: {fileID: 0}
-    - target: {fileID: 3649094248007670018, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.00042
-      objectReference: {fileID: 0}
-    - target: {fileID: 3649094248007670018, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.00042
-      objectReference: {fileID: 0}
-    - target: {fileID: 3649094248007670018, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3649094248007670018, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1.427
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030450172799755072, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_Alpha
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4259544806580569662, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4736983571839497990, guid: 15724181787ce4742bf5b14e00839360, type: 3}
       propertyPath: m_Name
       value: End_Popup UI
       objectReference: {fileID: 0}
-    - target: {fileID: 5629767792119144173, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 5629767792119144173, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 5629767792119144173, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 8284652911600160765, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332139509755576973, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332139509755576973, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332139509755576973, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8832038214928120277, guid: 15724181787ce4742bf5b14e00839360, type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 1085071617}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -25925,11 +25861,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
---- !u!4 &1085071617 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1666228647806929522, guid: 22a5232b49508214d9e023bfdd949b90, type: 3}
-  m_PrefabInstance: {fileID: 1085071616}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1086484920
 PrefabInstance:
   m_ObjectHideFlags: 0
