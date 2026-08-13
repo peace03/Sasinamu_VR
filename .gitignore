@@ -2,6 +2,9 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+# Recommended: add any editor/OS/tool-specific ignore rules from the Global/ templates as needed.
+# See: https://github.com/github/gitignore/tree/main/Global
+#
 .utmp/
 /[Ll]ibrary/
 /[Tt]emp/
@@ -10,7 +13,9 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-*.log
+*.log/
+/[Aa]ssets/_ExternalAssets/
+/[Aa]ssets/_ExternalAssets.meta
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
@@ -43,6 +48,7 @@ ExportedObj/
 *.csproj
 *.unityproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
@@ -98,30 +104,8 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-# ==========================================
-# [ Custom Ignores for Manual Package Flow ]
-# 용량이 큰 3D 모델 및 관련 에셋 제외 (.unitypackage로 수동 공유 예정)
-# ==========================================
-# 3D 모델 파일 및 해당 메타 파일
-*.fbx
-*.fbx.meta
-*.obj
-*.obj.meta
-*.max
-*.max.meta
-*.blend
-*.blend.meta
-*.dae
-*.dae.meta
-*.3ds
-*.3ds.meta
-
-# 대용량 텍스처 파일 (모델과 함께 패키징될 이미지 소스)
-*.tga
-*.tga.meta
-*.tif
-*.tif.meta
-*.tiff
-*.tiff.meta
-*.psd
-*.psd.meta
+# Auto-generated cache in Assets folder
+/[Aa]ssets/[Ss]ceneDependencyCache*
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+Assets/_Recovery/*
+ProfilerCaptures/*
